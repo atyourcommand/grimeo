@@ -1,0 +1,133 @@
+/* ==========================================================================
+   FONTS FOR PROJECT
+   ========================================================================== */
+
+/* ==========================================================================
+   Museo Sans
+   ========================================================================== */
+  
+@font-face {
+	font-family: 'MuseoSans-500';
+	src: url('../fonts/museo-sans-500/2A4683_0_0.eot');
+	src: url('../fonts/museo-sans-500/2A4683_0_0.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/museo-sans-500/2A4683_0_0.woff') format('woff'),
+		url('../fonts/museo-sans-500/2A4683_0_0.ttf') format('truetype');}
+
+/* ==========================================================================
+   Avenir
+   ========================================================================== */
+
+@font-face {
+    font-family: 'avenir_book';
+    src: url('../fonts/avenir/avenirltstd-book-webfont.eot');
+    src: url('../fonts/avenir/avenirltstd-book-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/avenir/avenirltstd-book-webfont.woff') format('woff'),
+         url('../fonts/avenir/avenirltstd-book-webfont.ttf') format('truetype'),
+         url('../fonts/avenir/avenirltstd-book-webfont.svg#avenir_lt_std45_book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'avenir_light';
+    src: url('../fonts/avenir/avenirltstd-light-webfont.eot');
+    src: url('../fonts/avenir/avenirltstd-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/avenir/avenirltstd-light-webfont.woff') format('woff'),
+         url('../fonts/avenir/avenirltstd-light-webfont.ttf') format('truetype'),
+         url('../fonts/avenir/avenirltstd-light-webfont.svg#avenir_lt_std35_light') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'avenir_heavy';
+    src: url('../fonts/avenir/avenirltstd-heavy-webfont.eot');
+    src: url('../fonts/avenir/avenirltstd-heavy-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/avenir/avenirltstd-heavy-webfont.woff') format('woff'),
+         url('../fonts/avenir/avenirltstd-heavy-webfont.ttf') format('truetype'),
+         url('../fonts/avenir/avenirltstd-heavy-webfont.svg#avenir_lt_std85_heavy') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'avenir_black';
+    src: url('../fonts/avenir/avenirltstd-black-webfont.eot');
+    src: url('../fonts/avenir/avenirltstd-black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/avenir/avenirltstd-black-webfont.woff') format('woff'),
+         url('../fonts/avenir/avenirltstd-black-webfont.ttf') format('truetype'),
+         url('../fonts/avenir/avenirltstd-black-webfont.svg#avenir_lt_std95_black') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* ==========================================================================
+   Secondary
+   ========================================================================== */
+   
+@font-face {
+    font-family: 'roboto_slabbold';
+    src: url('../fonts/roboto-slab/robotoslab-bold-webfont.eot');
+    src: url('../fonts/roboto-slab/robotoslab-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-slab/robotoslab-bold-webfont.woff') format('woff'),
+         url('../fonts/roboto-slab/robotoslab-bold-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-slab/robotoslab-bold-webfont.svg#roboto_slabbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'roboto_slablight';
+    src: url('../fonts/roboto-slab/robotoslab-light-webfont.eot');
+    src: url('../fonts/roboto-slab/robotoslab-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-slab/robotoslab-light-webfont.woff') format('woff'),
+         url('../fonts/roboto-slab/robotoslab-light-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-slab/robotoslab-light-webfont.svg#roboto_slablight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'roboto_slabregular';
+    src: url('../fonts/roboto-slab/robotoslab-regular-webfont.eot');
+    src: url('../fonts/roboto-slab/robotoslab-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-slab/robotoslab-regular-webfont.woff') format('woff'),
+         url('../fonts/roboto-slab/robotoslab-regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-slab/robotoslab-regular-webfont.svg#roboto_slabregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'roboto_slabthin';
+    src: url('../fonts/roboto-slab/robotoslab-thin-webfont.eot');
+    src: url('../fonts/roboto-slab/robotoslab-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-slab/robotoslab-thin-webfont.woff') format('woff'),
+         url('../fonts/roboto-slab/robotoslab-thin-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-slab/robotoslab-thin-webfont.svg#roboto_slabthin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+   
+/* ==========================================================================
+   Slider Fonts
+   ========================================================================== */
+   
+   @font-face {
+	font-family: 'flexslider-icon';
+	src:url('../fonts/flexislider/flexslider-icon.eot');
+	src:url('../fonts/flexislider/flexslider-icon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/flexislider/flexslider-icon.woff') format('woff'),
+		url('../fonts/flexislider/flexslider-icon.ttf') format('truetype'),
+		url('../fonts/flexislider/flexslider-icon.svg#flexslider-icon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
