@@ -22,8 +22,8 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		//$this->output->enable_profiler(TRUE);
-		$this->API_key = 'ba5a09dba76b1c3875e487780468ef93';
-		$this->load->model('Latest_model');
+		//$this->API_key = 'ba5a09dba76b1c3875e487780468ef93';
+		//$this->load->model('Latest_model');
 				
 	} 
 	public function index()
