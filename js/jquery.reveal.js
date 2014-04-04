@@ -103,6 +103,7 @@
 			modal.bind('reveal:close', function () {
 			  if(!locked) {
 					lockModal();
+					$('.video-container').html('');//JB
 					if(options.animation == "fadeAndPop") {
 						modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
 						modal.animate({

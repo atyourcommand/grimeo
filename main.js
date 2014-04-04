@@ -22,7 +22,7 @@ var dropDownMenu = (function() {
 
 	function init() {
 		$menuItems.on( 'click', open );
-		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
+		
 	}
 	
 	function open( event ) {
@@ -127,6 +127,8 @@ var dropDownMenuAlternate = (function() {
 
 	function close( event ) {
 		$listItems.eq( current ).removeClass( 'open' );
+		//Call swapText Function
+		swapText.revert();
 		current = -1;
 	}
 	//To use from outside to close menu
@@ -289,6 +291,7 @@ var dropDownMenuAlternate = (function() {
 		
 		});
 		
+			
 		//open and close menus
 		/*$('.sub-menu li a').on('click',function(e){
 			var	$this = $(this);
@@ -316,7 +319,10 @@ var dropDownMenuAlternate = (function() {
 	   
 	   menuHelper();	
 		//console.log('has menu function is running');
+		
+		// Working with local
 	
+			
 	});   
 })(jQuery);;var loadingContent = (function(){
 	
@@ -346,7 +352,66 @@ var dropDownMenuAlternate = (function() {
 	
 	return { init: init, start: start, end : end };	
 	
-})();;/**
+})();;(function ( $ ) {
+    $.fn.FormCache = function( options ) {
+        var settings = $.extend({
+        }, options );
+        
+        function on_change(event) {
+            var input = $(event.target);
+            var key = input.parents('form:first').attr('name');
+            var data = JSON.parse(localStorage[key]);
+            
+            if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
+                data[input.attr('name')] = input.is(':checked');
+            }else {
+                data[input.attr('name')] = input.val();
+            }
+            
+            localStorage[key] = JSON.stringify(data);
+        }
+        
+        return this.each(function() {    
+            var element = $(this);
+            
+            if(typeof(Storage)!=="undefined"){
+                var key = element.attr('name');
+                
+                var data = false;
+                if(localStorage[key]) {
+                    data = JSON.parse(localStorage[key]);
+                }
+                
+                if(!data) {
+                    localStorage[key] = JSON.stringify({});
+                    data = JSON.parse(localStorage[key]);
+                }
+                element.find('input, select').change(on_change);
+                
+                element.find('input, select').each(function(){
+                    if($(this).attr('type') != 'submit') {
+                        var input = $(this);
+                        var value = data[input.attr('name')];
+                        if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
+                            if(value) {
+                                input.attr('checked', input.is(':checked'));
+                            } else {
+                                input.removeAttr('checked');
+                            }
+                        } else {
+                            input.val(value);
+                        }
+                    }
+                });
+                
+                
+            }
+            else {
+                alert('local storage is not available');
+            }
+        });
+    };     
+}( jQuery ));/**
  * jQuery jPages v0.7
  * Client side pagination with jQuery
  * http://luis-almeida.github.com/jPages
@@ -483,7 +548,7 @@ var dropDownMenuAlternate = (function() {
         },
 		//MOD JB
 		adBlock: function (){
-			var adBlockHtml = '<div class="ad-block-one"></div>';
+			var adBlockHtml = '<div id="ad-location-one"></div>';
 			return adBlockHtml; 
 		},
 		//END MOD JB
@@ -808,17 +873,26 @@ var appendAdCode = (function(){
 		//console.log('loading ads to content');
 	}
 	
-	var adBlockOne = $('.ad-block-one');
-	var adOneCode = '<p>here it is</p>';
-	
 	function loadAds (){
-		adBlockOne.html(adOneCode);	
-		console.log('loading ads');
+		setTimeout(function (){
+			
+			var $adsense1 = '<div class="ad-spot-header"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:234px;height:60px"data-ad-client="ca-pub-9333805017415789"data-ad-slot="7244347139"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>'
+			
+			var adSpotOne = $('#ad-location-one');
+			var adBlockOne = '<div class="ad-block-one">'+$adsense1+'</div>';
+			//adSpotOne.hide().html(adBlockOne).fadeIn('2000');	
+			adSpotOne.html(adBlockOne);			
+		
+		}, 10000);
 	}
 	
 	return {loadAds: loadAds, init: init}
 	
-})();;/*
+})();
+
+
+
+;/*
  * jQuery Reveal Plugin 1.0
  * www.ZURB.com
  * Copyright 2010, ZURB
@@ -923,6 +997,7 @@ var appendAdCode = (function(){
 			modal.bind('reveal:close', function () {
 			  if(!locked) {
 					lockModal();
+					$('.video-container').html('');//JB
 					if(options.animation == "fadeAndPop") {
 						modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
 						modal.animate({
@@ -986,6 +1061,61 @@ var appendAdCode = (function(){
     }//orbit plugin call
 })(jQuery);
         
+;var swapText = (function (){
+			
+	var $swapItem = $('.fn-change-text');
+	var $spanFirst = $swapItem.children('span').eq(0);
+	var $spanSecond = $swapItem.children('span').eq(1);
+	var $item,
+	current = -1;
+	
+	function init(){
+		$swapItem.on('click',open)	
+	}
+	
+	function open (event){
+		
+		var $item = $(event.currentTarget);
+		var idx = $item.index();
+				
+		if( current !== -1 ) {
+			$swapItem.eq( current ).removeClass( 'open' );	
+			//console.log('current is not -1');
+		} 
+		
+		if( current === idx ) {
+			$swapItem.removeClass( 'open' );
+			current = -1;
+			//console.log('current is ' + idx);
+			$spanFirst.addClass('fade-in');
+			$spanSecond.removeClass('fade-in');
+			
+		} else {
+			$swapItem.addClass( 'open' );
+			$spanFirst.removeClass('fade-in');
+			$spanSecond.addClass('fade-in');
+			current = idx;
+		}
+		
+		return false	
+	}
+	function close (event){
+		$swapItem.removeClass( 'open' );
+		$spanFirst.addClass('fade-in');
+		$spanSecond.removeClass('fade-in');
+		current = -1;
+	}
+	function swap(){
+		open();	
+	}
+	function revert(){
+		close();	
+	}
+	
+	return {init:init, swap:swap, revert:revert}
+		
+})();
+
 ;$(function() {
     
 	var $header = $('.not-in-use');
@@ -1028,37 +1158,70 @@ var appendAdCode = (function(){
 	
 	var uiOptions = (function(){
 		var	$body = $( 'body' ),
-		//$container = $('.sub-menu'),
+	
 		$header = $('header'),
-		$search = $('.ui-options-search');
+		$searchMovie = $('.search-movie');
+		$searchTv = $('.search-tv');
+		$userOptions = $('.user-options');
 		$logo = $('.logo');
-		//$mainMenu = $('.main-nav');
-		//var choices = form.find(':radio');
+		
 		var $uiOption = $('input[name="options[1]"]', '.ui-options');
 			
 		$uiOption.change(function(){
+			
 			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
 			console.log($uiOptionChecked);	
-			if ($uiOptionChecked === 'search'){
+			if ($uiOptionChecked === 'movies'){
 				$header.addClass('search-active');
 				$logo.removeClass('logos-logo');
 				$logo.addClass('logos-logo-mobile');
-				$search.delay('400').fadeIn('slow');
+				$searchMovie.delay('400').addClass('show');
+				$('.options-nav').addClass('show');
+				$searchTv.removeClass('show');
+				$userOptions.removeClass('show');
+				//$search.delay('400').fadeIn('slow');
+				
+			}else if ($uiOptionChecked === 'tv'){
+				$header.addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');
+				$searchMovie.removeClass('show');
+				$searchTv.delay('400').addClass('show');
+				$userOptions.removeClass('show');
+				$('.options-nav').removeClass('show');
+				//$search.delay('400').fadeIn('slow');
+			
 			} else {
-				$header.removeClass('search-active');
-				$logo.removeClass('logos-logo-mobile');
-				$logo.addClass('logos-logo');
-				$search.hide();	
+				//$header.removeClass('search-active');
+				$header.addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');
+				$searchMovie.removeClass('show');
+				$searchTv.removeClass('show');
+				$userOptions.delay('400').addClass('show');
+				$search.hide();
+				$('.options-nav').removeClass('show');
+				//$userOptions.delay('400').fadeIn('slow');
 			}
 				
 		});
 		
-		$('.fn-change-text').click(function(e){
-			e.preventDefault();		
-			var span = $(this).find('span');
-			//var secondSpan = $(this).child('span')[1];
-			span.toggleClass('fade-in');
+		
+		
+		
+		
+		
+		//User option checkboxes to change classes
+		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
+		$userOptionOne.change(function(){
+			$header.toggleClass('show-trailers');
 		});
+		
+		var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
+		$userOptionTwo.change(function(){
+			$header.toggleClass('show-adult');
+		});
+		
 		
 			
 	});

@@ -22,7 +22,7 @@ var dropDownMenu = (function() {
 
 	function init() {
 		$menuItems.on( 'click', open );
-		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
+		
 	}
 	
 	function open( event ) {
@@ -127,6 +127,8 @@ var dropDownMenuAlternate = (function() {
 
 	function close( event ) {
 		$listItems.eq( current ).removeClass( 'open' );
+		//Call swapText Function
+		swapText.revert();
 		current = -1;
 	}
 	//To use from outside to close menu

@@ -135,7 +135,7 @@
         },
 		//MOD JB
 		adBlock: function (){
-			var adBlockHtml = '<div class="ad-block-one"></div>';
+			var adBlockHtml = '<div id="ad-location-one"></div>';
 			return adBlockHtml; 
 		},
 		//END MOD JB

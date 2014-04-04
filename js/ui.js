@@ -40,37 +40,70 @@ $(function() {
 	
 	var uiOptions = (function(){
 		var	$body = $( 'body' ),
-		//$container = $('.sub-menu'),
+	
 		$header = $('header'),
-		$search = $('.ui-options-search');
+		$searchMovie = $('.search-movie');
+		$searchTv = $('.search-tv');
+		$userOptions = $('.user-options');
 		$logo = $('.logo');
-		//$mainMenu = $('.main-nav');
-		//var choices = form.find(':radio');
+		
 		var $uiOption = $('input[name="options[1]"]', '.ui-options');
 			
 		$uiOption.change(function(){
+			
 			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
 			console.log($uiOptionChecked);	
-			if ($uiOptionChecked === 'search'){
+			if ($uiOptionChecked === 'movies'){
 				$header.addClass('search-active');
 				$logo.removeClass('logos-logo');
 				$logo.addClass('logos-logo-mobile');
-				$search.delay('400').fadeIn('slow');
+				$searchMovie.delay('400').addClass('show');
+				$('.options-nav').addClass('show');
+				$searchTv.removeClass('show');
+				$userOptions.removeClass('show');
+				//$search.delay('400').fadeIn('slow');
+				
+			}else if ($uiOptionChecked === 'tv'){
+				$header.addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');
+				$searchMovie.removeClass('show');
+				$searchTv.delay('400').addClass('show');
+				$userOptions.removeClass('show');
+				$('.options-nav').removeClass('show');
+				//$search.delay('400').fadeIn('slow');
+			
 			} else {
-				$header.removeClass('search-active');
-				$logo.removeClass('logos-logo-mobile');
-				$logo.addClass('logos-logo');
-				$search.hide();	
+				//$header.removeClass('search-active');
+				$header.addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');
+				$searchMovie.removeClass('show');
+				$searchTv.removeClass('show');
+				$userOptions.delay('400').addClass('show');
+				$search.hide();
+				$('.options-nav').removeClass('show');
+				//$userOptions.delay('400').fadeIn('slow');
 			}
 				
 		});
 		
-		$('.fn-change-text').click(function(e){
-			e.preventDefault();		
-			var span = $(this).find('span');
-			//var secondSpan = $(this).child('span')[1];
-			span.toggleClass('fade-in');
+		
+		
+		
+		
+		
+		//User option checkboxes to change classes
+		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
+		$userOptionOne.change(function(){
+			$header.toggleClass('show-trailers');
 		});
+		
+		var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
+		$userOptionTwo.change(function(){
+			$header.toggleClass('show-adult');
+		});
+		
 		
 			
 	});

@@ -73,6 +73,7 @@
 		
 		});
 		
+			
 		//open and close menus
 		/*$('.sub-menu li a').on('click',function(e){
 			var	$this = $(this);
@@ -100,6 +101,9 @@
 	   
 	   menuHelper();	
 		//console.log('has menu function is running');
+		
+		// Working with local
 	
+			
 	});   
 })(jQuery);

@@ -10,7 +10,6 @@ class login extends CI_Controller {
 			'secret' => '171730b0b7c778616b69ecf0f6603a7f'
 		);
 		$this->load->library('facebook', $config);
-		
 		$this->user = $this->facebook->getUser();
 	}
 	
