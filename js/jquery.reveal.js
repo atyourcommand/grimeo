@@ -26,8 +26,10 @@
 		
 		//Mod JB
 		var $assetId = $(this).attr('data-asset-id');
+		var $videoMode = $(this).attr('data-video-mode');
 		var $thisModal = $('#' + modalLocation);
 		$thisModal.attr('data-asset-id', $assetId);
+		$thisModal.attr('data-video-mode', $videoMode);
 		//
 	});
 

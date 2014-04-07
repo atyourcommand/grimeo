@@ -44,7 +44,7 @@ $(function() {
 		$header = $('header'),
 		$searchMovie = $('.search-movie');
 		$searchTv = $('.search-tv');
-		$userOptions = $('.user-options');
+		$userOptions = $('.options');
 		$logo = $('.logo');
 		
 		var $uiOption = $('input[name="options[1]"]', '.ui-options');
@@ -60,7 +60,7 @@ $(function() {
 				$searchMovie.delay('400').addClass('show');
 				$('.options-nav').addClass('show');
 				$searchTv.removeClass('show');
-				$userOptions.removeClass('show');
+				//$userOptions.fadeOut('fast');
 				//$search.delay('400').fadeIn('slow');
 				
 			}else if ($uiOptionChecked === 'tv'){
@@ -69,29 +69,50 @@ $(function() {
 				$logo.addClass('logos-logo-mobile');
 				$searchMovie.removeClass('show');
 				$searchTv.delay('400').addClass('show');
-				$userOptions.removeClass('show');
+				//$userOptions.fadeOut('fast');
 				$('.options-nav').removeClass('show');
 				//$search.delay('400').fadeIn('slow');
 			
 			} else {
 				//$header.removeClass('search-active');
-				$header.addClass('search-active');
-				$logo.removeClass('logos-logo');
-				$logo.addClass('logos-logo-mobile');
-				$searchMovie.removeClass('show');
-				$searchTv.removeClass('show');
-				$userOptions.delay('400').addClass('show');
-				$search.hide();
-				$('.options-nav').removeClass('show');
+				//$header.addClass('search-active');
+				//$logo.removeClass('logos-logo');
+				//$logo.addClass('logos-logo-mobile');
+				//$searchMovie.removeClass('show');
+				//$searchTv.removeClass('show');
+				
+				//$search.hide();
+				//$('.options-nav').removeClass('show');
 				//$userOptions.delay('400').fadeIn('slow');
 			}
 				
 		});
 		
 		
+		var $userOptionsLabelSelected = $('input[name="options[3_A]"]').closest('label').hasClass('selected');
+		if(	$userOptionsLabelSelected)$userOptions.slideDown('fast');
 		
+		$('input[name="options[3_A]"]').change(function(){
+			
+			if ($userOptions.css("display") == "none")
+    		$userOptions.slideDown('fast');
+			else
+    		$userOptions.slideUp('fast');
+			
+		});
 		
+		//var $genreOptionsLabelSelected = $('input[name="options[4_A]"]').closest('label').hasClass('selected');
+		//var $genreDrawerTarget = $('.fn_dropdown-alt ul li:first')
+		//if(	$genreOptionsLabelSelected) $genreDrawerTarget.addClass('open');
 		
+		//$('input[name="options[4_A]"]').change(function(){
+			//var $genreDrawer = $('.fn_dropdown-alt .sub-menu')
+			//if ($genreDrawerTarget.hasClass('open'))
+    		//$genreDrawerTarget.removeClass('open');
+			//else
+    		//$genreDrawerTarget.addClass('open');
+			
+		//});
 		
 		//User option checkboxes to change classes
 		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');

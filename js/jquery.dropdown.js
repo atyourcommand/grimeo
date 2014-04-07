@@ -78,37 +78,28 @@ var dropDownMenu = (function() {
 
 var dropDownMenuAlternate = (function() {
 
-	var $listItems = $( '.fn_dropdown-alt > ul > li'),
-		$menuItems = $listItems.children( 'a' ),
+	var $menuToggle = $('input[name="options[4_A]"]').closest('label');
 		$body = $( 'body' ),
-		$container = $('.sub-menu'),
+		$container = $('.dropdown-alt .sub-menu');
 		
-		current = -1;
+		
 
 	function init() {
-		$menuItems.on( 'click', open );
+		$menuToggle.on('click', open );
 		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
 	}
 	
 	function open( event ) {
 
-		if( current !== -1 ) {
-			$listItems.eq( current ).removeClass( 'open' );
+		if($(this).hasClass('open')) {
+			$(this).removeClass( 'open' );
+			$container.removeClass('open');
 		}
 
-		var $item = $( event.currentTarget ).parent( 'li' ),
-			idx = $item.index();
-
-		if( current === idx ) {
-			$item.removeClass( 'open' );
-			current = -1;
-			
-		}
 		else {
-			$item.addClass( 'open' );
-			current = idx;
-			//$body.off( 'click' ).on( 'click', close );
-						
+			$(this).addClass( 'open' );
+			$container.addClass('open');
+			
 			$('.fn-close').on( 'click', close );
 			//$listItems.on( 'blur', close );
 			$(document).on('click',function (e){
@@ -126,10 +117,12 @@ var dropDownMenuAlternate = (function() {
 	}
 
 	function close( event ) {
-		$listItems.eq( current ).removeClass( 'open' );
-		//Call swapText Function
-		swapText.revert();
-		current = -1;
+		$menuToggle.find('input').removeAttr( 'checked' );
+		$menuToggle.removeClass('open');
+		$container.removeClass( 'open' );
+		
+		
+		
 	}
 	//To use from outside to close menu
 	function closeMenu() {

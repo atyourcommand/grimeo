@@ -18,12 +18,12 @@ jQuery(function($) {
 	dropDownMenuAlternate.init();
 	swapText.init();
 	$('.fn-blocks').responsiveEqualHeightGrid();
-	//$('form').FormCache();
+	$('form').FormCache();
 	
 });
 </script>
 <script type="text/javascript" src="main.min.js"></script>
-<script type="text/javascript" src="jquery.min.js"></script>
+
 <script type="text/javascript" src="js/jquery.pages.js"></script>
 <script>
 (function($) {
@@ -32,11 +32,11 @@ jQuery(function($) {
 	var $header = $('header');
 	var onepagerecord = 18;
 	// GET VIDEO 
-	function videoLink($id){
+	function videoLink($id, $videoMode){
 		var src;
 		$.ajax({
 			async: false,
-			url: 'http://api.themoviedb.org/3/movie/'+$id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+			url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+$id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
 			success: function (data) { 
 						$.each(data, function(i, item) {
 							if(i == "youtube") {
@@ -94,9 +94,10 @@ jQuery(function($) {
 		$genreResultDiv.html(list).fadeIn();
 	}	
 //UPCOMING MOVIES
- var $getdata = "";
+
  function loadUpcomingMovies(){  
-	for(var k=1;k<=20;k++){
+	var $getdata = "";
+	for(var k=1;k<=2;k++){
 		var media = 'movie',
 		mode = '/upcoming',
 		url = 'http://api.themoviedb.org/3/',
@@ -113,7 +114,7 @@ jQuery(function($) {
 								var $id = item.id; 
 								//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
 								//var $videoModalLink = "<li><a href=\"#\" data-reveal-id=\"myModal\" class=\"fn-play-video\" data-asset-id=\""+$id+"\">Play trailer</a></li>";
-								var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
+								var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
 								var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
 								$getdata +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ; 
 								
@@ -164,9 +165,10 @@ jQuery(function($) {
 			loadingContent.start('Please wait, loading up coming movies');
 		},
 		success: function (data) {  
-			loadingContent.end(); //Remove loading message
+			
 			loadGenreList(data);
 			loadUpcomingMovies();
+			loadingContent.end(); //Remove loading message
 		}, 
 		error: function (request,error) {
 			alert('Network error has occurred please try again!');
@@ -211,7 +213,7 @@ jQuery(function($) {
 									var $poster_path = base_url+item.poster_path;
 									var $id = item.id;
 									//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
-									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
+									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
 									var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
 									list +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ;
 							});
@@ -275,7 +277,7 @@ jQuery(function($) {
 									var $poster_path = base_url+item.poster_path;
 									var $id = item.id;
 									//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
-									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
+									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
 									var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
 									list +="<li class=\"column small-6 medium-3 large-2 end\"><ul class=\"clearfix\" >"+$loader +$poster+"</ul></li>" ;
 							});
@@ -304,12 +306,11 @@ jQuery(function($) {
         	});
     });
 	//CLICK ON TEXT SEARCH RESULTS LINKS
-
 	$(document).on('click','.fn-asset-link', function(e){
 		//console.log('working');
 		
 		var $id  = $(this).attr('id'),
-		media = 'movie/';
+		media = 'movie/', $videoMode = 'movie';
 		//var url = "http://mymovieapi.com/?type=json&id="+$id+"&release=full&plot=full";
 		
 		//$('#imdbcontents').html('<center><img src="images/loading.gif" alt="loading..."></center>');
@@ -365,11 +366,205 @@ jQuery(function($) {
 		e.preventDefault();
   	});
 	
+	//CLICK ON TV RESULTS LINKS
+	$(document).on('click','.fn-asset-link-tv', function(e){
+		//console.log('working');
+		
+		var $id  = $(this).attr('id'),
+		media = 'tv/', $videoMode = 'tv';
+		
+		//var url = "http://mymovieapi.com/?type=json&id="+$id+"&release=full&plot=full";
+		
+		//$('#imdbcontents').html('<center><img src="images/loading.gif" alt="loading..."></center>');
+		$('search-output').hide();	
+		$('.holder').hide();	
+		$.ajax({
+		  url: url + media + $id + key,  
+		  dataType: 'json',
+		  async: false,
+		  contentType: 'application/json',
+		  dataType: 'jsonp',
+		  beforeSend: function() {
+			$('.searching-for').hide();
+			$('.term').hide();
+			$('.search-output').fadeOut();
+		  },
+		  success: function(data){
+				console.log(data);
+				var list;
+				var $resultDiv = $('.asset-detail'); 
+				//console.log(data);  
+					if(true) { 
+						//str +="\nTitle: "+item.title;
+						//var $title = "<li>\nTitle: "+item.title+"</li>";
+						var $title = "<h1>"+data.original_name+"</h1>";
+						//var $tagline = "<div class=\"tagline\">"+data.tagline+"</div>";
+						var $episodesSeasons = "<div class=\"tagline\">Seasons: "+data.number_of_seasons+"&nbsp;"+"Episodes: " +data.number_of_episodes +"</div>";
+						//var $episodes = "<div class=\"tagline\">Episodes: "+ data.number_of_episodes + "</div>";
+						var $overview = "<p>"+data.overview+"</p>";
+						var $videolink = "<p>"+'<iframe width="560"  height="315" src="'+videoLink($id)+'" frameborder="0" allowfullscreen=""></iframe>'+"</p>";
+						var $releaseDate = "<div class=\"vote-average\">Release date: "+data.release_date+"</div>";
+						var $voteAverage = "<div class=\"vote-average\">Vote average: "+data.vote_average+"</div>";
+						var $voteCount = "<div class=\"vote-count\">Total votes: "+data.vote_count+"</div>";
+						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id)+"</div>";
+						var $poster = "<img src=\""+base_url+data.poster_path+"\"/>";
+						
+						var $backdrop = "<li><img src=\""+base_backdrop_url+data.backdrop_path+"\" class=\"hero\"/></li>";
+						list +="<li class=\"column small-12 medium-12 large-12\"><ul>"+$poster+$title+$episodesSeasons+$releaseDate+$voteCount+$actors+$voteAverage+$backdrop+$overview+$videolink+"</ul></li>" ;
+					
+					} else {
+						alert('no record found');
+						console.log('no record found');		
+					}
+		  list = list.replace("undefined", "");
+		  $resultDiv.html(list).fadeIn();
+		  
+		  },
+		  error: function (request,error) {
+          	alert('Network error has occurred please try again!');
+			//console.log(url);
+          }
+		  
+		});
+		//end ajax
+		e.preventDefault();
+  	});
+	
+	
+
+//TOP RATED TV FUNCTION
+
+ function loadTopRatedTV(){  
+	var $getdata = "";
+	for(var k=1;k<=20;k++){
+		var media = 'tv',
+		mode = '/top_rated',
+		//adult= '&include_adult=true',
+		url = 'http://api.themoviedb.org/3/',
+		key = '?api_key=ba5a09dba76b1c3875e487780468ef93';
+		$.ajax({
+			async: false,
+			url: url + media + mode + key+'&page='+k, 
+			success: function (data) {  
+					$.each(data, function(i, item) {
+						if(i == "results") {
+							da = data[i];
+							$.each(da, function (j, item) {  
+								console.log(data);  
+								var $poster_path = base_url+item.poster_path;
+								var $id = item.id; 
+								//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
+								//var $videoModalLink = "<li><a href=\"#\" data-reveal-id=\"myModal\" class=\"fn-play-video\" data-asset-id=\""+$id+"\">Play trailer</a></li>";
+								var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"tv\"\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link-tv\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link-tv\" id=\""+$id+"\">"+item.name+"</a></h3></div>";
+								var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
+								$getdata +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ; 
+								
+							});
+						} 
+					});	
+					 
+			}   
+		}); 
+	}
+	//var $resultDiv = $('.search-output'); 
+	$('.holder').fadeIn();	
+	//alert('s');
+	$getdata = $getdata.replace("undefined", ""); 
+	$('.search-output').hide().html($getdata).fadeIn();
+	// paging function call
+	$("div.holder").jPages({
+		containerID : "content",
+		perPage: onepagerecord
+	});
+		
+	//Detect broken images
+	$('img').load(function () { 
+		$(this).hide();
+		$('.loader').fadeOut('fast');
+			$(this).fadeIn();
+	}); 
+}
+// MOVIE CONTENT VIA MOVIE RADIO OPTION
+$('input[id="1_A"]', '.ui-options').on('click', function(){
+	
+	var url = 'http://api.themoviedb.org/3/',
+		base_url = 'http://image.tmdb.org/t/p/w92',//for images
+		base_backdrop_url = 'http://image.tmdb.org/t/p/w780',//for images
+        mode = 'genre/list',
+		trailer = '/trailers',
+        input,
+        movieName,
+        key = '?api_key=ba5a09dba76b1c3875e487780468ef93',
+		modeHeading = 'Upcoming movies';
+	
+	$.ajax({
+		//type: 'GET',
+		//url: url + mode + key + '&query='+movieName ,
+		url: url + mode + key ,
+		 
+		contentType: 'application/json',
+		dataType: 'jsonp',
+		
+		beforeSend: function(){
+			loadingContent.start('Please wait, loading upcoming movies');
+			$('.title').html(modeHeading);	
+		},
+		success: function (data) {  
+			loadGenreList(data);
+			loadUpcomingMovies();
+			loadingContent.end(); //Remove loading message
+		}, 
+		error: function (request,error) {
+			alert('Network error has occurred please try again!');
+		} 
+	});
+});
+
+// TV CONTENT ON VIA TV RADIO OPTION
+$('input[id="1_B"]', '.ui-options').on('click', function(){
+	
+	var url = 'http://api.themoviedb.org/3/',
+		base_url = 'http://image.tmdb.org/t/p/w92',//for images
+		base_backdrop_url = 'http://image.tmdb.org/t/p/w780',//for images
+        //mode = 'genre/list',
+		trailer = '/trailers',
+        input,
+        movieName,
+        key = '?api_key=ba5a09dba76b1c3875e487780468ef93',
+		modeHeading = 'Top rated TV shows';
+		
+	$.ajax({
+		//type: 'GET',
+		//url: url + mode + key + '&query='+movieName ,
+		url: url + mode + key ,
+		 
+		contentType: 'application/json',
+		dataType: 'jsonp',
+		
+		beforeSend: function(){
+			loadingContent.start('Please wait, loading top rated TV');
+			$('.title').html(modeHeading);	
+			
+		},
+		success: function (data) {  
+			
+			//loadGenreList(data);
+			//loadUpcomingMovies();
+			loadTopRatedTV();
+			loadingContent.end(); //Remove loading message
+		}, 
+		error: function (request,error) {
+			alert('Network error has occurred please try again!');
+		} 
+	});
+});
+	
 	// PLAY VIDEO IN MODAL
 	$(document).on('click','.fn-play-video', function(e){	
 		var $modal = $('.reveal-modal');
 		var $id = $modal.attr('data-asset-id');
-		var $videolink = '<iframe width="560"  height="315" src="'+videoLink($id)+'?autoplay=1" frameborder="0" allowfullscreen=""></iframe>';
+		var $videoMode = $modal.attr('data-video-mode');
+		var $videolink = '<iframe width="560"  height="315" src="'+videoLink($id, $videoMode)+'?autoplay=1" frameborder="0" allowfullscreen=""></iframe>';
 		var $videoContainer = $('.video-container');
 		$videoContainer.html($videolink);
 		e.preventDefault();

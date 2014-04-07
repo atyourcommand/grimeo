@@ -8,9 +8,13 @@
             var key = input.parents('form:first').attr('name');
             var data = JSON.parse(localStorage[key]);
             
-            if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
+            if(input.attr('type') == 'checkbox') {
                 data[input.attr('name')] = input.is(':checked');
-            }else {
+			
+			}else if (input.attr('type') == 'radio'){
+				data[input.attr('id')] = input.is(':checked');
+			
+			}else {
                 data[input.attr('name')] = input.val();
             }
             
@@ -34,17 +38,32 @@
                 }
                 element.find('input, select').change(on_change);
                 
-                element.find('input, select').each(function(){
+                element.find('input, select').each(function(e){
                     if($(this).attr('type') != 'submit') {
                         var input = $(this);
-                        var value = data[input.attr('name')];
-                        if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
-                            if(value) {
-                                input.attr('checked', input.is(':checked'));
+                        //var value = data[input.attr('name')];
+                        if(input.attr('type') == 'checkbox') {
+                            var value = data[input.attr('name')];
+							if(value) {
+                                input.attr('checked', input.prop('checked', true));
+								console.log('adding checkbox checked on', e );
                             } else {
                                 input.removeAttr('checked');
+								console.log('removing checkbox checked on', e );
                             }
-                        } else {
+							
+						} else if (input.attr('type') == 'radio'){
+                        	var value = data[input.attr('id')];
+							if(value) {
+                                input.attr('checked', input.prop('checked', true));
+								console.log('adding radio checked on', e );
+                            } else {
+                                input.removeAttr('checked');
+								console.log('removing radio checked on', e );
+                            }
+						
+						
+						} else {
                             input.val(value);
                         }
                     }

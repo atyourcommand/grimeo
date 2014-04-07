@@ -78,37 +78,28 @@ var dropDownMenu = (function() {
 
 var dropDownMenuAlternate = (function() {
 
-	var $listItems = $( '.fn_dropdown-alt > ul > li'),
-		$menuItems = $listItems.children( 'a' ),
+	var $menuToggle = $('input[name="options[4_A]"]').closest('label');
 		$body = $( 'body' ),
-		$container = $('.sub-menu'),
+		$container = $('.dropdown-alt .sub-menu');
 		
-		current = -1;
+		
 
 	function init() {
-		$menuItems.on( 'click', open );
+		$menuToggle.on('click', open );
 		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
 	}
 	
 	function open( event ) {
 
-		if( current !== -1 ) {
-			$listItems.eq( current ).removeClass( 'open' );
+		if($(this).hasClass('open')) {
+			$(this).removeClass( 'open' );
+			$container.removeClass('open');
 		}
 
-		var $item = $( event.currentTarget ).parent( 'li' ),
-			idx = $item.index();
-
-		if( current === idx ) {
-			$item.removeClass( 'open' );
-			current = -1;
-			
-		}
 		else {
-			$item.addClass( 'open' );
-			current = idx;
-			//$body.off( 'click' ).on( 'click', close );
-						
+			$(this).addClass( 'open' );
+			$container.addClass('open');
+			
 			$('.fn-close').on( 'click', close );
 			//$listItems.on( 'blur', close );
 			$(document).on('click',function (e){
@@ -126,10 +117,12 @@ var dropDownMenuAlternate = (function() {
 	}
 
 	function close( event ) {
-		$listItems.eq( current ).removeClass( 'open' );
-		//Call swapText Function
-		swapText.revert();
-		current = -1;
+		$menuToggle.find('input').removeAttr( 'checked' );
+		$menuToggle.removeClass('open');
+		$container.removeClass( 'open' );
+		
+		
+		
 	}
 	//To use from outside to close menu
 	function closeMenu() {
@@ -311,10 +304,14 @@ var dropDownMenuAlternate = (function() {
 		
 		//extra radio or checkbox selected helper function
 		//TICK
-	   $('input:checked').parent().addClass("selected");
-	   $('input').click(function () {
-			$('input:not(:checked)').parent().removeClass("selected");
-			$('input:checked').parent().addClass("selected");
+	   $('input:checked').parent('label').addClass('selected');
+	   $('input').change(function () {
+			if ($(this).is(':checked'))
+				$(this).parent('label').addClass('selected');
+			else
+				//$(this).removeAttr('checked');
+				$(this).parent('label').removeClass('selected');
+			
        });
 	   
 	   menuHelper();	
@@ -362,9 +359,13 @@ var dropDownMenuAlternate = (function() {
             var key = input.parents('form:first').attr('name');
             var data = JSON.parse(localStorage[key]);
             
-            if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
+            if(input.attr('type') == 'checkbox') {
                 data[input.attr('name')] = input.is(':checked');
-            }else {
+			
+			}else if (input.attr('type') == 'radio'){
+				data[input.attr('id')] = input.is(':checked');
+			
+			}else {
                 data[input.attr('name')] = input.val();
             }
             
@@ -388,17 +389,32 @@ var dropDownMenuAlternate = (function() {
                 }
                 element.find('input, select').change(on_change);
                 
-                element.find('input, select').each(function(){
+                element.find('input, select').each(function(e){
                     if($(this).attr('type') != 'submit') {
                         var input = $(this);
-                        var value = data[input.attr('name')];
-                        if(input.attr('type') == 'radio' || input.attr('type') == 'checkbox') {
-                            if(value) {
-                                input.attr('checked', input.is(':checked'));
+                        //var value = data[input.attr('name')];
+                        if(input.attr('type') == 'checkbox') {
+                            var value = data[input.attr('name')];
+							if(value) {
+                                input.attr('checked', input.prop('checked', true));
+								console.log('adding checkbox checked on', e );
                             } else {
                                 input.removeAttr('checked');
+								console.log('removing checkbox checked on', e );
                             }
-                        } else {
+							
+						} else if (input.attr('type') == 'radio'){
+                        	var value = data[input.attr('id')];
+							if(value) {
+                                input.attr('checked', input.prop('checked', true));
+								console.log('adding radio checked on', e );
+                            } else {
+                                input.removeAttr('checked');
+								console.log('removing radio checked on', e );
+                            }
+						
+						
+						} else {
                             input.val(value);
                         }
                     }
@@ -877,11 +893,24 @@ var appendAdCode = (function(){
 		setTimeout(function (){
 			
 			var $adsense1 = '<div class="ad-spot-header"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:234px;height:60px"data-ad-client="ca-pub-9333805017415789"data-ad-slot="7244347139"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>'
+			var $adsense2 = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:120px;height:90px" data-ad-client="ca-pub-9333805017415789" data-ad-slot="4519063136"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 			
 			var adSpotOne = $('#ad-location-one');
 			var adBlockOne = '<div class="ad-block-one">'+$adsense1+'</div>';
+			var adBlockTwo = '<div class="ad-block-one">'+$adsense2+'</div>';
 			//adSpotOne.hide().html(adBlockOne).fadeIn('2000');	
-			adSpotOne.html(adBlockOne);			
+			
+			$(window).resize(function(){     
+			   if ($('header').width() <= 480 ){
+					adSpotOne.html(''); 
+					adSpotOne.html(adBlockTwo); 
+			   } else {
+					adSpotOne.html(''); 
+					adSpotOne.html(adBlockOne);   
+			   }
+			});
+			
+					
 		
 		}, 10000);
 	}
@@ -920,8 +949,10 @@ var appendAdCode = (function(){
 		
 		//Mod JB
 		var $assetId = $(this).attr('data-asset-id');
+		var $videoMode = $(this).attr('data-video-mode');
 		var $thisModal = $('#' + modalLocation);
 		$thisModal.attr('data-asset-id', $assetId);
+		$thisModal.attr('data-video-mode', $videoMode);
 		//
 	});
 
@@ -1162,7 +1193,7 @@ var appendAdCode = (function(){
 		$header = $('header'),
 		$searchMovie = $('.search-movie');
 		$searchTv = $('.search-tv');
-		$userOptions = $('.user-options');
+		$userOptions = $('.options');
 		$logo = $('.logo');
 		
 		var $uiOption = $('input[name="options[1]"]', '.ui-options');
@@ -1178,7 +1209,7 @@ var appendAdCode = (function(){
 				$searchMovie.delay('400').addClass('show');
 				$('.options-nav').addClass('show');
 				$searchTv.removeClass('show');
-				$userOptions.removeClass('show');
+				//$userOptions.fadeOut('fast');
 				//$search.delay('400').fadeIn('slow');
 				
 			}else if ($uiOptionChecked === 'tv'){
@@ -1187,29 +1218,50 @@ var appendAdCode = (function(){
 				$logo.addClass('logos-logo-mobile');
 				$searchMovie.removeClass('show');
 				$searchTv.delay('400').addClass('show');
-				$userOptions.removeClass('show');
+				//$userOptions.fadeOut('fast');
 				$('.options-nav').removeClass('show');
 				//$search.delay('400').fadeIn('slow');
 			
 			} else {
 				//$header.removeClass('search-active');
-				$header.addClass('search-active');
-				$logo.removeClass('logos-logo');
-				$logo.addClass('logos-logo-mobile');
-				$searchMovie.removeClass('show');
-				$searchTv.removeClass('show');
-				$userOptions.delay('400').addClass('show');
-				$search.hide();
-				$('.options-nav').removeClass('show');
+				//$header.addClass('search-active');
+				//$logo.removeClass('logos-logo');
+				//$logo.addClass('logos-logo-mobile');
+				//$searchMovie.removeClass('show');
+				//$searchTv.removeClass('show');
+				
+				//$search.hide();
+				//$('.options-nav').removeClass('show');
 				//$userOptions.delay('400').fadeIn('slow');
 			}
 				
 		});
 		
 		
+		var $userOptionsLabelSelected = $('input[name="options[3_A]"]').closest('label').hasClass('selected');
+		if(	$userOptionsLabelSelected)$userOptions.slideDown('fast');
 		
+		$('input[name="options[3_A]"]').change(function(){
+			
+			if ($userOptions.css("display") == "none")
+    		$userOptions.slideDown('fast');
+			else
+    		$userOptions.slideUp('fast');
+			
+		});
 		
+		//var $genreOptionsLabelSelected = $('input[name="options[4_A]"]').closest('label').hasClass('selected');
+		//var $genreDrawerTarget = $('.fn_dropdown-alt ul li:first')
+		//if(	$genreOptionsLabelSelected) $genreDrawerTarget.addClass('open');
 		
+		//$('input[name="options[4_A]"]').change(function(){
+			//var $genreDrawer = $('.fn_dropdown-alt .sub-menu')
+			//if ($genreDrawerTarget.hasClass('open'))
+    		//$genreDrawerTarget.removeClass('open');
+			//else
+    		//$genreDrawerTarget.addClass('open');
+			
+		//});
 		
 		//User option checkboxes to change classes
 		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');

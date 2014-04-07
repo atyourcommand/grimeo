@@ -93,10 +93,14 @@
 		
 		//extra radio or checkbox selected helper function
 		//TICK
-	   $('input:checked').parent().addClass("selected");
-	   $('input').click(function () {
-			$('input:not(:checked)').parent().removeClass("selected");
-			$('input:checked').parent().addClass("selected");
+	   $('input:checked').parent('label').addClass('selected');
+	   $('input').change(function () {
+			if ($(this).is(':checked'))
+				$(this).parent('label').addClass('selected');
+			else
+				//$(this).removeAttr('checked');
+				$(this).parent('label').removeClass('selected');
+			
        });
 	   
 	   menuHelper();	

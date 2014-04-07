@@ -120,43 +120,47 @@
     </div>
     <div class="column small-12 medium-6 static center"> <a href="/" class="inline-block margin-auto logo logos-logo-mobile fn-wobble show-for-medium-up"></a> 
       <div class="relative">
-      <!--Radio Options-->
-          <div class="ui-options fn-ui-options">
-            <label for="1_A" class="inline-block">
-              <input type="radio" name="options[1]" value="movies" id="1_A" checked>
-              Movies </label>
-            <label for="1_B" class="inline-block">
-              <input type="radio" name="options[1]" value="tv" id="1_B" >
-              Television </label>
-            <label for="1_C" class="inline-block">
-              <input type="radio" name="options[1]" value="options" id="1_C" >
-              Options </label>
+      	  
+          <div class="row">
+          	<div class="column small-12">
+              <!--Radio Options-->
+              <div class="ui-options fn-ui-options">
+                <label for="1_A" class="inline-block">
+                  <input type="radio" name="options[1]" value="movies" id="1_A">
+                  Movies </label>
+                <label for="1_B" class="inline-block">
+                  <input type="radio" name="options[1]" value="tv" id="1_B" >
+                  Television </label>
+               
+              </div>
+            </div>
           </div>
-          <div class="search-tv">
-            <input type="text" value="" id="tv" class="main-search" placeholder="Search all television shows"/ >
-            <!--Alt dropdowns-->
-            <!--No dropdowns yet-->
-            <!--//Alt dropdowns--> 
-          </div>
-          <div class="user-options">
-            <label for="2_A" class="checkboxes inline-block">
-              <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
-              Trailers </label>
-            <label for="2_B" class="checkboxes inline-block">
-              <input type="checkbox" name="options[2_B]" value="adult" id="2_B" >
-              Adult </label>
-            <label for="2_C" class="checkboxes inline-block disabled">
-              <input type="checkbox" name="options[2_C]" value="review" id="2_C" disabled >
-              Review </label>  
-          </div>
-          <div class="search-movie show">
-            <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
+           <div class="row">
+          	<div class="column small-3">
+            	 <label for="4_A" class="checkboxes inline-block">
+                 <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">Genres</label>  
+            </div>
+            <div class="column small-6">
+                  <div class="search-tv">
+                    <input type="text" value="" id="tv" class="main-search" placeholder="Search all television shows"/ >
+                    <!--Alt dropdowns-->
+                    <!--No dropdowns yet-->
+                    <!--//Alt dropdowns--> 
+                  </div>
+                  <div class="search-movie show">
+                    <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
+                  </div>
+          	</div>
+            <div class="column small-3">
+            	 <label for="3_A" class="checkboxes inline-block">
+                 <input type="checkbox" name="options[3_A]" value="options" id="3_A">Options</label>  
+            </div>
           </div>
      </div>
      <!--Alt dropdowns-->
-            <div class="dropdown-menu fn_dropdown-alt options-nav show-for-medium-up">
+            <div class="dropdown-menu dropdown-alt options-nav show">
               <ul class="menu-inline-list">
-                <li class=""><a href="#" class="fn-change-text"><span class="fade-in">or chose from 35 genres <i class="fa fa-arrow-circle-right"></i></span><span> <i class="fa fa-arrow-circle-left"></i> Close Genres</span></a>
+                <li class=""><a href="#" class="button small fn-change-text" style="display:none;"><span class="fade-in">or chose from 35 genres <i class="fa fa-arrow-circle-right"></i></span><span> <i class="fa fa-arrow-circle-left"></i> Close Genres</span></a>
                   <div class="sub-menu">
                     <div class="inner"> 
                       <!--Genre menu output-->
@@ -228,7 +232,24 @@ if(!empty($sesUser))   {
     </div>
   </div>
   </form>
-</header>
+</header> 
+<section class="options" style="display:none;">
+ <div class="row">
+      <div class="column small-12">
+      	 <div class="user-options">
+            <label for="2_A" class="checkboxes inline-block">
+              <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
+              Trailers </label>
+            <label for="2_B" class="checkboxes inline-block">
+              <input type="checkbox" name="options[2_B]" value="adult" id="2_B" >
+              Adult </label>
+            <label for="2_C" class="checkboxes inline-block disabled">
+              <input type="checkbox" name="options[2_C]" value="review" id="2_C" disabled >
+              Review </label>  
+          </div>
+      </div>
+ </div>
+</section>
 <section class="main"> 
   <!--Paging results-->
   <div class="holder"></div>
@@ -236,34 +257,36 @@ if(!empty($sesUser))   {
   <!--Results Header-->
   <div class="results-header">
     <div class="row">
-      <div class="column medium-3">&nbsp;</div>
+      <div class="column medium-3 show-for-medium-up">&nbsp;</div>
       <div class="column medium-6">
         <div class="searching-for center" style="display:none">Searching for: <span class="term">&nbsp;</span> </div>
         <div class="category center"> <span class="title">Latest Movies</span> </div>
       </div>
-      <div class="column medium-3">&nbsp;</div>
+      <div class="column medium-3 show-for-medium-up" >&nbsp;</div>
     </div>
   </div>
   <!--Search Output-->
-  <div class="row">
-    <div class="column medium-12">
-      <ul id="content" class="row search-output">
-      </ul>
-    </div>
-  </div>
-  <!--//Search Output--> 
-  <!--Detailed Output-->
-  <div class="row">
-    <div class="column large-12">
-      <ul class="asset-detail">
-      </ul>
-    </div>
-  </div>
-  <!--In progress message-->
-  <div class="in-progress-bg">
-    <div class="in-progress">
-      <div class="in-progress-msg"></div>
-    </div>
-  </div>
-  <!--//In progress message--> 
+  <div class="results relative">
+      <div class="row">
+        <div class="column medium-12">
+          <ul id="content" class="row search-output">
+          </ul>
+        </div>
+      </div>
+      <!--//Search Output--> 
+      <!--Detailed Output-->
+      <div class="row">
+        <div class="column large-12">
+          <ul class="asset-detail">
+          </ul>
+        </div>
+      </div>
+      <!--In progress message-->
+      <div class="in-progress-bg">
+        <div class="in-progress">
+          <div class="in-progress-msg"></div>
+        </div>
+      </div>
+      <!--//In progress message--> 
+  </div>    
 </section>
