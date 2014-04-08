@@ -78,51 +78,39 @@ var dropDownMenu = (function() {
 
 var dropDownMenuAlternate = (function() {
 
-	var $menuToggle = $('input[name="options[4_A]"]').closest('label');
+	var $menuToggle = $('.fn_dropdown-alt'),
 		$body = $( 'body' ),
-		$container = $('.dropdown-alt .sub-menu');
-		
-		
+		$container = $('.dropdown-alt ul li > .sub-menu'); 
+
 
 	function init() {
-		$menuToggle.on('click', open );
-		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
+		$menuToggle.change( open );
 	}
 	
 	function open( event ) {
+		
+		var $item = $( event.currentTarget );
 
-		if($(this).hasClass('open')) {
-			$(this).removeClass( 'open' );
-			$container.removeClass('open');
+		if( $container.hasClass('is-open')) {
+			$container.removeClass('is-open');
+		
 		}
 
 		else {
-			$(this).addClass( 'open' );
-			$container.addClass('open');
-			
+			//$(this).addClass( 'open' );
+			$container.addClass('is-open');
+			console.log('do somethink');
 			$('.fn-close').on( 'click', close );
-			//$listItems.on( 'blur', close );
-			$(document).on('click',function (e){
-				if ($container.has(e.target).length > 0)
-				{
-					//console.log('this container HAS been clicked');	 
-				}
-				else {
-					close();
-					//console.log('this container HAS NOT been clicked');
-				}
-			});
+			
 		}
+		
 		return false;
 	}
 
 	function close( event ) {
-		$menuToggle.find('input').removeAttr( 'checked' );
-		$menuToggle.removeClass('open');
-		$container.removeClass( 'open' );
-		
-		
-		
+		$menuToggle.removeAttr( 'checked' );
+		$container.removeClass( 'is-open' );
+			
 	}
 	//To use from outside to close menu
 	function closeMenu() {
@@ -304,15 +292,15 @@ var dropDownMenuAlternate = (function() {
 		
 		//extra radio or checkbox selected helper function
 		//TICK
-	   $('input:checked').parent('label').addClass('selected');
-	   $('input').change(function () {
-			if ($(this).is(':checked'))
-				$(this).parent('label').addClass('selected');
-			else
+	   //$('input:checked').closest('label').addClass('selected');
+	   //$('input').change(function () {
+		//	if ($(this).is(':checked'))
+		//		$(this).closest('label').addClass('selected');
+		//	else
 				//$(this).removeAttr('checked');
-				$(this).parent('label').removeClass('selected');
+		//		$(this).closest('label').removeClass('selected');
 			
-       });
+       //});
 	   
 	   menuHelper();	
 		//console.log('has menu function is running');
@@ -1191,14 +1179,18 @@ var appendAdCode = (function(){
 		var	$body = $( 'body' ),
 	
 		$header = $('header'),
+		$search = $('.search');
 		$searchMovie = $('.search-movie');
-		$searchTv = $('.search-tv');
-		$userOptions = $('.options');
-		$logo = $('.logo');
+		$searchTv = $('.search-tv'),
+		$userOptions = $('.options'),
+		$logo = $('.logo'),
+		$genreInput = $('input[name="options[4_A]"]'),
+		$genreInputLabel = $('input[name="options[4_A]"]').next('label');
 		
 		var $uiOption = $('input[name="options[1]"]', '.ui-options');
 			
 		$uiOption.change(function(){
+			
 			
 			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
 			console.log($uiOptionChecked);	
@@ -1209,8 +1201,9 @@ var appendAdCode = (function(){
 				$searchMovie.delay('400').addClass('show');
 				$('.options-nav').addClass('show');
 				$searchTv.removeClass('show');
-				//$userOptions.fadeOut('fast');
-				//$search.delay('400').fadeIn('slow');
+				$genreInput.prop('disabled', false);
+				$genreInputLabel.removeClass('disabled');
+				$search.delay('400').fadeIn('slow');
 				
 			}else if ($uiOptionChecked === 'tv'){
 				$header.addClass('search-active');
@@ -1218,15 +1211,15 @@ var appendAdCode = (function(){
 				$logo.addClass('logos-logo-mobile');
 				$searchMovie.removeClass('show');
 				$searchTv.delay('400').addClass('show');
-				//$userOptions.fadeOut('fast');
 				$('.options-nav').removeClass('show');
-				//$search.delay('400').fadeIn('slow');
+				$genreInput.prop('disabled', true);
+				$genreInputLabel.addClass('disabled');
+				$search.delay('400').fadeIn('slow');
 			
 			} else {
 				//$header.removeClass('search-active');
 				//$header.addClass('search-active');
-				//$logo.removeClass('logos-logo');
-				//$logo.addClass('logos-logo-mobile');
+				
 				//$searchMovie.removeClass('show');
 				//$searchTv.removeClass('show');
 				
@@ -1237,33 +1230,14 @@ var appendAdCode = (function(){
 				
 		});
 		
-		
-		var $userOptionsLabelSelected = $('input[name="options[3_A]"]').closest('label').hasClass('selected');
-		if(	$userOptionsLabelSelected)$userOptions.slideDown('fast');
-		
 		$('input[name="options[3_A]"]').change(function(){
-			
 			if ($userOptions.css("display") == "none")
     		$userOptions.slideDown('fast');
 			else
     		$userOptions.slideUp('fast');
-			
 		});
 		
-		//var $genreOptionsLabelSelected = $('input[name="options[4_A]"]').closest('label').hasClass('selected');
-		//var $genreDrawerTarget = $('.fn_dropdown-alt ul li:first')
-		//if(	$genreOptionsLabelSelected) $genreDrawerTarget.addClass('open');
-		
-		//$('input[name="options[4_A]"]').change(function(){
-			//var $genreDrawer = $('.fn_dropdown-alt .sub-menu')
-			//if ($genreDrawerTarget.hasClass('open'))
-    		//$genreDrawerTarget.removeClass('open');
-			//else
-    		//$genreDrawerTarget.addClass('open');
-			
-		//});
-		
-		//User option checkboxes to change classes
+		//User option radio options to change classes
 		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 		$userOptionOne.change(function(){
 			$header.toggleClass('show-trailers');
@@ -1274,7 +1248,13 @@ var appendAdCode = (function(){
 			$header.toggleClass('show-adult');
 		});
 		
-		
+		$(document).ajaxStart(function() {
+		  $("input").attr("disabled", true);
+		  //$("input").closest('label').addClass('disabled');
+		}).ajaxComplete(function() {
+		  $("input").removeAttr("disabled");
+		  //$("input").closest('label').removeClass('disabled');
+		});
 			
 	});
 	

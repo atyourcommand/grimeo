@@ -78,51 +78,39 @@ var dropDownMenu = (function() {
 
 var dropDownMenuAlternate = (function() {
 
-	var $menuToggle = $('input[name="options[4_A]"]').closest('label');
+	var $menuToggle = $('.fn_dropdown-alt'),
 		$body = $( 'body' ),
-		$container = $('.dropdown-alt .sub-menu');
-		
-		
+		$container = $('.dropdown-alt ul li > .sub-menu'); 
+
 
 	function init() {
-		$menuToggle.on('click', open );
-		//$listItems.on( 'click', function( event ) { event.stopPropagation(); } );
+		$menuToggle.change( open );
 	}
 	
 	function open( event ) {
+		
+		var $item = $( event.currentTarget );
 
-		if($(this).hasClass('open')) {
-			$(this).removeClass( 'open' );
-			$container.removeClass('open');
+		if( $container.hasClass('is-open')) {
+			$container.removeClass('is-open');
+		
 		}
 
 		else {
-			$(this).addClass( 'open' );
-			$container.addClass('open');
-			
+			//$(this).addClass( 'open' );
+			$container.addClass('is-open');
+			console.log('do somethink');
 			$('.fn-close').on( 'click', close );
-			//$listItems.on( 'blur', close );
-			$(document).on('click',function (e){
-				if ($container.has(e.target).length > 0)
-				{
-					//console.log('this container HAS been clicked');	 
-				}
-				else {
-					close();
-					//console.log('this container HAS NOT been clicked');
-				}
-			});
+			
 		}
+		
 		return false;
 	}
 
 	function close( event ) {
-		$menuToggle.find('input').removeAttr( 'checked' );
-		$menuToggle.removeClass('open');
-		$container.removeClass( 'open' );
-		
-		
-		
+		$menuToggle.removeAttr( 'checked' );
+		$container.removeClass( 'is-open' );
+			
 	}
 	//To use from outside to close menu
 	function closeMenu() {

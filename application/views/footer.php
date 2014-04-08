@@ -18,7 +18,7 @@ jQuery(function($) {
 	dropDownMenuAlternate.init();
 	swapText.init();
 	$('.fn-blocks').responsiveEqualHeightGrid();
-	$('form').FormCache();
+	//$('form').FormCache();
 	
 });
 </script>
@@ -52,11 +52,11 @@ jQuery(function($) {
 	}
 		
 	// GET ALL ACTORS LIST
-	function actorname($id){
+	function actorname($id, $creditsMode){
 			var op;
 			$.ajax({
 				async: false,
-				url: 'http://api.themoviedb.org/3/movie/'+$id+'/credits?api_key=ba5a09dba76b1c3875e487780468ef93', 
+				url: 'http://api.themoviedb.org/3/'+$creditsMode+'/'+$id+'/credits?api_key=ba5a09dba76b1c3875e487780468ef93', 
 				success: function (data) {  
 						var name;
 						$.each(data, function(i, item) {
@@ -244,8 +244,8 @@ jQuery(function($) {
         		}
         	});
     });
-	//MAIN TEXT SEARCH
-    $('.main-search').on('keyup',function() {
+	//MAIN MOVIE SEARCH
+    $('[name="movie"]').on('keyup',function() {
 			var input = $('#movie').val(),
 				movieName = encodeURI(input),
 				mode = 'search/',
@@ -305,12 +305,74 @@ jQuery(function($) {
         		}  
         	});
     });
+	
+	//MAIN TV SEARCH
+    $('[name="tv"]').on('keyup',function() {
+			var input = $('#tv').val(),
+				movieName = encodeURI(input),
+				mode = 'search/',
+				media = 'tv';
+			$.ajax({
+				//type: 'GET',
+				url: url + mode + media + key + '&query='+movieName ,
+				async: false,
+				contentType: 'application/json',
+				dataType: 'jsonp',
+				beforeSend: function(html) {
+					$('.holder').fadeIn();		
+					$('.category').hide();
+					$('.searching-for').show();
+					$('.term').html(input);	 
+					// Check if text search box is empty or clear 
+					if(!input) $('.search-output').hide();
+				}, 
+				success: function (data) {   
+					//console.log(data);  
+					var str;
+					var list;
+					var $resultDiv = $('.search-output');//
+					//console.log(data); // 
+					$.each(data, function(i, item) {
+						if(i == "results") {
+							da = data[i];
+							$.each(da, function (j, item) {  
+									var $poster_path = base_url+item.poster_path;
+									var $id = item.id;
+									//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
+									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\tv\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link-tv\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link-tv\" id=\""+$id+"\">"+item.name+"</a></h3></div>";
+									var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
+									list +="<li class=\"column small-6 medium-3 large-2 end\"><ul class=\"clearfix\" >"+$loader +$poster+"</ul></li>" ;
+							});
+						} 
+					}); 
+				list = list.replace("undefined", "");
+				$resultDiv.html(list).fadeIn();
+				// paging function call
+				$("div.holder").jPages({
+					containerID : "content",
+					perPage: onepagerecord
+				});
+				//Detect broken images
+				$('img').load(function () { 
+					$(this).hide();
+					$('.loader').fadeOut('fast');
+					$(this).fadeIn();
+				})
+				.error(function () {
+					$(this).attr('src','http://placehold.it/150x225');
+				}) 
+				},  
+				error: function (request,error) {
+            		alert('Network error has occurred please try again!');
+        		}  
+        	});
+    });
 	//CLICK ON TEXT SEARCH RESULTS LINKS
 	$(document).on('click','.fn-asset-link', function(e){
 		//console.log('working');
 		
 		var $id  = $(this).attr('id'),
-		media = 'movie/', $videoMode = 'movie';
+		media = 'movie/', $videoMode = 'movie', $creditsMode = 'movie';
 		//var url = "http://mymovieapi.com/?type=json&id="+$id+"&release=full&plot=full";
 		
 		//$('#imdbcontents').html('<center><img src="images/loading.gif" alt="loading..."></center>');
@@ -342,7 +404,7 @@ jQuery(function($) {
 						var $releaseDate = "<div class=\"vote-average\">Release date: "+data.release_date+"</div>";
 						var $voteAverage = "<div class=\"vote-average\">Vote average: "+data.vote_average+"</div>";
 						var $voteCount = "<div class=\"vote-count\">Total votes: "+data.vote_count+"</div>";
-						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id)+"</div>";
+						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id, $creditsMode )+"</div>";
 						var $poster = "<img src=\""+base_url+data.poster_path+"\"/>";
 						
 						var $backdrop = "<li><img src=\""+base_backdrop_url+data.backdrop_path+"\" class=\"hero\"/></li>";
@@ -371,7 +433,7 @@ jQuery(function($) {
 		//console.log('working');
 		
 		var $id  = $(this).attr('id'),
-		media = 'tv/', $videoMode = 'tv';
+		media = 'tv/', $videoMode = 'tv', $creditsMode = 'tv';
 		
 		//var url = "http://mymovieapi.com/?type=json&id="+$id+"&release=full&plot=full";
 		
@@ -406,7 +468,7 @@ jQuery(function($) {
 						var $releaseDate = "<div class=\"vote-average\">Release date: "+data.release_date+"</div>";
 						var $voteAverage = "<div class=\"vote-average\">Vote average: "+data.vote_average+"</div>";
 						var $voteCount = "<div class=\"vote-count\">Total votes: "+data.vote_count+"</div>";
-						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id)+"</div>";
+						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id, $creditsMode)+"</div>";
 						var $poster = "<img src=\""+base_url+data.poster_path+"\"/>";
 						
 						var $backdrop = "<li><img src=\""+base_backdrop_url+data.backdrop_path+"\" class=\"hero\"/></li>";
@@ -436,7 +498,7 @@ jQuery(function($) {
 
  function loadTopRatedTV(){  
 	var $getdata = "";
-	for(var k=1;k<=20;k++){
+	for(var k=1;k<=3;k++){
 		var media = 'tv',
 		mode = '/top_rated',
 		//adult= '&include_adult=true',

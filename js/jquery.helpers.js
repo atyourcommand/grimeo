@@ -93,15 +93,15 @@
 		
 		//extra radio or checkbox selected helper function
 		//TICK
-	   $('input:checked').parent('label').addClass('selected');
-	   $('input').change(function () {
-			if ($(this).is(':checked'))
-				$(this).parent('label').addClass('selected');
-			else
+	   //$('input:checked').closest('label').addClass('selected');
+	   //$('input').change(function () {
+		//	if ($(this).is(':checked'))
+		//		$(this).closest('label').addClass('selected');
+		//	else
 				//$(this).removeAttr('checked');
-				$(this).parent('label').removeClass('selected');
+		//		$(this).closest('label').removeClass('selected');
 			
-       });
+       //});
 	   
 	   menuHelper();	
 		//console.log('has menu function is running');

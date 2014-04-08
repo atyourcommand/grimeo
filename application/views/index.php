@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width">
 <title>Best Movie and TV Search | Thousands of titles | Grimeo</title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-<link href="css/app.css" rel="stylesheet" type="text/css">
+<link href="css/app.css?version=08.04.14" rel="stylesheet" type="text/css">
 <!--<link href="css/paging.css" media="screen" rel="stylesheet" type="text/css" />-->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 </head>
@@ -118,31 +118,32 @@
         </ul>
       </div>
     </div>
-    <div class="column small-12 medium-6 static center"> <a href="/" class="inline-block margin-auto logo logos-logo-mobile fn-wobble show-for-medium-up"></a> 
+    <div class="column small-12 medium-6 static center"> <a href="/" class="inline-block margin-auto logo logos-logo fn-wobble show-for-medium-up"></a> 
       <div class="relative">
       	  
           <div class="row">
           	<div class="column small-12">
               <!--Radio Options-->
               <div class="ui-options fn-ui-options">
-                <label for="1_A" class="inline-block">
+              
                   <input type="radio" name="options[1]" value="movies" id="1_A">
-                  Movies </label>
-                <label for="1_B" class="inline-block">
+                    <label for="1_A" class="inline-block">Movies </label>
+              
                   <input type="radio" name="options[1]" value="tv" id="1_B" >
-                  Television </label>
+                   <label for="1_B" class="inline-block"> Television </label>
                
               </div>
             </div>
           </div>
-           <div class="row">
+           <div class="row search" style="display:none;">
           	<div class="column small-3">
+            <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
             	 <label for="4_A" class="checkboxes inline-block">
-                 <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">Genres</label>  
+                 Genres</label>  
             </div>
             <div class="column small-6">
                   <div class="search-tv">
-                    <input type="text" value="" id="tv" class="main-search" placeholder="Search all television shows"/ >
+                    <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
                     <!--Alt dropdowns-->
                     <!--No dropdowns yet-->
                     <!--//Alt dropdowns--> 
@@ -152,8 +153,9 @@
                   </div>
           	</div>
             <div class="column small-3">
+             <input type="checkbox" name="options[3_A]" value="options" id="3_A">
             	 <label for="3_A" class="checkboxes inline-block">
-                 <input type="checkbox" name="options[3_A]" value="options" id="3_A">Options</label>  
+                Options</label>  
             </div>
           </div>
      </div>
@@ -236,15 +238,18 @@ if(!empty($sesUser))   {
 <section class="options" style="display:none;">
  <div class="row">
       <div class="column small-12">
-      	 <div class="user-options">
+      	 <div class="user-options center">
+          <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
             <label for="2_A" class="checkboxes inline-block">
-              <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
+             
               Trailers </label>
+               <input type="checkbox" name="options[2_B]" value="adult" id="2_B" >
             <label for="2_B" class="checkboxes inline-block">
-              <input type="checkbox" name="options[2_B]" value="adult" id="2_B" >
+             
               Adult </label>
-            <label for="2_C" class="checkboxes inline-block disabled">
               <input type="checkbox" name="options[2_C]" value="review" id="2_C" disabled >
+            <label for="2_C" class="checkboxes inline-block disabled">
+              
               Review </label>  
           </div>
       </div>
