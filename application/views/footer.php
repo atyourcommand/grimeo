@@ -5,12 +5,23 @@
     </div>
     <div class="column large-12">
       <p class="attribution"><a href="http://www.atyourcommand.com.au">Responsive Web Design by At Your Command</a></p>
+      <p><a href="#" data-reveal-id="myShows">Launch My Shows</a></p>
     </div>
   </div>
 </footer>
 <div id="myModal" class="reveal-modal video">
   <div class="video-container"></div>
-  <a class="close-reveal-modal">&#215;</a> </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="myShows" class="reveal-modal">
+ <h3>My Shows</h3>
+ <p>Here are your saved and favourited shows</p>
+ <div class="show-container">
+   <ul id="show-items"></ul>
+   <a href="#" id="clear-all" class="button">Clear All</a>
+ </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
 </body>
 <script>
 jQuery(function($) {
@@ -18,8 +29,12 @@ jQuery(function($) {
 	dropDownMenuAlternate.init();
 	swapText.init();
 	$('.fn-blocks').responsiveEqualHeightGrid();
-	//$('form').FormCache();
 	
+	
+});
+$(window).load(function() {
+    $('form').FormCache();
+	$('[name="save-shows"]').SavedList();
 });
 </script>
 <script type="text/javascript" src="main.min.js"></script>
@@ -114,9 +129,12 @@ jQuery(function($) {
 								var $id = item.id; 
 								//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
 								//var $videoModalLink = "<li><a href=\"#\" data-reveal-id=\"myModal\" class=\"fn-play-video\" data-asset-id=\""+$id+"\">Play trailer</a></li>";
-								var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
+								var $poster = "<img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3>";
 								var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
-								$getdata +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ; 
+								var $actions = "<div class=\"myshows-actions relative\"><input name=\"asset["+$id+"]\" id=\""+$id+"\" type=\"checkbox\" data-asset-name=\""+item.title+"\" data-asset-poster-path=\""+$poster_path+"\" value=\"save\"/><label for=\""+$id+"\" class=\"checkboxes\">Save it</label></div>"
+								
+								;
+								$getdata +="<li class=\"column small-6 medium-3 large-2 end fn-add-hover\"><ul><div class=\"image-container fn-add-hover\" >"+$loader+$poster+$actions+"</div></ul></li>" ; 
 								
 							});
 						} 

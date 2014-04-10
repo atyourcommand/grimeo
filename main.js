@@ -198,7 +198,7 @@ var dropDownMenuAlternate = (function() {
   };
 
 })(jQuery);;(function($) {
-	$( document ).ready(function() {
+	$(document).ready(function() {
     
 		$('.fn_assign_link .panel').on('click',function(e) {
 		   e.stopPropagation();
@@ -212,10 +212,7 @@ var dropDownMenuAlternate = (function() {
 				 //console.log(displayStatus); 
 			 }
 		});
-		
-		//extra helper function
-		//TICK
-		
+	
 		$('body').on('mouseenter','.fn-add-hover',
 		function(e){ 
 			$(this).addClass('hover')
@@ -225,9 +222,32 @@ var dropDownMenuAlternate = (function() {
 			 $(this).removeClass('hover')
 		});
 		
-		//Adds .has-menu when present
-		//Adds or removes .show-menu when clicked
-		//OK
+		$(window).load(function(){
+			$('input').each(function() { 
+				console.log('this each function is working');
+				$this = $(this);
+				$label = $('label[for="'+ $this.attr('id') +'"]');
+					if ($label.length > 0 ) {
+					  if ($(this).is(':checked'))
+						$label.addClass('selected');
+					  else
+						$label.removeClass('selected');
+					}
+			});
+		
+		});
+				
+		$(document).on('change', 'input', function() { 
+			console.log('input change');
+			$this = $(this);
+			$label = $('label[for="'+ $this.attr('id') +'"]');
+			if ($(this).is(':checked'))
+			   $label.addClass('selected');
+			else
+			   $label.removeClass('selected');
+		});
+		
+		//Adds .has-menu & adds or removes .show-menu when clicked
 		var menuHelper = function() {
 				
 				$('.fn_menu-helper li').each(function(){
@@ -258,7 +278,7 @@ var dropDownMenuAlternate = (function() {
 				});
 		}
 		
-		//BASIC ACCORDION
+		// Basic Accordion
 		$('.accordion ul').hide();	
 		$('.accordion li a').click(function (e) {
 			
@@ -272,40 +292,8 @@ var dropDownMenuAlternate = (function() {
 		
 		});
 		
-			
-		//open and close menus
-		/*$('.sub-menu li a').on('click',function(e){
-			var	$this = $(this);
-			var $listItem = $this.parent('li');
-			//var $listItems = $listItem.siblings();
-			var $listItemHasClass = $listItem.filter('.show-menu')
-			if ($listItemHasClass.length > 0){
-				$listItem.
-				
-				removeClass('show-menu');
-				//$listItem.addClass('show-menu');
-				console.log('remove');	
-			} else {
-				$listItem.addClass('show-menu');
-			}
-		});*/
-		
-		//extra radio or checkbox selected helper function
-		//TICK
-	   //$('input:checked').closest('label').addClass('selected');
-	   //$('input').change(function () {
-		//	if ($(this).is(':checked'))
-		//		$(this).closest('label').addClass('selected');
-		//	else
-				//$(this).removeAttr('checked');
-		//		$(this).closest('label').removeClass('selected');
-			
-       //});
-	   
 	   menuHelper();	
 		//console.log('has menu function is running');
-		
-		// Working with local
 	
 			
 	});   
@@ -385,20 +373,20 @@ var dropDownMenuAlternate = (function() {
                             var value = data[input.attr('name')];
 							if(value) {
                                 input.attr('checked', input.prop('checked', true));
-								console.log('adding checkbox checked on', e );
+								//console.log('adding checkbox checked on', e );
                             } else {
                                 input.removeAttr('checked');
-								console.log('removing checkbox checked on', e );
+								//console.log('removing checkbox checked on', e );
                             }
 							
 						} else if (input.attr('type') == 'radio'){
                         	var value = data[input.attr('id')];
 							if(value) {
                                 input.attr('checked', input.prop('checked', true));
-								console.log('adding radio checked on', e );
+								//console.log('adding radio checked on', e );
                             } else {
                                 input.removeAttr('checked');
-								console.log('removing radio checked on', e );
+								//console.log('removing radio checked on', e );
                             }
 						
 						
@@ -1080,7 +1068,72 @@ var appendAdCode = (function(){
     }//orbit plugin call
 })(jQuery);
         
-;var swapText = (function (){
+;(function ( $ ) {
+    $.fn.SavedList = function( options ) {
+        var settings = $.extend({
+        }, options );		
+			
+			
+			var $list = $('#show-items'),
+				$listItem = $list.find('li'),
+				shows = '',
+				$btnClear = $('#clear-all');  
+		
+			$list.append( localStorage.getItem('shows'));
+		
+		   
+			function on_change(event){
+				var input = $(event.target),
+					//data = JSON.parse(localStorage[key]),
+					//$myPost  = input.val(),
+					$posterPath = input.attr('data-asset-poster-path');
+					$assetImage = '<img src='+ $posterPath +'/>';
+					$assetName = input.attr('data-asset-name');
+					$deleteLink = '<a href="#" class="button closer">Remove</a>';
+					newItem = '<li>' + $assetImage + $assetName + $deleteLink +'</li>'; 
+			   
+				$list.append(newItem);
+				shows = $list.html(); //sets the html of the list to a variable     
+				localStorage.setItem( 'shows', shows );//sets the newly appended list to storage
+				console.log('add a list item');
+			}
+			return this.each(function(){    
+				var element = $(this);
+			
+				element.find('input').change(on_change);
+				
+				//click function to clear localStorage and
+				//clear the html of the list
+				$btnClear.click(function(e){
+					alert('Are you sure you want to remove this list');
+					localStorage.clear();
+					$list.html( '' );
+					e.preventDefault();
+			
+				});
+				
+				//click function to make of item as complete or remove it
+				 $listItem.find('.closer').live('click',function(e){
+					//var $closeButton = $(this)
+					if ($(this).parent('li').hasClass('selected')){
+						$(this).parent('li').fadeOut('slow').delay(400).remove();
+						tasks = $list.html();      
+						localStorage.setItem('tasks', tasks);
+			
+					} else {
+						$(this).parent('li').addClass('selected');
+						
+					}
+					e.preventDefault();
+			
+				});
+			
+			});
+
+			
+			
+    };     
+}( jQuery ))		;var swapText = (function (){
 			
 	var $swapItem = $('.fn-change-text');
 	var $spanFirst = $swapItem.children('span').eq(0);
@@ -1191,7 +1244,6 @@ var appendAdCode = (function(){
 			
 		$uiOption.change(function(){
 			
-			
 			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
 			console.log($uiOptionChecked);	
 			if ($uiOptionChecked === 'movies'){
@@ -1240,7 +1292,7 @@ var appendAdCode = (function(){
 		//User option radio options to change classes
 		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 		$userOptionOne.change(function(){
-			$header.toggleClass('show-trailers');
+			$body.toggleClass('show-trailers');
 		});
 		
 		var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
@@ -1248,11 +1300,26 @@ var appendAdCode = (function(){
 			$header.toggleClass('show-adult');
 		});
 		
+		//Favourites Option
+		var $userOptionTwo = $('input[name="options[2_C]"]', '.user-options');
+		var $userOptionTwoChecked = $('input[name="options[2_C]"]:checked', '.user-options').val;
+
+		if ($userOptionTwoChecked === 'favourites'){
+			$body.addClass('show-favourites')
+			console.log('is checked');	
+		}else{
+			$body.removeClass('show-favourites')
+			console.log('is not checked');	
+		}
+		$userOptionTwo.change(function(){
+			$body.toggleClass('show-favourites');
+		});
+		
 		$(document).ajaxStart(function() {
-		  $("input").attr("disabled", true);
+		  //$("input").attr("disabled", true);
 		  //$("input").closest('label').addClass('disabled');
 		}).ajaxComplete(function() {
-		  $("input").removeAttr("disabled");
+		  //$("input").removeAttr("disabled");
 		  //$("input").closest('label').removeClass('disabled');
 		});
 			

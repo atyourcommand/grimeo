@@ -1,5 +1,5 @@
 (function($) {
-	$( document ).ready(function() {
+	$(document).ready(function() {
     
 		$('.fn_assign_link .panel').on('click',function(e) {
 		   e.stopPropagation();
@@ -13,10 +13,7 @@
 				 //console.log(displayStatus); 
 			 }
 		});
-		
-		//extra helper function
-		//TICK
-		
+	
 		$('body').on('mouseenter','.fn-add-hover',
 		function(e){ 
 			$(this).addClass('hover')
@@ -26,9 +23,32 @@
 			 $(this).removeClass('hover')
 		});
 		
-		//Adds .has-menu when present
-		//Adds or removes .show-menu when clicked
-		//OK
+		$(window).load(function(){
+			$('input').each(function() { 
+				console.log('this each function is working');
+				$this = $(this);
+				$label = $('label[for="'+ $this.attr('id') +'"]');
+					if ($label.length > 0 ) {
+					  if ($(this).is(':checked'))
+						$label.addClass('selected');
+					  else
+						$label.removeClass('selected');
+					}
+			});
+		
+		});
+				
+		$(document).on('change', 'input', function() { 
+			console.log('input change');
+			$this = $(this);
+			$label = $('label[for="'+ $this.attr('id') +'"]');
+			if ($(this).is(':checked'))
+			   $label.addClass('selected');
+			else
+			   $label.removeClass('selected');
+		});
+		
+		//Adds .has-menu & adds or removes .show-menu when clicked
 		var menuHelper = function() {
 				
 				$('.fn_menu-helper li').each(function(){
@@ -59,7 +79,7 @@
 				});
 		}
 		
-		//BASIC ACCORDION
+		// Basic Accordion
 		$('.accordion ul').hide();	
 		$('.accordion li a').click(function (e) {
 			
@@ -73,40 +93,8 @@
 		
 		});
 		
-			
-		//open and close menus
-		/*$('.sub-menu li a').on('click',function(e){
-			var	$this = $(this);
-			var $listItem = $this.parent('li');
-			//var $listItems = $listItem.siblings();
-			var $listItemHasClass = $listItem.filter('.show-menu')
-			if ($listItemHasClass.length > 0){
-				$listItem.
-				
-				removeClass('show-menu');
-				//$listItem.addClass('show-menu');
-				console.log('remove');	
-			} else {
-				$listItem.addClass('show-menu');
-			}
-		});*/
-		
-		//extra radio or checkbox selected helper function
-		//TICK
-	   //$('input:checked').closest('label').addClass('selected');
-	   //$('input').change(function () {
-		//	if ($(this).is(':checked'))
-		//		$(this).closest('label').addClass('selected');
-		//	else
-				//$(this).removeAttr('checked');
-		//		$(this).closest('label').removeClass('selected');
-			
-       //});
-	   
 	   menuHelper();	
 		//console.log('has menu function is running');
-		
-		// Working with local
 	
 			
 	});   

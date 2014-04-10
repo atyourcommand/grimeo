@@ -8,6 +8,7 @@
 
 //Mixins
 @import "compass/css3/border-radius";
+@import "compass/css3/opacity";
 @import "compass/css3/transition";
 
 // ADD NEW STYLE PAGES 
@@ -211,7 +212,7 @@ header {
 		opacity:0;
 		width:0;
 		@include transition-property(all);
-		@include transition-duration(.500s);
+		@include transition-duration(.200s);
 		@include transition-timing-function(ease);
 		//margin-top:7px;
 		margin-bottom:0;
@@ -232,7 +233,7 @@ header {
 		opacity:0;
 		width:0;
 		@include transition-property(all);
-		@include transition-duration(.500s);
+		@include transition-duration(.200s);
 		@include transition-timing-function(ease);
 		//margin-top:7px;
 		margin-bottom:0;
@@ -257,10 +258,10 @@ header {
 		}
 	}
 	.logo {
-		 -webkit-transition: all 0.5s ease;
-		-moz-transition: all 0.5s ease;
-		-o-transition: all 0.5s ease;
-		transition: all 0.5s ease;
+		 -webkit-transition: all 0.2s ease;
+		-moz-transition: all 0.2s ease;
+		-o-transition: all 0.2s ease;
+		transition: all 0.2s ease;
 		
 		@media #{$small-only}{
 			margin-bottom: 5px;	
@@ -435,7 +436,7 @@ header {
 			width: 100%;
 			left: -3000px;
 			
-			&.open {
+			&.is-open {
 				opacity:1;
 				left:0;
 			}
@@ -662,8 +663,8 @@ header {
 			font-size:rem-calc(12);
 			font-weight:normal;
 			a {
-				color:#624737;
-				font-weight:normal;
+				color:#222222;
+				font-weight:bold;
 				text-shadow: 1px 1px #aec2c7;
 			}
 		}
@@ -732,10 +733,14 @@ header {
 				}
 			}
 		}
+		
 		&.hover {
 			.btn{
 				width:100%;
 				opacity:1;
+				.show-favourites & {
+					display:none;
+				}
 				
 				b{
 					display:inline;
@@ -874,6 +879,27 @@ Results
 	margin-top:8px;
 	margin-bottom:10px;
 }
+
+input[type=radio] {
+		position:absolute;
+		z-index:10;
+		left:10px;
+		top:9px;
+		@include opacity(0);
+		
+}
+input[type=radio] + label {
+		font-size:em-calc(13);
+		line-height:22px;
+		padding-left:25px;
+		background: transparent url(../images/ui/radio-small.png) scroll no-repeat left top;
+		&.disabled {
+			background-image:url(../images/ui/radio-small_disabled.png);	
+		}
+}
+input[type=radio]:checked + label{
+			background-image:url(../images/ui/radio-small_active.png);	
+}
 label {
 	@include transition-property(all);
 	@include transition-duration(.1s);
@@ -896,41 +922,22 @@ label {
 	padding-left:40px;
 	margin-right:10px;
 	text-align:left;
-	input {
+}	
+input[type=checkbox] {
 		position:absolute;
 		z-index:10;
-		left:10px;
+		left:20px;
 		top:9px;
 		@include opacity(0);
-		
-	}
-	background: transparent url(../images/ui/radio.png) scroll no-repeat left top;
-	&.selected {
-		background-image:url(../images/ui/radio_active.png);	
-	}
-	&.disabled {
-		background-image:url(../images/ui/radio_disabled.png);
-		color:#999;	
-		cursor:default;
-	}
-	.search-active & {
-		font-size:em-calc(13);
-		line-height:22px;
-		padding-left:25px;
-		background: transparent url(../images/ui/radio-small.png) scroll no-repeat left top;
-		&.selected {
-			background-image:url(../images/ui/radio-small_active.png);	
-		}
-		&.disabled {
-			background-image:url(../images/ui/radio-small_disabled.png);	
-		}
-	}
-	&.checkboxes {
+		cursor:pointer;
+			
+}
+
+input[type=checkbox] + label.checkboxes {
 		@include transition-property(all);
 		@include transition-duration(.1s);
 		@include transition-timing-function(ease-in);
-		//@include transition-delay(.15s);
-		
+				
 		position:relative;
 		font-size:em-calc(16);
 		@media #{$small} {
@@ -947,25 +954,17 @@ label {
 		padding-left:40px;
 		margin-right:10px;
 		text-align:left;
-		input {
-			position:absolute;
-			z-index:10;
-			left:10px;
-			top:9px;
-			@include opacity(0);
-			cursor:pointer;
-			
-		}
-		background: transparent url(../images/ui/checkbox.png) scroll no-repeat left top;
-		&.selected {
-			background-image:url(../images/ui/checkbox_active.png);	
-		}
+		background-image: url(../images/ui/checkbox.png);
+		background-position: left top;
+		background-repeat: no-repeat;
 		&.disabled {
 			background-image:url(../images/ui/checkbox_disabled.png);
 			color:#999;	
 		}
-		
-		}
+}
+
+input[type=checkbox]:checked + label.checkboxes {
+	background-image:url(../images/ui/checkbox_active.png);	
 }
 
 //Fade in alternate text
@@ -988,7 +987,7 @@ label {
 .options {
 	
 	background-color: $site-yellow;
-	border-top: solid 1px #f2e4c2;	
+	border-bottom: solid 1px #f2e4c2;	
 	//border-bottom: solid 1px #92a0a5;
 	padding:8px 10px;
 	width:100%;
@@ -1231,6 +1230,82 @@ label {
 //FB Thumb
 .fb-thumb {
 	@include border-radius(50%); 
+}
+
+//Input 
+input[type="text"] {
+	border-color:#566468;
+	-moz-box-shadow:    2px 2px 0px 0px #566468;
+	-webkit-box-shadow: 2px 2px 0px 0px #566468;
+	box-shadow:         2px 2px 0px 0px #566468;
+}
+
+//My Shows actions
+
+.myshows-actions {
+	position:absolute;
+	top:0;
+	
+	//opacity:0; //dont do opacity here local storage triggers fail
+
+	height:auto;
+	width:100%;
+	//@include transition-property(all); // NO
+	//@include transition-duration(.200s); //NO
+	
+	.show-favourites & {
+		
+	}
+	
+	input[type=checkbox] + label.checkboxes {
+		background-color: $site-yellow;
+		background-position:5px 5px ;
+		display:block;
+		padding:5px 10px 5px 50px;
+		margin:0;
+		@include opacity(0);
+		@include transition-property(all);
+		@include transition-duration(.200s);
+		.show-favourites & {
+			@include opacity(0.5);
+		
+		}
+		&.selected {
+			@include opacity(1);
+			
+		}
+		.hover & {
+			@include opacity(1);
+		}
+	
+	}
+	
+	input[type="checkbox"]{
+		left:16px;
+		top:16px;
+	}
+}
+#show-items {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	
+	li {
+		font-size:rem-calc(18);
+		margin-bottom:5px;
+		background-color:$site-base;
+		padding:10px 10px;
+	}
+	
+	img {
+		display:inline-block;
+		width:40px;
+		margin-right:30px;
+	}
+	.closer {
+		float:right;
+	}
+	
 }
 
 

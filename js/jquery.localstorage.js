@@ -46,20 +46,20 @@
                             var value = data[input.attr('name')];
 							if(value) {
                                 input.attr('checked', input.prop('checked', true));
-								console.log('adding checkbox checked on', e );
+								//console.log('adding checkbox checked on', e );
                             } else {
                                 input.removeAttr('checked');
-								console.log('removing checkbox checked on', e );
+								//console.log('removing checkbox checked on', e );
                             }
 							
 						} else if (input.attr('type') == 'radio'){
                         	var value = data[input.attr('id')];
 							if(value) {
                                 input.attr('checked', input.prop('checked', true));
-								console.log('adding radio checked on', e );
+								//console.log('adding radio checked on', e );
                             } else {
                                 input.removeAttr('checked');
-								console.log('removing radio checked on', e );
+								//console.log('removing radio checked on', e );
                             }
 						
 						

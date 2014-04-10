@@ -54,7 +54,6 @@ $(function() {
 			
 		$uiOption.change(function(){
 			
-			
 			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
 			console.log($uiOptionChecked);	
 			if ($uiOptionChecked === 'movies'){
@@ -103,7 +102,7 @@ $(function() {
 		//User option radio options to change classes
 		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 		$userOptionOne.change(function(){
-			$header.toggleClass('show-trailers');
+			$body.toggleClass('show-trailers');
 		});
 		
 		var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
@@ -111,11 +110,26 @@ $(function() {
 			$header.toggleClass('show-adult');
 		});
 		
+		//Favourites Option
+		var $userOptionTwo = $('input[name="options[2_C]"]', '.user-options');
+		var $userOptionTwoChecked = $('input[name="options[2_C]"]:checked', '.user-options').val;
+
+		if ($userOptionTwoChecked === 'favourites'){
+			$body.addClass('show-favourites')
+			console.log('is checked');	
+		}else{
+			$body.removeClass('show-favourites')
+			console.log('is not checked');	
+		}
+		$userOptionTwo.change(function(){
+			$body.toggleClass('show-favourites');
+		});
+		
 		$(document).ajaxStart(function() {
-		  $("input").attr("disabled", true);
+		  //$("input").attr("disabled", true);
 		  //$("input").closest('label').addClass('disabled');
 		}).ajaxComplete(function() {
-		  $("input").removeAttr("disabled");
+		  //$("input").removeAttr("disabled");
 		  //$("input").closest('label').removeClass('disabled');
 		});
 			
