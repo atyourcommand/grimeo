@@ -1076,37 +1076,56 @@ var appendAdCode = (function(){
 			
 			var $list = $('#show-items'),
 				$listItem = $list.find('li'),
-				shows = '',
-				$btnClear = $('#clear-all');  
-		
-			$list.append( localStorage.getItem('shows'));
-		
-		   
+				tasks = '',
+				key = 'my-new-list',
+				$btnClear = $('#clear-all') ,
+				data = '';  
+			
 			function on_change(event){
 				var input = $(event.target),
-					//data = JSON.parse(localStorage[key]),
-					//$myPost  = input.val(),
-					$posterPath = input.attr('data-asset-poster-path');
-					$assetImage = '<img src='+ $posterPath +'/>';
-					$assetName = input.attr('data-asset-name');
-					$deleteLink = '<a href="#" class="button closer">Remove</a>';
-					newItem = '<li>' + $assetImage + $assetName + $deleteLink +'</li>'; 
-			   
-				$list.append(newItem);
-				shows = $list.html(); //sets the html of the list to a variable     
-				localStorage.setItem( 'shows', shows );//sets the newly appended list to storage
+				
+				assetId = input.attr('id');
+				assetName = input.attr('data-asset-name');	
+				assetValue  = input.val(),
+				posterPath = input.attr('data-asset-poster-path');
+				
+				$assetImage = '<img src='+ posterPath +'/>';
+				$assetName = assetName;
+				$deleteLink = '<a href="#" class="button closer">Remove</a>';
+				
+				tasks = $list.html();    
+				//Add the data we have to a list on the page
+				newItem = '<li>' + $assetImage + $assetName + $deleteLink +'</li>'; 
+				//adds the new item to the bottom of the list
+				$list.append( newItem );
+				//sets the html of the list to a variable
+				tasks = $list.html();      
+				//sets the newly appended list to storage
+				//localStorage.setItem( 'tasks', tasks ); NO NOT THIS TIME
+				
+				//get existing form local storage
+				var data = localStorage.getItem('favourite-shows');
+				if (data != null) {
+				data = JSON.parse(data);
+				} else {
+				data = new Array();
+				}
+			    //new from input
+				var tempData = {"assetId":assetId, "assetName":assetName, "assetImage":posterPath};
+				//add new
+				data.push(tempData);
+				localStorage.setItem("favourite-shows", JSON.stringify(data));
 				console.log('add a list item');
 			}
+			
 			return this.each(function(){    
 				var element = $(this);
 			
 				element.find('input').change(on_change);
 				
-				//click function to clear localStorage and
 				//clear the html of the list
 				$btnClear.click(function(e){
-					alert('Are you sure you want to remove this list');
-					localStorage.clear();
+					localStorage.clear("favourite-shows");
 					$list.html( '' );
 					e.preventDefault();
 			
@@ -1114,15 +1133,16 @@ var appendAdCode = (function(){
 				
 				//click function to make of item as complete or remove it
 				 $listItem.find('.closer').live('click',function(e){
-					//var $closeButton = $(this)
-					if ($(this).parent('li').hasClass('selected')){
-						$(this).parent('li').fadeOut('slow').delay(400).remove();
-						tasks = $list.html();      
-						localStorage.setItem('tasks', tasks);
+					var $listItem = $(this).parent('li');
+					
+					if ($listItem.hasClass('task-complete')){
+						$(this).closest('li').fadeOut('slow').remove();
+						//localStorage.setItem('tasks', tasks);
+						//console.log('condition 1');
 			
 					} else {
-						$(this).parent('li').addClass('selected');
-						
+						$listItem.addClass('task-complete');
+						//console.log('condition 2');
 					}
 					e.preventDefault();
 			
@@ -1189,142 +1209,158 @@ var appendAdCode = (function(){
 })();
 
 ;$(function() {
-    
-	var $header = $('.not-in-use');
-	$(window).scroll(function () {
-	   if(scrollY <= 0){
-		   //$header.removeClass('content-scroll');
-		   $header.animate({
-				opacity: 1,
-		   }, 500);
-	   }
-	   if(scrollY > 0 && $header.is(':not(:animated)')){
-		   //$header.addClass('content-scroll');
-		   $header.animate({
-				opacity: .5,
-		   }, 500);
-	   }
-	});
-	
-	$('.fn-toggle-control').click(function(){
-		var $userControl = $(this).closest('.result').find('.control');
-		var $userOptions = $(this).closest('.result').find('.user-options');
-		$userControl.fadeToggle();
-		$userOptions.fadeToggle();
-		return false;
-		console.log('clicked');
-	
-	});
-	
-	$('.fn-expand-panel').click(function(){
-		var $icon = $(this).children('i:first');
-		var $panelColumn = $(this).closest('.result').parent('.column');
-		var $otherPanelColumns = $panelColumn.siblings('.column');	
-		$panelColumn.toggleClass('panel-full-width');
-		$otherPanelColumns.removeClass('panel-full-width');
-		$icon.toggleClass('fa-compress');
+	//With ajax content need to wait for all events for some of these listeners
+	$(window).load(function(){    
 		
-		scrollTop($(this));
-		return false;
-	});
-	
-	var uiOptions = (function(){
-		var	$body = $( 'body' ),
-	
-		$header = $('header'),
-		$search = $('.search');
-		$searchMovie = $('.search-movie');
-		$searchTv = $('.search-tv'),
-		$userOptions = $('.options'),
-		$logo = $('.logo'),
-		$genreInput = $('input[name="options[4_A]"]'),
-		$genreInputLabel = $('input[name="options[4_A]"]').next('label');
+		var $header = $('.not-in-use');
+		$(window).scroll(function () {
+		   if(scrollY <= 0){
+			   //$header.removeClass('content-scroll');
+			   $header.animate({
+					opacity: 1,
+			   }, 500);
+		   }
+		   if(scrollY > 0 && $header.is(':not(:animated)')){
+			   //$header.addClass('content-scroll');
+			   $header.animate({
+					opacity: .5,
+			   }, 500);
+		   }
+		});
 		
-		var $uiOption = $('input[name="options[1]"]', '.ui-options');
+		$('.fn-toggle-control').click(function(){
+			var $userControl = $(this).closest('.result').find('.control');
+			var $userOptions = $(this).closest('.result').find('.user-options');
+			$userControl.fadeToggle();
+			$userOptions.fadeToggle();
+			return false;
+			console.log('clicked');
+		
+		});
+		
+		$('.fn-expand-panel').click(function(){
+			var $icon = $(this).children('i:first');
+			var $panelColumn = $(this).closest('.result').parent('.column');
+			var $otherPanelColumns = $panelColumn.siblings('.column');	
+			$panelColumn.toggleClass('panel-full-width');
+			$otherPanelColumns.removeClass('panel-full-width');
+			$icon.toggleClass('fa-compress');
 			
-		$uiOption.change(function(){
+			scrollTop($(this));
+			return false;
+		});
+		
+		var uiOptions = (function(){
+			var	$body = $( 'body' ),
+		
+			$header = $('header'),
+			$search = $('.search');
+			$searchMovie = $('.search-movie');
+			$searchTv = $('.search-tv'),
+			$userOptions = $('.options'),
+			$logo = $('.logo'),
+			$genreInput = $('input[name="options[4_A]"]'),
+			$genreInputLabel = $('input[name="options[4_A]"]').next('label');
 			
-			var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
-			console.log($uiOptionChecked);	
-			if ($uiOptionChecked === 'movies'){
-				$header.addClass('search-active');
-				$logo.removeClass('logos-logo');
-				$logo.addClass('logos-logo-mobile');
-				$searchMovie.delay('400').addClass('show');
-				$('.options-nav').addClass('show');
-				$searchTv.removeClass('show');
-				$genreInput.prop('disabled', false);
-				$genreInputLabel.removeClass('disabled');
-				$search.delay('400').fadeIn('slow');
+			var $uiOption = $('input[name="options[1]"]', '.ui-options');
 				
-			}else if ($uiOptionChecked === 'tv'){
-				$header.addClass('search-active');
-				$logo.removeClass('logos-logo');
-				$logo.addClass('logos-logo-mobile');
-				$searchMovie.removeClass('show');
-				$searchTv.delay('400').addClass('show');
-				$('.options-nav').removeClass('show');
-				$genreInput.prop('disabled', true);
-				$genreInputLabel.addClass('disabled');
-				$search.delay('400').fadeIn('slow');
+			$uiOption.change(function(){
+				
+				var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
+				console.log($uiOptionChecked);	
+				if ($uiOptionChecked === 'movies'){
+					$header.addClass('search-active');
+					$logo.removeClass('logos-logo');
+					$logo.addClass('logos-logo-mobile');
+					$searchMovie.delay('400').addClass('show');
+					$('.options-nav').addClass('show');
+					$searchTv.removeClass('show');
+					$genreInput.prop('disabled', false);
+					$genreInputLabel.removeClass('disabled');
+					$search.delay('400').fadeIn('slow');
+					
+				} else if ($uiOptionChecked === 'tv'){
+					$header.addClass('search-active');
+					$logo.removeClass('logos-logo');
+					$logo.addClass('logos-logo-mobile');
+					$searchMovie.removeClass('show');
+					$searchTv.delay('400').addClass('show');
+					$('.options-nav').removeClass('show');
+					$genreInput.prop('disabled', true);
+					$genreInputLabel.addClass('disabled');
+					$search.delay('400').fadeIn('slow');
+				
+				} else {
+					//$header.removeClass('search-active');
+					//$header.addClass('search-active');
+					//$searchMovie.removeClass('show');
+					//$searchTv.removeClass('show');
+					//$search.hide();
+					//$('.options-nav').removeClass('show');
+					//$userOptions.delay('400').fadeIn('slow');
+				}
+					
+			});
 			
-			} else {
-				//$header.removeClass('search-active');
-				//$header.addClass('search-active');
-				
-				//$searchMovie.removeClass('show');
-				//$searchTv.removeClass('show');
-				
-				//$search.hide();
-				//$('.options-nav').removeClass('show');
-				//$userOptions.delay('400').fadeIn('slow');
+			$('input[name="options[3_A]"]').change(function(){
+				if ($userOptions.css("display") == "none")
+				$userOptions.slideDown('fast');
+				else
+				$userOptions.slideUp('fast');
+			});
+			
+			//Add a class and remove it to preview something
+			var previewFeature = function ($target){
+				$target.addClass('preview');			
+				setTimeout(function(){
+					$target.removeClass('preview');	
+				}, 1000);
 			}
+			
+			//User option radio options to change classes
+			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
+			console.log($userOptionThree);
+			if ($userOptionOne.attr('checked')){
+				$body.addClass('show-trailers')
+				//console.log('is checked');	
+			}else{
+				$body.removeClass('show-trailers')
+				//console.log('is not checked');	
+			}
+			$userOptionOne.change(function(){
+				$body.toggleClass('show-trailers');
+				previewFeature($body);
+			});
+			
+			var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
+			$userOptionTwo.change(function(){
+				$header.toggleClass('show-adult');
+			});
+			
+			//Favourites Check Box Option
+			var $userOptionThree = $('input[id="2_C"]', '.user-options');
+			console.log($userOptionThree);
+			if ($userOptionThree.attr('checked')){
+				$body.addClass('show-favourites')
+				//console.log('is checked');	
+			}else{
+				$body.removeClass('show-favourites')
+				//console.log('is not checked');	
+			}
+			$userOptionThree.change(function(){
+				$body.toggleClass('show-favourites');
+			});
+			
+			$(document).ajaxStart(function() {
+			  //$("input").attr("disabled", true);
+			  //$("input").closest('label').addClass('disabled');
+			}).ajaxComplete(function() {
+			  //$("input").removeAttr("disabled");
+			  //$("input").closest('label').removeClass('disabled');
+			});
 				
 		});
 		
-		$('input[name="options[3_A]"]').change(function(){
-			if ($userOptions.css("display") == "none")
-    		$userOptions.slideDown('fast');
-			else
-    		$userOptions.slideUp('fast');
-		});
-		
-		//User option radio options to change classes
-		var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
-		$userOptionOne.change(function(){
-			$body.toggleClass('show-trailers');
-		});
-		
-		var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
-		$userOptionTwo.change(function(){
-			$header.toggleClass('show-adult');
-		});
-		
-		//Favourites Option
-		var $userOptionTwo = $('input[name="options[2_C]"]', '.user-options');
-		var $userOptionTwoChecked = $('input[name="options[2_C]"]:checked', '.user-options').val;
-
-		if ($userOptionTwoChecked === 'favourites'){
-			$body.addClass('show-favourites')
-			console.log('is checked');	
-		}else{
-			$body.removeClass('show-favourites')
-			console.log('is not checked');	
-		}
-		$userOptionTwo.change(function(){
-			$body.toggleClass('show-favourites');
-		});
-		
-		$(document).ajaxStart(function() {
-		  //$("input").attr("disabled", true);
-		  //$("input").closest('label').addClass('disabled');
-		}).ajaxComplete(function() {
-		  //$("input").removeAttr("disabled");
-		  //$("input").closest('label').removeClass('disabled');
-		});
-			
-	});
-	
-	uiOptions();
-	
+		uiOptions();
+	});	
 });

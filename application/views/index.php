@@ -18,11 +18,47 @@
       <div class="user-options center">
       <form name="user-options">
         <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
-        <label for="2_A" class="checkboxes inline-block"> Show Movie Trailers </label>
+        <label for="2_A" class="checkboxes inline-block"> Show Trailers </label>
         <input type="checkbox" name="options[2_B]" value="adult" id="2_B" disabled >
         <label for="2_B" class="checkboxes inline-block disabled" > Adult </label>
         <input type="checkbox" name="options[2_C]" value="favourites" id="2_C" >
-        <label for="2_C" class="checkboxes inline-block">Create a favourite show list</label>
+        <label for="2_C" class="checkboxes inline-block"><a href="#" data-reveal-id="myShows">Favourites list</a></label>
+         <?php 
+$sesUser = $this->session->userdata('User');
+//if($this->session->userdata($sesUser) !== FALSE)   { 
+if(!empty($sesUser))   { 
+	echo '<img src="https://graph.facebook.com/'. $sesUser['id'] .'/picture" class="fb-thumb" width="50" height="50"/><div><small>'.$sesUser['name'].'</small></div>';	
+	echo '<small><a href="'.$this->session->userdata('logout').'">LOGOUT</a></small>';
+} else{
+	echo img(array('src'=>$base_url.'/images/misc/fb-48.png','id'=>'facebook','style'=>'cursor:pointer; margin-right:10px;'));
+	echo '<label for="facebook" style="cursor:default">Join with Facebook</label>';
+}
+?>
+          <div id="fb-root"></div>
+          <!--Facebook SDK--> 
+          <script type="text/javascript">
+  window.fbAsyncInit = function() {
+     FB.init({ 
+       appId:'<?php echo $this->config->item('appID'); ?>', cookie:true, 
+       status:true, xfbml:true,oauth : true 
+     });
+   };
+   (function(d){
+           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           ref.parentNode.insertBefore(js, ref);
+         }(document));
+ $('#facebook').click(function(e) {
+    FB.login(function(response) {
+	  if(response.authResponse) {
+		  parent.location ='<?php echo $base_url; ?>/welcome/fblogin';
+	  }
+ },{scope: 'email,read_stream,publish_stream,user_birthday,user_location,user_work_history,user_hometown,user_photos'});
+});
+</script> 
+          <!--//Facebook SDK--> 
         </form>
       </div>
     </div>
@@ -205,41 +241,9 @@
         <div class="center"> 
           <!--<i class="fa fa-film"></i>--> 
           <!--<i class="fa fa-facebook"></i>-->
-          <?php 
-$sesUser = $this->session->userdata('User');
-//if($this->session->userdata($sesUser) !== FALSE)   { 
-if(!empty($sesUser))   { 
-	echo '<img src="https://graph.facebook.com/'. $sesUser['id'] .'/picture" class="fb-thumb" width="50" height="50"/><div><small>'.$sesUser['name'].'</small></div>';	
-	echo '<small><a href="'.$this->session->userdata('logout').'">LOGOUT</a></small>';
-} else{
-	echo img(array('src'=>$base_url.'/images/misc/fb-48.png','id'=>'facebook','style'=>'cursor:pointer;'));
-}
-?>
-          <div id="fb-root"></div>
-          <!--Facebook SDK--> 
-          <script type="text/javascript">
-  window.fbAsyncInit = function() {
-     FB.init({ 
-       appId:'<?php echo $this->config->item('appID'); ?>', cookie:true, 
-       status:true, xfbml:true,oauth : true 
-     });
-   };
-   (function(d){
-           var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement('script'); js.id = id; js.async = true;
-           js.src = "//connect.facebook.net/en_US/all.js";
-           ref.parentNode.insertBefore(js, ref);
-         }(document));
- $('#facebook').click(function(e) {
-    FB.login(function(response) {
-	  if(response.authResponse) {
-		  parent.location ='<?php echo $base_url; ?>/welcome/fblogin';
-	  }
- },{scope: 'email,read_stream,publish_stream,user_birthday,user_location,user_work_history,user_hometown,user_photos'});
-});
-</script> 
-          <!--//Facebook SDK--> 
+           <input type="checkbox" name="options[3_A]" value="options" id="3_A">
+           <label for="3_A" class="checkboxes inline-block"> Options</label>
+		 
         </div>
       </div>
     </div>

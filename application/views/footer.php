@@ -131,7 +131,7 @@ $(window).load(function() {
 								//var $videoModalLink = "<li><a href=\"#\" data-reveal-id=\"myModal\" class=\"fn-play-video\" data-asset-id=\""+$id+"\">Play trailer</a></li>";
 								var $poster = "<img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3>";
 								var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
-								var $actions = "<div class=\"myshows-actions relative\"><input name=\"asset["+$id+"]\" id=\""+$id+"\" type=\"checkbox\" data-asset-name=\""+item.title+"\" data-asset-poster-path=\""+$poster_path+"\" value=\"save\"/><label for=\""+$id+"\" class=\"checkboxes\">Save it</label></div>"
+								var $actions = "<div class=\"myshows-actions relative\"><input name=\"asset["+$id+"]\" id=\""+$id+"\" type=\"checkbox\" data-asset-name=\""+item.title+"\" data-asset-poster-path=\""+$poster_path+"\" value=\"save\"/><label for=\""+$id+"\" class=\"fn-add-hover checkboxes\"><span class=\"first\">Save it</span><span class=\"second\">Saved</span></label></div>"
 								
 								;
 								$getdata +="<li class=\"column small-6 medium-3 large-2 end fn-add-hover\"><ul><div class=\"image-container fn-add-hover\" >"+$loader+$poster+$actions+"</div></ul></li>" ; 

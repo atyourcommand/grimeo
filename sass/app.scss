@@ -672,7 +672,6 @@ header {
 			position:absolute;
 			left:0;
 			top:0;
-			display:block;
 			opacity:0;
 			overflow:hidden;
 			color:#fff;
@@ -688,6 +687,9 @@ header {
 			//@include transition-delay(.15s);
 			b {
 				display:none;
+				.preview & {
+					display:inline;
+				}
 			}
 			i {
 				text-indent:0;
@@ -706,10 +708,18 @@ header {
 				}
 			}
 			&.fn-play-video {
+				display:none;
+				.show-trailers & {
+					display:block;
+				}
 				background-color:#dedede;
 				color:$site-red;
 				i:before {
 					content:"\f008"	
+				}
+				.preview & {
+					width:100%;
+					opacity:1;
 				}	
 			}
 			&.fn-asset-link {
@@ -741,13 +751,10 @@ header {
 				.show-favourites & {
 					display:none;
 				}
-				
-				b{
+				b {
 					display:inline;
 				}
-				
 			}
-		
 		}
 	
 	}
@@ -919,14 +926,15 @@ label {
 		display:inline-block;
 	}
 	line-height:34px;
-	padding-left:40px;
+	
 	margin-right:10px;
 	text-align:left;
 }	
+
 input[type=checkbox] {
 		position:absolute;
 		z-index:10;
-		left:20px;
+		left:42px;
 		top:9px;
 		@include opacity(0);
 		cursor:pointer;
@@ -940,6 +948,7 @@ input[type=checkbox] + label.checkboxes {
 				
 		position:relative;
 		font-size:em-calc(16);
+		padding-left:40px;
 		@media #{$small} {
 			font-size:em-calc(16);
 		}
@@ -979,7 +988,6 @@ input[type=checkbox]:checked + label.checkboxes {
 			&.fade-in {
 				display:inline-block;
 				opacity:1;
-				
 			}
 	}
 }
@@ -1266,18 +1274,53 @@ input[type="text"] {
 		@include opacity(0);
 		@include transition-property(all);
 		@include transition-duration(.200s);
-		.show-favourites & {
-			@include opacity(0.5);
 		
+		.show-favourites & {
+			&.selected {
+				@include opacity(1);
+			}
+			
+			@include opacity(0.5);
+			&.hover {
+				@include opacity(1);
+			}
 		}
-		&.selected {
-			@include opacity(1);
+		
+	
+	}
+	label {
+		span {
+			display:none;
+			opacity:0;
+			@include transition-property(all);
+			@include transition-duration(.5s);
+			@include transition-timing-function(ease-in);
+			//@include transition-delay(.15s);
+		}
+		.first {
+			display:inline-block;
+			opacity:1;
+			visibility:hidden;
+			.hover & {
+					visibility:visible;
+			}
 			
 		}
-		.hover & {
-			@include opacity(1);
-		}
+		
+		
+	}
 	
+	
+	.selected {
+		.second {
+			display:inline-block;
+			opacity:1;
+			color:$site-red;
+		}
+		.first {
+			display:none;
+			opacity:0;
+		}
 	}
 	
 	input[type="checkbox"]{
@@ -1286,6 +1329,7 @@ input[type="text"] {
 	}
 }
 #show-items {
+	
 	list-style-type:none;
 	margin:0;
 	padding:0;
