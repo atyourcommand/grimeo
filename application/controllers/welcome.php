@@ -32,26 +32,35 @@ class Welcome extends CI_Controller {
 	} 
 	public function index()
 	{
-		$this->load->view('index');
-		$this->load->view('footer');
-		
+		$data =  array();
+		$data['user_profile'] ='';
 		if ($this->user){
 			try {
 				
 				$user_profile = $this->facebook->api('/me');									                //echo "<br/>";
+				$data['user_profile'] = $user_profile;
+				$params = array('next' => base_url().'welcome/logout');
+				$sesUser = array('User'=>$user_profile,
+				   'logout' =>$this->facebook->getLogoutUrl($params)
+				);
+		     $this->session->set_userdata($sesUser);
 				//print_r($user_profile);
 				//echo $user_profile['email'];
 				
 			} catch(FacebookApiException $e) {
-				print_r($e);
+				///print_r($e);
 				$user = null;
 			}
 		}
+		$this->load->view('index',$data);
+		$this->load->view('footer');
 	}
 	function logout(){
 		$base_url=$this->config->item('base_url');
 		$this->session->sess_destroy();
-		header('Location: '.$base_url);
+		$this->facebook->destroySession();
+		///header('Location: '.$base_url);
+		redirect('welcome');
 	}
 	function fblogin(){
 		$base_url=$this->config->item('base_url');
@@ -65,14 +74,15 @@ class Welcome extends CI_Controller {
 		if($this->user){
 			try{
 				$user_profile = $this->facebook->api('/me');
-				$params = array('next' => $base_url.'welcome/logout');
+				$params = array('next' => $base_url.'/welcome/logout');
+				//echo $facebook->getLogoutUrl($params);
 				$sesUser = array('User'=>$user_profile,
 				   'logout' =>$facebook->getLogoutUrl($params)
 				);
-		        $this->session->set_userdata($sesUser);
-				header('Location: '.$base_url);
+		     $this->session->set_userdata($sesUser);
+				redirect('welcome');
 			}catch(FacebookApiException $e){
-				error_log($e);
+				//error_log($e);
 				$user = NULL;
 			}		
 		}
