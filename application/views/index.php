@@ -6,6 +6,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Best Movie and TV Search | Thousands of titles | Grimeo</title>
+<link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link href="css/app.css?version=08.04.14" rel="stylesheet" type="text/css">
 <!--<link href="css/paging.css" media="screen" rel="stylesheet" type="text/css" />-->
@@ -200,8 +202,8 @@ if(!empty($sesUser))   {
               </div>
             </div>
             <div class="column small-3">
-              <input type="checkbox" name="options[3_A]" value="options" id="3_A">
-              <label for="3_A" class="checkboxes inline-block"> Options</label>
+              <!--<input type="checkbox" name="options[3_A]" value="options" id="3_A">
+              <label for="3_A" class="checkboxes inline-block"> Options</label>-->
             </div>
           </div>
         </div>
