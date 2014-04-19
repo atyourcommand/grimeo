@@ -1,4 +1,4 @@
-<?php  $this->load->helper('html');?>
+<?php $this->load->helper('html');?>
 <?php $base_url=$this->config->item('base_url'); ?>
 <!DOCTYPE HTML>
 <html>
@@ -18,14 +18,14 @@
   <div class="row">
     <div class="column small-12">
       <div class="user-options center">
-      <form name="user-options">
-        <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
-        <label for="2_A" class="checkboxes inline-block"> Show Trailers </label>
-        <input type="checkbox" name="options[2_B]" value="adult" id="2_B" disabled >
-        <label for="2_B" class="checkboxes inline-block disabled" > Adult </label>
-        <input type="checkbox" name="options[2_C]" value="favourites" id="2_C" >
-        <label for="2_C" class="checkboxes inline-block"><a href="#" data-reveal-id="myShows">Favourites list</a></label>
-         <?php 
+        <form name="user-options">
+          <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
+          <label for="2_A" class="checkboxes inline-block"> Show Trailers </label>
+          <input type="checkbox" name="options[2_B]" value="adult" id="2_B" disabled >
+          <label for="2_B" class="checkboxes inline-block disabled" > Adult </label>
+          <input type="checkbox" name="options[2_C]" value="favourites" id="2_C" >
+          <label for="2_C" class="checkboxes inline-block"><a href="#" data-reveal-id="myShows">Favourites list</a></label>
+          <?php 
 $sesUser = $this->session->userdata('User');
 //if($this->session->userdata($sesUser) !== FALSE)   { 
 if(!empty($sesUser))   { 
@@ -60,105 +60,104 @@ if(!empty($sesUser))   {
  },{scope: 'email,read_stream,publish_stream,user_birthday,user_location,user_work_history,user_hometown,user_photos'});
 });
 </script> 
-          <!--//Facebook SDK--> 
+          <!--//Facebook SDK-->
         </form>
       </div>
     </div>
   </div>
 </section>
-<header class="fn-add-hover search-active">
-
-    <div class="row show-for-small-only">
-      <div class="column small-12 static"> <a href="/" class="inline-block margin-auto logo logos-logo-mobile"></a> </div>
-    </div>
-    <div class="row">
-      <div class="column small-12 medium-2 static">
-        <div class="dropdown-menu main-nav fn_dropdown">
-          <ul class="menu-inline-list">
-            <li><a href="#">Menu <i class="fa fa-arrow-circle-right"></i></a>
-              <div class="sub-menu fn_menu-helper">
-                <div class="inner">
-                  <ul class="plain row-1 fn-blocks">
-                    <li class="show-menu"><a href="#">Movies</a>
-                      <ul class="plain menu row-2 fn-blocks">
-                        <li class="show-menu"><a href="#">Search</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Fastest search</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#">All movies</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Largest array of movie titles</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#">Movie details</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Descriptions, backdrops and reviews</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li><a href="#">TV</a>
-                      <ul class="plain menu row-2 fn-blocks">
-                        <li class="show-menu"><a href="#">List items 2</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Fund<br>
-                                Sustainability</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <p><a href="#" class="learn-more">Go to page</a></p>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#">List items 2</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Fund<br>
-                                Sustainability</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <p><a href="#" class="learn-more">Go to page</a></p>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#">List items 2</a>
-                          <ul class="plain menu row-3 fn-blocks">
-                            <li>
-                              <h2>Fund<br>
-                                Sustainability</h2>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                              <p><a href="#" class="learn-more">Go to page</a></p>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
+<header class="fn-add-hover">
+  <div class="row show-for-small-only">
+    <div class="column small-12 static"> <!--<a href="/" class="inline-block margin-auto logo logos-logo-mobile"></a> --></div>
+  </div>
+  <div class="row">
+    <div class="column small-12 medium-2 static">
+      <div class="dropdown-menu main-nav fn_dropdown">
+        <ul class="menu-inline-list">
+          <li><a href="/" class="block"><span class="inline-block logo logos-logo-mobile show-for-small-only margin-auto"></span><span class="show-for-medium-up">Menu</span> <i class="show-for-medium-up fa fa-arrow-circle-right"></i></a>
+            <div class="sub-menu fn_menu-helper">
+              <div class="inner">
+                <ul class="plain row-1 fn-blocks">
+                  <li class="show-menu"><a href="#">Movies</a>
+                    <ul class="plain menu row-2 fn-blocks">
+                      <li class="show-menu"><a href="#">Search</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Fastest search</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a href="#">All movies</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Largest array of movie titles</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a href="#">Movie details</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Descriptions, backdrops and reviews</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a href="#">TV</a>
+                    <ul class="plain menu row-2 fn-blocks">
+                      <li class="show-menu"><a href="#">List items 2</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Fund<br>
+                              Sustainability</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p><a href="#" class="learn-more">Go to page</a></p>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a href="#">List items 2</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Fund<br>
+                              Sustainability</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p><a href="#" class="learn-more">Go to page</a></p>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a href="#">List items 2</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Fund<br>
+                              Sustainability</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p><a href="#" class="learn-more">Go to page</a></p>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
-            </li>
-            <li><a href="#" class="show-for-small-only">Genres</a>
-              <div class="sub-menu">
-                <div class="inner"> 
-                  <!--Genre menu output-->
-                  <dl class="plain menu-genre row">
-                  </dl>
-                  <!--//Genre menu output--> 
-                  <a href="#" class="right fn-close closer"><i class="fa fa-times-circle"></i></a> </div>
-              </div>
-            </li>
-            <!--<li><a href="#">More</a>
+            </div>
+          </li>
+          <!--<li><a href="#" class="show-for-small-only">Genres</a>
+            <div class="sub-menu">
+              <div class="inner"> 
+              
+                <dl class="plain menu-genre row">
+                </dl>
+               
+                <a href="#" class="right fn-close closer"><i class="fa fa-times-circle"></i></a> </div>
+            </div>
+          </li>-->
+          <!--<li><a href="#">More</a>
                   <div class="sub-menu">
                     <div class="inner">
                       <ul class="plain">
@@ -167,60 +166,66 @@ if(!empty($sesUser))   {
                     </div>
                   </div>
                 </li>--> 
-            <!--<li><a href="#">More</a></li>--> 
-            <!-- <li><a href="#">More</a></li>-->
-          </ul>
+          <!--<li><a href="#">More</a></li>--> 
+          <!-- <li><a href="#">More</a></li>-->
+        </ul>
+      </div>
+    </div>
+    <div class="column small-12 medium-8 static center"> <a href="/" class="inline-block margin-auto logo logos-logo fn-wobble show-for-medium-up"></a>
+      <div class="relative">
+        <div class="row search">
+          <div class="column small-12">
+            <div class="row">
+              <div class="column small-6 medium-3"> 
+                <!--<i class="fa fa-film"></i>--> 
+                <!--<i class="fa fa-facebook"></i>-->
+                <input type="checkbox" name="options[3_A]" value="options" id="3_A">
+                <label for="3_A" class="checkboxes inline-block"> Options</label>
+              </div>
+              
+              <div class="column small-6 medium-3 medium-push-6">
+                <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
+                <label for="4_A" class="checkboxes inline-block"> Genres</label>
+              </div>
+              
+              <div class="column small-12 medium-6 medium-pull-3">
+                <div class="search-tv">
+                  <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
+                  
+                  <!--Alt dropdowns--> 
+                  <!--No dropdowns yet--> 
+                  <!--//Alt dropdowns--> 
+                </div>
+                <div class="search-movie show">
+                  <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
+                </div>
+                <div class="ui-options fn-ui-options">
+                  <input type="radio" name="options[1]" value="movies" id="1_A">
+                  <label for="1_A" class="inline-block">Movies </label>
+                  <input type="radio" name="options[1]" value="tv" id="1_B" >
+                  <label for="1_B" class="inline-block"> TV </label>
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
         </div>
       </div>
-      <div class="column small-12 medium-8 static center"> <a href="/" class="inline-block margin-auto logo logos-logo fn-wobble show-for-medium-up"></a>
-        <div class="relative">
-          <div class="row">
-            <div class="column small-12"> 
-              <!--Radio Options-->
-              <div class="ui-options fn-ui-options">
-                <input type="radio" name="options[1]" value="movies" id="1_A">
-                <label for="1_A" class="inline-block">Movies </label>
-                <input type="radio" name="options[1]" value="tv" id="1_B" >
-                <label for="1_B" class="inline-block"> Television </label>
-              </div>
+      <!--Alt dropdowns-->
+      <div class="dropdown-menu dropdown-alt options-nav show">
+        <ul class="menu-inline-list">
+          <li class=""><a href="#" class="button small fn-change-text" style="display:none;"><span class="fade-in">or chose from 35 genres <i class="fa fa-arrow-circle-right"></i></span><span> <i class="fa fa-arrow-circle-left"></i> Close Genres</span></a>
+            <div class="sub-menu">
+              <div class="inner"> 
+                <!--Genre menu output-->
+                <dl class="plain menu-genre row">
+                </dl>
+                <!--//Genre menu output--> 
+                <a href="#" class="right fn-close closer"><i class="fa fa-times-circle"></i></a> </div>
             </div>
-          </div>
-          <div class="row search" style="display:none;">
-            <div class="column small-3">
-              <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
-              <label for="4_A" class="checkboxes inline-block"> Genres</label>
-            </div>
-            <div class="column small-6">
-              <div class="search-tv">
-                <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
-                <!--Alt dropdowns--> 
-                <!--No dropdowns yet--> 
-                <!--//Alt dropdowns--> 
-              </div>
-              <div class="search-movie show">
-                <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
-              </div>
-            </div>
-            <div class="column small-3">
-              <!--<input type="checkbox" name="options[3_A]" value="options" id="3_A">
-              <label for="3_A" class="checkboxes inline-block"> Options</label>-->
-            </div>
-          </div>
-        </div>
-        <!--Alt dropdowns-->
-        <div class="dropdown-menu dropdown-alt options-nav show">
-          <ul class="menu-inline-list">
-            <li class=""><a href="#" class="button small fn-change-text" style="display:none;"><span class="fade-in">or chose from 35 genres <i class="fa fa-arrow-circle-right"></i></span><span> <i class="fa fa-arrow-circle-left"></i> Close Genres</span></a>
-              <div class="sub-menu">
-                <div class="inner"> 
-                  <!--Genre menu output-->
-                  <dl class="plain menu-genre row">
-                  </dl>
-                  <!--//Genre menu output--> 
-                  <a href="#" class="right fn-close closer"><i class="fa fa-times-circle"></i></a> </div>
-              </div>
-            </li>
-            <!--<li><a href="#">More</a>
+          </li>
+          <!--<li><a href="#">More</a>
                       <div class="sub-menu">
                         <div class="inner">
                           <ul class="plain">
@@ -229,29 +234,21 @@ if(!empty($sesUser))   {
                         </div>
                       </div>
                     </li>--> 
-            <!--<li><a href="#">More</a></li>--> 
-            <!-- <li><a href="#">More</a></li>-->
-          </ul>
-        </div>
-        
-        <!--//Alt dropdowns--> 
-        
+          <!--<li><a href="#">More</a></li>--> 
+          <!-- <li><a href="#">More</a></li>-->
+        </ul>
       </div>
-      <div class="column small-12 medium-2 show-for-medium-up"> 
-        <!--<a href="#" class="inline-block graphics-fb right"></a>-->
-        
-        <div class="center"> 
-          <!--<i class="fa fa-film"></i>--> 
-          <!--<i class="fa fa-facebook"></i>-->
-           <input type="checkbox" name="options[3_A]" value="options" id="3_A">
-           <label for="3_A" class="checkboxes inline-block"> Options</label>
-		 
-        </div>
-      </div>
+      
+      <!--//Alt dropdowns--> 
+      
     </div>
-
+    <div class="column small-12 medium-2 show-for-medium-up"> 
+      <!--<a href="#" class="inline-block graphics-fb right"></a>-->
+      
+      <div class="center"> </div>
+    </div>
+  </div>
 </header>
-
 <section class="main"> 
   <!--Paging results-->
   <div class="holder"></div>
@@ -271,10 +268,9 @@ if(!empty($sesUser))   {
   <div class="results relative">
     <div class="row">
       <div class="column medium-12">
-      
         <form name="save-shows">
-        <ul id="content" class="row search-output">
-        </ul>
+          <ul id="content" class="row search-output">
+          </ul>
         </form>
       </div>
     </div>

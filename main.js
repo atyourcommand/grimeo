@@ -1073,59 +1073,78 @@ var appendAdCode = (function(){
         var settings = $.extend({
         }, options );		
 			
-			
 			var $list = $('#show-items'),
 				$listItem = $list.find('li'),
 				tasks = '',
-				key = 'my-new-list',
-				$btnClear = $('#clear-all') ,
-				data = '';  
+				key = 'favourite-shows',
+				$btnClear = $('#clear-all'),
+				data = '', 
+				newData = '';  
 			
 			function on_change(event){
 				var input = $(event.target),
+					isChecked = input.is(':checked');
+					$id = input.attr('id'),
+					assetName = input.attr('data-asset-name'),	
+					assetValue  = input.val(),
+					posterPath = input.attr('data-asset-poster-path'),
+					$assetImage = '<img src='+ posterPath +'/>',
+					$assetName = assetName,
+					$deleteLink = '<a href="#" class="button closer">Remove</a>',
+					newItem = '<li id=\"'+$id+'\">' + $assetImage + $assetName + $deleteLink +'</li>'; //make the list item
+					//$list.append( newItem );//adds to list
+					tasks = $list.html(); //sets the html of the list to a variable     
 				
-				assetId = input.attr('id');
-				assetName = input.attr('data-asset-name');	
-				assetValue  = input.val(),
-				posterPath = input.attr('data-asset-poster-path');
+				//data from input
+				var tempData = {"assetId":$id, "assetName":assetName, "assetImage":posterPath};
 				
-				$assetImage = '<img src='+ posterPath +'/>';
-				$assetName = assetName;
-				$deleteLink = '<a href="#" class="button closer">Remove</a>';
-				
-				tasks = $list.html();    
-				//Add the data we have to a list on the page
-				newItem = '<li>' + $assetImage + $assetName + $deleteLink +'</li>'; 
-				//adds the new item to the bottom of the list
-				$list.append( newItem );
-				//sets the html of the list to a variable
-				tasks = $list.html();      
-				//sets the newly appended list to storage
-				//localStorage.setItem( 'tasks', tasks ); NO NOT THIS TIME
+				//remove an item from the saved list
+				var removeItem = function(itemId){
+					var $listItemWithId = $list.find('#' + itemId);
+					$listItemWithId.remove();
+				}
 				
 				//get existing form local storage
-				var data = localStorage.getItem('favourite-shows');
+				var data = localStorage.getItem(key);
 				if (data != null) {
 				data = JSON.parse(data);
 				} else {
 				data = new Array();
 				}
-			    //new from input
-				var tempData = {"assetId":assetId, "assetName":assetName, "assetImage":posterPath};
-				//add new
-				data.push(tempData);
-				localStorage.setItem("favourite-shows", JSON.stringify(data));
-				console.log('add a list item');
+				
+				if (isChecked === true){
+					console.log('is not checked?');	
+					//add new
+					//localStorage[key] = JSON.stringify(data);
+					data.push(tempData);
+					localStorage.setItem(key, JSON.stringify(data));
+					$list.append(newItem);//adds to list
+				} else {
+					//var storedData = localStorage.getItem(key);
+					//JSON.parse(storedData);
+					var newData = data.filter(function(jsonObject) { return jsonObject.assetId != $id;});
+					
+					//JSON.parse(newData); // parses String back into an Object
+					console.log(newData);
+					//var storedData = [storedData];
+					
+					
+					localStorage.removeItem(key);
+					data.push(newData);
+					localStorage.setItem(key, JSON.stringify(newData));
+					removeItem($id);//remove from the list
+				}
+				
+				
 			}
 			
 			return this.each(function(){    
 				var element = $(this);
 			
 				element.find('input').change(on_change);
-				
 				//clear the html of the list
 				$btnClear.click(function(e){
-					localStorage.clear("favourite-shows");
+					localStorage.removeItem(key);
 					$list.html( '' );
 					e.preventDefault();
 			
@@ -1234,7 +1253,7 @@ var appendAdCode = (function(){
 			$userControl.fadeToggle();
 			$userOptions.fadeToggle();
 			return false;
-			console.log('clicked');
+			//console.log('clicked');
 		
 		});
 		
@@ -1249,7 +1268,7 @@ var appendAdCode = (function(){
 			scrollTop($(this));
 			return false;
 		});
-		
+				
 		var uiOptions = (function(){
 			var	$body = $( 'body' ),
 		
@@ -1261,17 +1280,22 @@ var appendAdCode = (function(){
 			$logo = $('.logo'),
 			$genreInput = $('input[name="options[4_A]"]'),
 			$genreInputLabel = $('input[name="options[4_A]"]').next('label');
-			
+			$('header').on('hover', function(){
+				$(this).addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');	
+			});
+		
 			var $uiOption = $('input[name="options[1]"]', '.ui-options');
 				
 			$uiOption.change(function(){
 				
 				var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
-				console.log($uiOptionChecked);	
+				//console.log($uiOptionChecked);	
 				if ($uiOptionChecked === 'movies'){
 					$header.addClass('search-active');
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');
 					$searchMovie.delay('400').addClass('show');
 					$('.options-nav').addClass('show');
 					$searchTv.removeClass('show');
@@ -1281,8 +1305,8 @@ var appendAdCode = (function(){
 					
 				} else if ($uiOptionChecked === 'tv'){
 					$header.addClass('search-active');
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');
 					$searchMovie.removeClass('show');
 					$searchTv.delay('400').addClass('show');
 					$('.options-nav').removeClass('show');
@@ -1319,7 +1343,7 @@ var appendAdCode = (function(){
 			
 			//User option radio options to change classes
 			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
-			console.log($userOptionThree);
+			//console.log($userOptionThree);
 			if ($userOptionOne.attr('checked')){
 				$body.addClass('show-trailers')
 				//console.log('is checked');	
@@ -1339,7 +1363,7 @@ var appendAdCode = (function(){
 			
 			//Favourites Check Box Option
 			var $userOptionThree = $('input[id="2_C"]', '.user-options');
-			console.log($userOptionThree);
+			//console.log($userOptionThree);
 			if ($userOptionThree.attr('checked')){
 				$body.addClass('show-favourites')
 				//console.log('is checked');	

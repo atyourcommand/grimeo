@@ -205,12 +205,20 @@ header {
 			//color:#fff;
 		}
 	}
+	.search {
+		display:none;
+	}
+	&.search-active {
+		.search {
+			display:block;
+		}
+	}
+	
 	.search-movie {
-		//display:none;
-		position:absolute;
-		left:0;
+		
 		opacity:0;
-		width:0;
+		display:none;
+		
 		@include transition-property(all);
 		@include transition-duration(.200s);
 		@include transition-timing-function(ease);
@@ -222,16 +230,14 @@ header {
 		&.show {
 			display:block;
 			opacity:1;
-			width:100%;
+			
 		}
 	}
 	.search-tv {
-		//display:none;
-		position:absolute;
-		left:auto;
-		right:0;
+		display:none;
+		
 		opacity:0;
-		width:0;
+		
 		@include transition-property(all);
 		@include transition-duration(.200s);
 		@include transition-timing-function(ease);
@@ -243,7 +249,7 @@ header {
 		&.show {
 			display:block;
 			opacity:1;
-			width:100%;
+			
 		}
 	}
 	
@@ -273,6 +279,7 @@ header {
 			top:-95px;
 		}
 		left:auto;
+		margin-bottom:15px;
 		
 	}
 	&.active {
@@ -350,7 +357,7 @@ header {
 	}
 	li {
 		@media #{$small-only}{
-			display: inline-block;	
+			display: block;	
 		}
 		display: inline-block;
 		
@@ -361,7 +368,7 @@ header {
 		}
 		
 		a {
-			padding:em-calc(0 30 18 30);
+			padding:em-calc(0 30 18 0);
 			@media #{$small-only}{
 				padding:em-calc(5 0 5 0)	
 			}
@@ -523,7 +530,7 @@ header {
 	}
 }
 .block {
-	display:block;
+	display:block !important;
 }
 .inline-block {
 	display:inline-block;
@@ -879,12 +886,13 @@ Results
 //Form interface
 
 .ui-options {
-	//display:none;
-	@media #{$small}{
+	display:none;
+	.search-active & {
 		display:block;
+		opacity:1;
 	}
 	margin-top:8px;
-	margin-bottom:10px;
+	
 }
 
 input[type=radio] {
@@ -949,15 +957,19 @@ input[type=checkbox] + label.checkboxes {
 		position:relative;
 		font-size:em-calc(16);
 		padding-left:40px;
+		margin-bottom:10px;
 		@media #{$small} {
 			font-size:em-calc(16);
 		}
 		display:block;
+		
 		@media #{$small}{
 			display:inline-block;
+			margin-bottom:0;
 		}
 		.lt-ie9 &{
 			display:inline-block;
+			margin-bottom:0;
 		}
 		line-height:34px;
 		padding-left:40px;

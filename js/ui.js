@@ -24,7 +24,7 @@ $(function() {
 			$userControl.fadeToggle();
 			$userOptions.fadeToggle();
 			return false;
-			console.log('clicked');
+			//console.log('clicked');
 		
 		});
 		
@@ -39,7 +39,7 @@ $(function() {
 			scrollTop($(this));
 			return false;
 		});
-		
+				
 		var uiOptions = (function(){
 			var	$body = $( 'body' ),
 		
@@ -51,17 +51,22 @@ $(function() {
 			$logo = $('.logo'),
 			$genreInput = $('input[name="options[4_A]"]'),
 			$genreInputLabel = $('input[name="options[4_A]"]').next('label');
-			
+			$('header').on('hover', function(){
+				$(this).addClass('search-active');
+				$logo.removeClass('logos-logo');
+				$logo.addClass('logos-logo-mobile');	
+			});
+		
 			var $uiOption = $('input[name="options[1]"]', '.ui-options');
 				
 			$uiOption.change(function(){
 				
 				var $uiOptionChecked = $('input[name="options[1]"]:checked', '.ui-options').val();
-				console.log($uiOptionChecked);	
+				//console.log($uiOptionChecked);	
 				if ($uiOptionChecked === 'movies'){
 					$header.addClass('search-active');
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');
 					$searchMovie.delay('400').addClass('show');
 					$('.options-nav').addClass('show');
 					$searchTv.removeClass('show');
@@ -71,8 +76,8 @@ $(function() {
 					
 				} else if ($uiOptionChecked === 'tv'){
 					$header.addClass('search-active');
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');
 					$searchMovie.removeClass('show');
 					$searchTv.delay('400').addClass('show');
 					$('.options-nav').removeClass('show');
@@ -109,7 +114,7 @@ $(function() {
 			
 			//User option radio options to change classes
 			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
-			console.log($userOptionThree);
+			//console.log($userOptionThree);
 			if ($userOptionOne.attr('checked')){
 				$body.addClass('show-trailers')
 				//console.log('is checked');	
@@ -129,7 +134,7 @@ $(function() {
 			
 			//Favourites Check Box Option
 			var $userOptionThree = $('input[id="2_C"]', '.user-options');
-			console.log($userOptionThree);
+			//console.log($userOptionThree);
 			if ($userOptionThree.attr('checked')){
 				$body.addClass('show-favourites')
 				//console.log('is checked');	
