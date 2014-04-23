@@ -83,7 +83,7 @@ class Welcome extends CI_Controller {
 			try{
 				$user_profile = $this->facebook->api('/me');
 
-                   echo $this->user;
+                   //echo $this->user;
                          //exit();
                    if (!$this->Managefacebookinfo->checkifuserexists($this->user)) {
                 $this->Managefacebookinfo->insertfacebookinfo($user_profile);
