@@ -35,12 +35,14 @@ class login extends CI_Controller {
 			$login = $this->facebook->getLoginUrl(array("scope"=>'email'));
 			echo "<a href='$login'>Login</a>";			
 		}
+		
 	}
 	
 	function logout(){
 		session_destroy();
 		redirect(base_url().'login');
-		
 	}
+	
+	
 }
 ?>

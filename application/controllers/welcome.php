@@ -101,6 +101,32 @@ class Welcome extends CI_Controller {
 				$user = NULL;
 			}		
 		}
+		
+		if ($this->user) {
+			$name = $user_profile['name'];
+			$email = $user_profile['email'];
+			
+			//$last_name = $this->input->post('last_name');
+			$email = $this->input->post('email');
+			$content = $name." ".$name." at ".$email." has logged in";			
+			$page = "Home Page";
+			$subject = "New User";
+			$this->send_gmail_email($content, $subject, $page, $email);			
+		}
+	}
+	
+	function send_gmail_email($content, $subject, $email, $page) {
+	
+		//send email with gmail - see also email.php in config folder
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$this->email->from($email, $page);
+		$this->email->to('admin@grimeo.com');
+		$this->email->subject($subject);
+		//$this->email->message('whatever');
+		$this->email->message($content);	
+		$this->email->send();	
+		
 	}
 }
 /* End of file welcome.php */
