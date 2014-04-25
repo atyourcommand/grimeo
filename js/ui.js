@@ -51,12 +51,23 @@ $(function() {
 			$logo = $('.logo'),
 			$genreInput = $('input[name="options[4_A]"]'),
 			$genreInputLabel = $('input[name="options[4_A]"]').next('label');
-			$('header').on('hover', function(){
-				$(this).addClass('search-active');
-				$logo.removeClass('logos-logo');
-				$logo.addClass('logos-logo-mobile');	
-			});
+			
+			//Add class after a delay
+			(function (){
+				var $this = $(this),
+					timer = $this.data("timer") || 0;
+				
+				clearTimeout(timer);
+				//add something 
+				timer = setTimeout(function() {
+					$header.addClass("search-active");
+					$logo.removeClass('logos-logo');
+					$logo.addClass('logos-logo-mobile');	
+				}, 2000); // 2000 is in mil sec eq to 2 sec.
 		
+				$this.data("timer", timer);
+			})();
+			
 			var $uiOption = $('input[name="options[1]"]', '.ui-options');
 				
 			$uiOption.change(function(){

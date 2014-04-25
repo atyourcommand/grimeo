@@ -65,7 +65,7 @@
     var _this = this;
     function syncHeights() {
       var cols = _this.detectGridColumns();
-      console.log(cols);
+      //console.log(cols);
       _this.equalHeightGrid(cols);  
     }
     $(window).bind('resize load', syncHeights);
