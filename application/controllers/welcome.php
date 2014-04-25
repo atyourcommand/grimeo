@@ -24,20 +24,24 @@ class Welcome extends CI_Controller {
 		$this->load->library('session');
 		$this->config->load('facebook');
 		$config = array(
-			'appId'  => '694907180553170',
-			'secret' => '171730b0b7c778616b69ecf0f6603a7f'
+			'appId'  => $this->config->item('appID'), //'694907180553170',
+			'secret' => $this->config->item('appSecret'),  //'171730b0b7c778616b69ecf0f6603a7f'
 		);
-		$this->load->library('facebook', $config);   
+		$this->load->library('facebook', $config);
 		$this->user = $this->facebook->getUser();
-	} 
+        $this->load->model('Managefacebookinfo');
+	}
 	public function index()
 	{
 		$data =  array();
 		$data['user_profile'] ='';
 		if ($this->user){
 			try {
-				
-				$user_profile = $this->facebook->api('/me');									                //echo "<br/>";
+
+				$user_profile = $this->facebook->api('/me');
+
+           //     var_dump($user_profile);
+                //$this->Managefacebookinfo->insertfacebookinfo($user_profile);								                //echo "<br/>";
 				$data['user_profile'] = $user_profile;
 				$params = array('next' => base_url().'welcome/logout');
 				$sesUser = array('User'=>$user_profile,
@@ -62,6 +66,8 @@ class Welcome extends CI_Controller {
 		///header('Location: '.$base_url);
 		redirect('welcome');
 	}
+
+    ///this function is used to save info
 	function fblogin(){
 		$base_url=$this->config->item('base_url');
 			
@@ -71,9 +77,18 @@ class Welcome extends CI_Controller {
 		));
 		
 		$this->user = $this->facebook->getUser();
+
+
 		if($this->user){
 			try{
 				$user_profile = $this->facebook->api('/me');
+
+                   //echo $this->user;
+                         //exit();
+                   if (!$this->Managefacebookinfo->checkifuserexists($this->user)) {
+                $this->Managefacebookinfo->insertfacebookinfo($user_profile);
+                 // exit();
+                  }
 				$params = array('next' => $base_url.'/welcome/logout');
 				//echo $facebook->getLogoutUrl($params);
 				$sesUser = array('User'=>$user_profile,
