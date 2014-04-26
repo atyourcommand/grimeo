@@ -126,7 +126,7 @@ $(function() {
 			//User option radio options to change classes
 			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 			//console.log($userOptionThree);
-			if ($userOptionOne.attr('checked')){
+			if ($userOptionOne.attr('checked') && !$userOptionOne.attr('disabled')){
 				$body.addClass('show-trailers')
 				//console.log('is checked');	
 			}else{
@@ -139,6 +139,13 @@ $(function() {
 			});
 			
 			var $userOptionTwo = $('input[name="options[2_B]"]', '.user-options');
+			if ($userOptionTwo.attr('checked') && !$userOptionTwo.attr('disabled')){
+				$body.addClass('show-adult')
+				//console.log('is checked');	
+			}else{
+				$body.removeClass('show-adult')
+				//console.log('is not checked');	
+			}			
 			$userOptionTwo.change(function(){
 				$header.toggleClass('show-adult');
 			});

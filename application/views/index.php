@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<?php $header_data = get_header_data();?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Best Movie and TV Search | Thousands of titles | Grimeo</title>
@@ -19,10 +20,10 @@
     <div class="column small-12">
       <div class="user-options center">
         <form name="user-options">
-          <input type="checkbox" name="options[2_A]" value="trailers" id="2_A">
-          <label for="2_A" class="checkboxes inline-block"> Show Trailers </label>
-          <input type="checkbox" name="options[2_B]" value="adult" id="2_B" disabled >
-          <label for="2_B" class="checkboxes inline-block disabled" > Adult </label>
+          <input type="checkbox" name="options[2_A]" value="trailers" id="2_A" <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>>
+          <label for="2_A" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>"><?php if ($header_data['user_logged_in']){ ?>Show Trailers<?php }else{?>Show Trailers (Login required)<?php }?></label>
+          <input type="checkbox" name="options[2_B]" value="adult" id="2_B" <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?> >
+          <label for="2_B" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>" ><?php if ($header_data['user_logged_in']){ ?>Adult<?php }else{?>Adult (Login required)<?php }?></label>
           <input type="checkbox" name="options[2_C]" value="favourites" id="2_C" >
           <label for="2_C" class="checkboxes inline-block"><a href="#" data-reveal-id="myShows">Favourites list</a></label>
           <?php 
@@ -33,7 +34,7 @@ if(!empty($sesUser))   {
 	echo '<small><a href="'.$this->session->userdata('logout').'">LOGOUT</a></small>';
 } else{
 	echo img(array('src'=>$base_url.'/images/misc/fb-48.png','id'=>'facebook','style'=>'cursor:pointer; margin-right:10px;'));
-	echo '<label for="facebook" style="cursor:default">Join with Facebook</label>';
+	echo '<label for="facebook" style="cursor:default">Join</label>';
 }
 ?>
           <div id="fb-root"></div>
@@ -84,7 +85,7 @@ if(!empty($sesUser))   {
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Fastest search</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p>Start typing in the box to see all the matching titles appear right away. Yes, the fastest movie search on the internet. Watching a trailer is just as fast but make sure you login with faceboook to see all the trailer links appear.</p>
                             <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
@@ -93,7 +94,7 @@ if(!empty($sesUser))   {
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Largest array of movie titles</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p>Think of a movie and most likely it is here for you to check out or view a trailer. All Grimeo movies come directly from the huge movie database at TMDB.</p>
                             <!-- <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
@@ -102,7 +103,7 @@ if(!empty($sesUser))   {
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Descriptions, backdrops and reviews</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
+                            <p>The show-more link takes you to a full run down of the movie including ratings, backdrop, poster and description. If the movie has a trailer then sit back and you can watch that here too. A larger selection of movie backdrops is coming soon.  </p>
                             <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
@@ -111,36 +112,56 @@ if(!empty($sesUser))   {
                   </li>
                   <li><a href="#">TV</a>
                     <ul class="plain menu row-2 fn-blocks">
-                      <li class="show-menu"><a href="#">List items 2</a>
+                      <li class="show-menu"><a href="#">What's hot</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
-                            <h2>Fund<br>
-                              Sustainability</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                            <p><a href="#" class="learn-more">Go to page</a></p>
+                            <h2>Top rated and more</h2>
+                            <p>We serve up the top rated shows right away and of course you can search for your friends recommendations. Coming soon will be listings for "most popular" tv shows as will "on the air" and even "airing today". </p>
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
                           </li>
                         </ul>
                       </li>
-                      <li><a href="#">List items 2</a>
+                     <li><a href="#">Show details</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
-                            <h2>Fund<br>
-                              Sustainability</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                            <p><a href="#" class="learn-more">Go to page</a></p>
+                            <h2>Cast, descriptions and backdrops</h2>
+                            <p>The show-more link takes you to a full run down of the show including cast and how many episides and series have been made.   </p>
+                            <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
                       </li>
-                      <li><a href="#">List items 2</a>
+                      <li><a href="#">My Favourites</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
-                            <h2>Fund<br>
-                              Sustainability</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                            <p><a href="#" class="learn-more">Go to page</a></p>
+                            <h2>Create a list and share</h2>
+                            <p>In your options panel chose "favourites list" and then select the titles to make <strong>your</strong> list. We are working on this app so you can share this with your friends.</p>
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
                           </li>
                         </ul>
                       </li>
+                    </ul>
+                  </li>
+                   <li><a href="#">Feedback</a>
+                    <ul class="plain menu row-2 fn-blocks">
+                      <li class="show-menu"><a href="#">Contact</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Drop us a line</h2>
+                            <p><a href="mailto:admin@grimeo.com">Email JB at Grimeo here.</a></p>
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
+                          </li>
+                        </ul>
+                      </li>
+                     <li><a href="#">Be social</a>
+                        <ul class="plain menu row-3 fn-blocks">
+                          <li>
+                            <h2>Twitter</h2>
+                            <p><a href="https://twitter.com/grimeotrailers">Follow the Grimeo Trailers Twitter feed here.</a></p>
+                            <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
+                          </li>
+                        </ul>
+                      </li>
+                      
                     </ul>
                   </li>
                 </ul>
@@ -187,7 +208,6 @@ if(!empty($sesUser))   {
                 <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
                 <label for="4_A" class="checkboxes inline-block"> Genres</label>
               </div>
-              
               <div class="column small-12 medium-6 medium-pull-3">
                 <div class="search-tv">
                   <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
@@ -204,10 +224,8 @@ if(!empty($sesUser))   {
                   <label for="1_A" class="inline-block">Movies </label>
                   <input type="radio" name="options[1]" value="tv" id="1_B" >
                   <label for="1_B" class="inline-block"> TV </label>
-                  
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
@@ -238,9 +256,7 @@ if(!empty($sesUser))   {
           <!-- <li><a href="#">More</a></li>-->
         </ul>
       </div>
-      
       <!--//Alt dropdowns--> 
-      
     </div>
     <div class="column small-12 medium-2 show-for-medium-up"> 
       <!--<a href="#" class="inline-block graphics-fb right"></a>-->
