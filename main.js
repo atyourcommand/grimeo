@@ -337,14 +337,12 @@ var dropDownMenuAlternate = (function() {
             
             if(input.attr('type') == 'checkbox') {
                 data[input.attr('name')] = input.is(':checked');
-			
 			}else if (input.attr('type') == 'radio'){
 				data[input.attr('id')] = input.is(':checked');
 			
 			}else {
                 data[input.attr('name')] = input.val();
             }
-            
             localStorage[key] = JSON.stringify(data);
         }
         
@@ -1073,14 +1071,14 @@ var appendAdCode = (function(){
         var settings = $.extend({
         }, options );		
 			
-			var $list = $('#show-items'),
+				var element = $(this),
+				$list = $('#show-items'),
 				$listItem = $list.find('li'),
 				tasks = '',
-				key = 'favourite-shows',
-				key2 = 'checked',
+				key = 'favourites',
+				key2 = element.attr('name'),
 				$btnClear = $('#clear-all'),
 				$deleteLink = '<a href="#" class="button closer">Remove</a>',
-				
 				newData = ''; 
 			
 			//Build list function
@@ -1090,12 +1088,12 @@ var appendAdCode = (function(){
 				});
 			});
 			
-			//Get existing from local storage
+			//Get existing data for list from local storage
 			var data = localStorage.getItem(key);
 			if (data != null) {
-			data = JSON.parse(data);
+				data = JSON.parse(data);
 			} else {
-			data = new Array();
+				data = new Array();
 			} 
 			buildList(); //Build list on load of page
 			
@@ -1110,30 +1108,17 @@ var appendAdCode = (function(){
 					$assetImage = '<img src='+ posterPath +'/>',
 					$assetName = assetName,
 					newItem = '<li id=\"'+$id+'\">' + $assetImage + $assetName + $deleteLink +'</li>'; 
-				//var dataChecked = localStorage.getItem(key2);
-				//dataChecked = JSON.parse(dataChecked);
 				
 				var checkedData = (function (){
-					var dataChecked = localStorage.getItem(key2);
-					//var dataChecked = JSON.parse(localStorage[key2]);
-            
-					if (dataChecked != null) {
-					dataChecked = JSON.parse(dataChecked);
-					console.log('there is dataChecked');
-					} else {
-					dataChecked = new Array();
-					console.log('still no dataChecked');
-					}
 					
+					var dataChecked = JSON.parse(localStorage[key2]);
 					dataChecked[input.attr('name')] = input.is(':checked');
-					
-					console.log(dataChecked);
+					console.log('this is the data' + dataChecked);
 					localStorage[key2] = JSON.stringify(dataChecked);
-					//localStorage.setItem(key2, JSON.stringify(data));
 				
 				})();
 								
-				//Data from input
+				//Favourites List data from input
 				var tempData = {"assetId":$id, "assetName":assetName, "assetImage":posterPath};
 					//Get existing from local storage
 					var data = localStorage.getItem(key);
@@ -1143,14 +1128,11 @@ var appendAdCode = (function(){
 					data = new Array();
 					}
 					
-					//Function to remove an item from the Saved List and Local Storage
+					//Function to remove an item from the Favourites List and Local Storage
 					var removeItem = function(itemId){
 						var $listItemWithId = $list.find('#' + itemId);
 						$listItemWithId.remove();
-						//var storedData = localStorage.getItem(key);
-						//JSON.parse(storedData);
 						var newData = data.filter(function(jsonObject) { return jsonObject.assetId != $id;});
-						//JSON.parse(newData); // parses String back into an Object
 						console.log('new data is' + newData);
 						localStorage.removeItem(key);
 						data.push(newData);
@@ -1159,9 +1141,7 @@ var appendAdCode = (function(){
 					}
 										
 					if (isChecked === true){
-						//console.log('is not checked?');	
 						//add new
-						//localStorage[key] = JSON.stringify(data);
 						data.push(tempData);
 						localStorage.setItem(key, JSON.stringify(data));
 						$list.append(newItem);//adds to list
@@ -1170,10 +1150,6 @@ var appendAdCode = (function(){
 						removeItem($id); //remove from the list
 					}
 					
-					
-					
-				
-				
 			}
 			
 			return this.each(function(){    
@@ -1181,16 +1157,14 @@ var appendAdCode = (function(){
 				
 				if(typeof(Storage)!=="undefined"){
 						
-						var key2 = element.attr('name');
-						
 						var dataChecked = false;
 						if(localStorage[key2]) {
-							//dataChecked = JSON.parse(localStorage[key2]);
+							dataChecked = JSON.parse(localStorage[key2]);
 						}
 						
-						if(!data) {
-							//localStorage[key2] = JSON.stringify({});
-							//dataChecked = JSON.parse(localStorage[key2]);
+						if(!dataChecked) {
+							localStorage[key2] = JSON.stringify({});
+							dataChecked = JSON.parse(localStorage[key2]);
 						}
 						
 						element.find('input').change(on_change);
@@ -1205,10 +1179,7 @@ var appendAdCode = (function(){
 								} else {
 									input.removeAttr('checked');
 									console.log('no value');
-									//console.log('removing checkbox checked on', e );
 								}
-									
-								
 							}
 						});
 						
@@ -1241,8 +1212,6 @@ var appendAdCode = (function(){
 					alert('local storage is not available');
 				}		
 			});
-
-			
 			
     };     
 }(jQuery))		;var swapText = (function (){

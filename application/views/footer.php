@@ -139,7 +139,6 @@ $(window).load(function() {
 							});
 						} 
 					});	
-					 
 			}   
 		}); 
 	}
@@ -154,12 +153,16 @@ $(window).load(function() {
 		perPage: onepagerecord
 	});
 		
-	//Detect broken images
+	//Loader image first
 	$('img').load(function () { 
 		$(this).hide();
 		$('.loader').fadeOut('fast');
 			$(this).fadeIn();
-	}); 
+	}) 
+		
+	.error(function () {
+		$(this).attr('src','images/misc/poster-missing.gif');
+	})
 }
 	
 	var url = 'http://api.themoviedb.org/3/',
@@ -244,7 +247,7 @@ $(window).load(function() {
 					containerID : "content",
 					perPage: onepagerecord
 				});
-				//Detect broken images
+				//Loader image first
 				$('img').load(function () {
 				
 					$(this).hide();
@@ -252,7 +255,7 @@ $(window).load(function() {
 					$(this).fadeIn();
 				})
 				.error(function () {
-					$(this).attr('src','http://placehold.it/150x225');
+					$(this).attr('src','images/misc/poster-missing.gif');
 				})
 				
 				},
@@ -315,7 +318,7 @@ $(window).load(function() {
 					$(this).fadeIn();
 				})
 				.error(function () {
-					$(this).attr('src','http://placehold.it/150x225');
+					$(this).attr('src','images/misc/poster-missing.gif');
 				}) 
 				},  
 				error: function (request,error) {
@@ -377,7 +380,7 @@ $(window).load(function() {
 					$(this).fadeIn();
 				})
 				.error(function () {
-					$(this).attr('src','http://placehold.it/150x225');
+					$(this).attr('src','images/misc/poster-missing.gif');
 				}) 
 				},  
 				error: function (request,error) {

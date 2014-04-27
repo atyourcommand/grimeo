@@ -18,7 +18,7 @@
 <section class="options" style="display:none;">
   <div class="row">
     <div class="column small-12">
-      <div class="user-options center">
+      <div class="user-options">
         <form name="user-options">
           <input type="checkbox" name="options[2_A]" value="trailers" id="2_A" <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>>
           <label for="2_A" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>"><?php if ($header_data['user_logged_in']){ ?>Show Trailers<?php }else{?>Show Trailers (Login required)<?php }?></label>
@@ -34,7 +34,7 @@ if(!empty($sesUser))   {
 	echo '<small><a href="'.$this->session->userdata('logout').'">LOGOUT</a></small>';
 } else{
 	echo img(array('src'=>$base_url.'/images/misc/fb-48.png','id'=>'facebook','style'=>'cursor:pointer; margin-right:10px;'));
-	echo '<label for="facebook" style="cursor:default">Join</label>';
+	echo '<label for="facebook" style="cursor:default; display:inline-block;">Join</label>';
 }
 ?>
           <div id="fb-root"></div>
@@ -69,13 +69,13 @@ if(!empty($sesUser))   {
 </section>
 <header class="fn-add-hover">
   <div class="row show-for-small-only">
-    <div class="column small-12 static"> <!--<a href="/" class="inline-block margin-auto logo logos-logo-mobile"></a> --></div>
+    <div class="column small-12 static center"> <a href="/" class="inline-block margin-auto logo logos-logo-mobile"></a></div>
   </div>
   <div class="row">
     <div class="column small-12 medium-2 static">
       <div class="dropdown-menu main-nav fn_dropdown">
         <ul class="menu-inline-list">
-          <li><a href="/" class="block"><span class="inline-block logo logos-logo-mobile show-for-small-only margin-auto"></span><span class="show-for-medium-up">Menu</span> <i class="show-for-medium-up fa fa-arrow-circle-right"></i></a>
+          <li><a href="/" class="block"><span class="show-for-medium-up">Menu</span> <i class="show-for-medium-up fa fa-arrow-circle-right"></i></a>
             <div class="sub-menu fn_menu-helper">
               <div class="inner">
                 <ul class="plain row-1 fn-blocks">

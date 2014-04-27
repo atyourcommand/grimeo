@@ -10,14 +10,12 @@
             
             if(input.attr('type') == 'checkbox') {
                 data[input.attr('name')] = input.is(':checked');
-			
 			}else if (input.attr('type') == 'radio'){
 				data[input.attr('id')] = input.is(':checked');
 			
 			}else {
                 data[input.attr('name')] = input.val();
             }
-            
             localStorage[key] = JSON.stringify(data);
         }
         
