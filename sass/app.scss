@@ -177,13 +177,13 @@ header {
 		margin-bottom:0;
 	}
 	background-color:$site-base;
-	height:200px;
+	height:135px;
 	@media #{$medium-up}{
 		height:153px;
 	}
 	
 	//overflow:hidden;
-	padding: 10px 0;
+	padding: 10px 0 10px;
 	border-bottom:solid 1px #92a0a5;
 	//position:fixed;
 	//z-index:2;
@@ -213,7 +213,9 @@ header {
 			display:block;
 		}
 	}
-	
+	.search-container {
+		margin-bottom:10px;
+	}
 	.search-movie {
 		
 		opacity:0;
@@ -424,9 +426,9 @@ header {
 	}
 		.sub-menu {
 			@media #{$small-only}{
-				top:200px;
+				top:135px;
 				.search-active & {
-					top:200px;
+					top:135px;
 				}
 			}
 			top:153px;
@@ -982,11 +984,129 @@ input[type=checkbox] + label.checkboxes {
 			background-image:url(../images/ui/checkbox_disabled.png);
 			color:#999;	
 		}
+		&.small {
+		
+			line-height:20px;
+			padding-left:20px;
+			margin-right:10px;
+			text-align:left;
+			background-image: url(../images/ui/checkbox-sm.png);
+			background-position: left top;
+			background-repeat: no-repeat;
+			&.disabled {
+				background-image:url(../images/ui/checkbox-sm_disabled.png);
+				color:#999;	
+			}
+				
+		}
 }
 
 input[type=checkbox]:checked + label.checkboxes {
 	background-image:url(../images/ui/checkbox_active.png);	
+	&.small {
+		background-image:url(../images/ui/checkbox-sm_active.png);	
+	}
 }
+
+//Main search 
+
+input[type="text"].main-search {
+	border:none;
+	//-moz-box-shadow:    2px 2px 0px 0px #566468;
+	//-webkit-box-shadow: 2px 2px 0px 0px #566468;
+	//box-shadow:         2px 2px 0px 0px #566468;
+	@include border-radius(0);
+}
+
+.options-selector {
+	
+	background-color:#f3f3f3;
+	padding:0;
+	height:em-calc(37);
+	line-height:31px;
+	text-align:left;
+	label {
+		width:100%;
+		background-color:#efefef;
+		text-align:right;
+		padding-right:20px;
+	}
+	input {
+		cursor:pointer;
+	}
+	input[type=radio]+label {
+		height:37px;
+		background-position:10px 7px;
+		margin-left:0;
+		padding-left:35px;
+	} 
+	i {
+		font-size:em-calc(25);
+		line-height:35px;
+		color:#cccccc;
+		@include transition-property(all);
+		@include transition-duration(.25s);
+		@include transition-timing-function(ease-in);
+	}
+	.selected {
+		background-color:#cccccc;
+		i {
+			color:$site-yellow;
+		}
+	}
+	
+	&.header-version {
+		width:34px;
+		height:auto;
+		background-color:transparent;
+		display:inline-block;
+		
+		i {
+			font-size:em-calc(24);
+			line-height:1;
+			color:#fff;
+			@include transition-property(all);
+			@include transition-duration(.25s);
+			@include transition-timing-function(ease-in);
+			&.fa-cog {
+				display:inline-block;
+			}
+			&.fa-times-circle {
+				display:none;
+			}
+		}
+		
+		input[type=checkbox]+label {
+			background-color:transparent;
+			text-align:center;
+			padding:0 0 0 0;
+			margin:0;
+			//background-position:center 5px;
+			background-image:none;
+			line-height:32px;
+			
+			&.selected {
+				background-color:$site-yellow;
+				position:relative;
+				background-image:none;
+				top:-10px;
+					i {
+						color:$site-red;
+						font-size:em-calc(16);
+						
+						&.fa-cog {
+							display:none;
+						}
+						&.fa-times-circle {
+							display:inline-block;
+						}
+					}
+				}
+			}
+	}
+}
+
+
 
 //Fade in alternate text
 .fn-change-text {
@@ -1004,6 +1124,7 @@ input[type=checkbox]:checked + label.checkboxes {
 	}
 }
 
+//Options panel in the header
 .options {
 	
 	background-color: $site-yellow;
@@ -1252,13 +1373,6 @@ input[type=checkbox]:checked + label.checkboxes {
 	@include border-radius(50%); 
 }
 
-//Input 
-input[type="text"] {
-	border-color:#566468;
-	-moz-box-shadow:    2px 2px 0px 0px #566468;
-	-webkit-box-shadow: 2px 2px 0px 0px #566468;
-	box-shadow:         2px 2px 0px 0px #566468;
-}
 
 //My Shows actions
 

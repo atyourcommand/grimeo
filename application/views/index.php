@@ -21,20 +21,32 @@
       <div class="user-options">
         <form name="user-options">
           <input type="checkbox" name="options[2_A]" value="trailers" id="2_A" <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>>
-          <label for="2_A" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>"><?php if ($header_data['user_logged_in']){ ?>Show Trailers<?php }else{?>Show Trailers (Login required)<?php }?></label>
+          <label for="2_A" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>">
+            <?php if ($header_data['user_logged_in']){ ?>
+            Trailers
+            <?php }else{?>
+            Trailers (Login)
+            <?php }?>
+          </label>
           <input type="checkbox" name="options[2_B]" value="adult" id="2_B" <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?> >
-          <label for="2_B" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>" ><?php if ($header_data['user_logged_in']){ ?>Adult<?php }else{?>Adult (Login required)<?php }?></label>
+          <label for="2_B" class="checkboxes inline-block <?php if ($header_data['user_logged_in']){ ?><?php }else{?>disabled<?php }?>" >
+            <?php if ($header_data['user_logged_in']){ ?>
+            Adult
+            <?php }else{?>
+            Adult (Login)
+            <?php }?>
+          </label>
           <input type="checkbox" name="options[2_C]" value="favourites" id="2_C" >
           <label for="2_C" class="checkboxes inline-block"><a href="#" data-reveal-id="myShows">Favourites list</a></label>
           <?php 
 $sesUser = $this->session->userdata('User');
 //if($this->session->userdata($sesUser) !== FALSE)   { 
 if(!empty($sesUser))   { 
-	echo '<img src="https://graph.facebook.com/'. $sesUser['id'] .'/picture" class="fb-thumb" width="50" height="50"/><div><small>'.$sesUser['name'].'</small></div>';	
-	echo '<small><a href="'.$this->session->userdata('logout').'">LOGOUT</a></small>';
+	echo '<img src="https://graph.facebook.com/'. $sesUser['id'] .'/picture" class="fb-thumb" width="50" height="50" style="margin-right:10px;"/><span>'.$sesUser['name'].'</span>';	
+	echo '<span>&nbsp;&nbsp;<a href="'.$this->session->userdata('logout').'">Logout</a></span>';
 } else{
 	echo img(array('src'=>$base_url.'/images/misc/fb-48.png','id'=>'facebook','style'=>'cursor:pointer; margin-right:10px;'));
-	echo '<label for="facebook" style="cursor:default; display:inline-block;">Join</label>';
+	echo '<label for="facebook" style="cursor:default; display:inline-block;">Login</label>';
 }
 ?>
           <div id="fb-root"></div>
@@ -72,10 +84,10 @@ if(!empty($sesUser))   {
     <div class="column small-12 static center"> <a href="/" class="inline-block margin-auto logo logos-logo-mobile"></a></div>
   </div>
   <div class="row">
-    <div class="column small-12 medium-2 static">
+    <div class="column small-12 medium-2 static show-for-medium-up">
       <div class="dropdown-menu main-nav fn_dropdown">
         <ul class="menu-inline-list">
-          <li><a href="/" class="block"><span class="show-for-medium-up">Menu</span> <i class="show-for-medium-up fa fa-arrow-circle-right"></i></a>
+          <li><a href="/"><span class="show-for-medium-up">Menu</span> <i class="show-for-medium-up fa fa-arrow-circle-right"></i></a>
             <div class="sub-menu fn_menu-helper">
               <div class="inner">
                 <ul class="plain row-1 fn-blocks">
@@ -103,7 +115,7 @@ if(!empty($sesUser))   {
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Descriptions, backdrops and reviews</h2>
-                            <p>The show-more link takes you to a full run down of the movie including ratings, backdrop, poster and description. If the movie has a trailer then sit back and you can watch that here too. A larger selection of movie backdrops is coming soon.  </p>
+                            <p>The show-more link takes you to a full run down of the movie including ratings, backdrop, poster and description. If the movie has a trailer then sit back and you can watch that here too. A larger selection of movie backdrops is coming soon. </p>
                             <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
@@ -117,15 +129,15 @@ if(!empty($sesUser))   {
                           <li>
                             <h2>Top rated and more</h2>
                             <p>We serve up the top rated shows right away and of course you can search for your friends recommendations. Coming soon will be listings for "most popular" tv shows as will "on the air" and even "airing today". </p>
-                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
                       </li>
-                     <li><a href="#">Show details</a>
+                      <li><a href="#">Show details</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Cast, descriptions and backdrops</h2>
-                            <p>The show-more link takes you to a full run down of the show including cast and how many episides and series have been made.   </p>
+                            <p>The show-more link takes you to a full run down of the show including cast and how many episides and series have been made. </p>
                             <!--  <p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
@@ -135,24 +147,24 @@ if(!empty($sesUser))   {
                           <li>
                             <h2>Create a list and share</h2>
                             <p>In your options panel chose "favourites list" and then select the titles to make <strong>your</strong> list. We are working on this app so you can share this with your friends.</p>
-                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
                       </li>
                     </ul>
                   </li>
-                   <li><a href="#">Feedback</a>
+                  <li><a href="#">Feedback</a>
                     <ul class="plain menu row-2 fn-blocks">
                       <li class="show-menu"><a href="#">Contact</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Drop us a line</h2>
                             <p><a href="mailto:admin@grimeo.com">Email JB at Grimeo here.</a></p>
-                            <!--<p><a href="#" class="learn-more">Go to page</a></p>-->
+                            <!--<p><a href="#" class="learn-more">Go to page</a></p>--> 
                           </li>
                         </ul>
                       </li>
-                     <li><a href="#">Be social</a>
+                      <li><a href="#">Be social</a>
                         <ul class="plain menu row-3 fn-blocks">
                           <li>
                             <h2>Twitter</h2>
@@ -161,7 +173,6 @@ if(!empty($sesUser))   {
                           </li>
                         </ul>
                       </li>
-                      
                     </ul>
                   </li>
                 </ul>
@@ -177,7 +188,7 @@ if(!empty($sesUser))   {
                
                 <a href="#" class="right fn-close closer"><i class="fa fa-times-circle"></i></a> </div>
             </div>
-          </li>-->
+          </li>--> 
           <!--<li><a href="#">More</a>
                   <div class="sub-menu">
                     <div class="inner">
@@ -196,34 +207,39 @@ if(!empty($sesUser))   {
       <div class="relative">
         <div class="row search">
           <div class="column small-12">
-            <div class="row">
-              <div class="column small-6 medium-3"> 
-                <!--<i class="fa fa-film"></i>--> 
-                <!--<i class="fa fa-facebook"></i>-->
-                <input type="checkbox" name="options[3_A]" value="options" id="3_A">
-                <label for="3_A" class="checkboxes inline-block"> Options</label>
-              </div>
+            <div class="row collapse ui-options fn-ui-options">
               
-              <div class="column small-6 medium-3 medium-push-6">
-                <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
-                <label for="4_A" class="checkboxes inline-block"> Genres</label>
+              <div class="column small-3 medium-2"> 
+                <div class="options-selector">
+                    <input type="radio" name="options[1]" value="movies" id="1_A">
+                    <label for="1_A" class="inline-block">
+                        <i class="fa fa-film"></i>
+                    </label>
+                </div>
               </div>
-              <div class="column small-12 medium-6 medium-pull-3">
-                <div class="search-tv">
-                  <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
-                  
-                  <!--Alt dropdowns--> 
-                  <!--No dropdowns yet--> 
-                  <!--//Alt dropdowns--> 
+              <div class="column small-3 medium-2 small-push-6 medium-push-8">
+              	<div class="options-selector">
+                    <input type="radio" name="options[1]" value="tv" id="1_B" >
+                    <label for="1_B" class="inline-block">
+                    <i class="fa fa-video-camera"></i>
+                    </label>
                 </div>
-                <div class="search-movie show">
-                  <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
+              </div>
+              <div class="column small-6 medium-8 small-pull-3 medium-pull-2">
+               	<div class="search-container">
+                    <div class="search-tv">
+                      <input type="text" value="" name="tv" id="tv" class="main-search" placeholder="Search all television shows"/ >
+                      
+                     
+                    </div>
+                    <div class="search-movie show">
+                      <input type="text" value="" name="movie"  id="movie" class="main-search" placeholder="Search all movies"/ >
+                    </div>
                 </div>
-                <div class="ui-options fn-ui-options">
-                  <input type="radio" name="options[1]" value="movies" id="1_A">
-                  <label for="1_A" class="inline-block">Movies </label>
-                  <input type="radio" name="options[1]" value="tv" id="1_B" >
-                  <label for="1_B" class="inline-block"> TV </label>
+                <div>
+                
+                  <input type="checkbox" name="options[4_A]" value="genres" id="4_A" class="fn_dropdown-alt">
+                  <label for="4_A" class="checkboxes small inline-block"> Genres</label>
                 </div>
               </div>
             </div>
@@ -258,10 +274,12 @@ if(!empty($sesUser))   {
       </div>
       <!--//Alt dropdowns--> 
     </div>
-    <div class="column small-12 medium-2 show-for-medium-up"> 
+    <div class="column small-12 medium-2 show-for-medium-up align-right"> 
       <!--<a href="#" class="inline-block graphics-fb right"></a>-->
-      
-      <div class="center"> </div>
+     <div class="options-selector header-version"> 
+         <input type="checkbox" name="options[3_A]" value="options" id="3_A">
+         <label for="3_A" class="checkboxes small"> <i class="fa fa-cog"></i><i class="fa fa-times-circle"></i></label>
+     </div>
     </div>
   </div>
 </header>

@@ -25,11 +25,11 @@
 		
 		$(window).load(function(){
 			$('input').each(function() { 
-				console.log('this each function is working');
+				//console.log('this each function is working');
 				$this = $(this);
 				$label = $('label[for="'+ $this.attr('id') +'"]');
 					if ($label.length > 0 ) {
-					  if ($(this).is(':checked'))
+					  if ($this.is(':checked'))
 						$label.addClass('selected');
 					  else
 						$label.removeClass('selected');
@@ -39,10 +39,10 @@
 		});
 				
 		$(document).on('change', 'input', function() { 
-			console.log('input change');
+			//console.log('input change');
 			$this = $(this);
 			$label = $('label[for="'+ $this.attr('id') +'"]');
-			if ($(this).is(':checked'))
+			if ($this.is(':checked'))
 			   $label.addClass('selected');
 			else
 			   $label.removeClass('selected');
