@@ -107,10 +107,10 @@
 								var value = dataChecked[input.attr('name')];
 								if(value) {
 									input.attr('checked', input.prop('checked', true));
-									console.log('has a value' + value );
+									//console.log('has a value' + value );
 								} else {
 									input.removeAttr('checked');
-									console.log('no value');
+									//console.log('no value');
 								}
 							}
 						});

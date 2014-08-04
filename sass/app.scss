@@ -133,8 +133,6 @@ h2 {
 	font-size:$h2-font-size;	
 }
 
-
-
 /* ==========================================================================
    Reset the resets
    ========================================================================== */
@@ -214,7 +212,7 @@ header {
 		}
 	}
 	.search-container {
-		margin-bottom:10px;
+		//margin-bottom:10px;
 	}
 	.search-movie {
 		
@@ -606,7 +604,7 @@ header {
 /* ==========================================================================
    Search Output
    ========================================================================== */ 
-.search-output {
+.search-output-new {
 
 	list-style-type:none;
 	margin:0;
@@ -1175,7 +1173,7 @@ input[type="text"].main-search {
 	padding-top:20px
 }
 //Paging results
-.holder {
+.pagination {
 	@include clearfix;
 	background-color: #9cb7be;
 	padding: 15px 0;
@@ -1188,42 +1186,65 @@ input[type="text"].main-search {
 	span {
 		display:none;
 	}
-	.jp-previous, .jp-next {
-		@include transition-property(color);
-		@include transition-duration(.250s);
-		@include transition-timing-function(ease); 
-		text-indent:0;
-		color:$site-yellow;
-		font-size:em-calc(60);
-		display: inline-block;
-		font-family: FontAwesome;
-		font-style: normal;
-		font-weight: normal;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		&:hover {
-			color: darken($site-yellow, 10%)
+	ul {
+		> li {
+			display:inline;
+			&.disabled a{
+				color:#8aa6ad;
+				pointer:default;
+			}
 		}
-		&.jp-disabled {
-			color:#8aa6ad;
-			pointer:default;
+		
+		
+		> li:nth-child(2) a {
+				float:left;
+				display:inline-block;
+				padding-left:20px;
+				//text-indent:-5000px;
+				&:before {
+					content:"\f0a8"	;
+				}
+					
+		}
+		> li:nth-last-child(2) a {
+			float:right;
+			display:inline-block;
+			padding-right:20px;
+			//text-indent:-5000px;
+			&:before {
+				content:"\f0a9"	
+			}
+						
+		}
+		> li:nth-child(2) > a, > li:nth-last-child(2) > a {
+			@include transition-property(color);
+			@include transition-duration(.250s);
+			@include transition-timing-function(ease); 
+			text-indent:0;
+			color:$site-yellow;
+			font-size:em-calc(60);
+			display: inline-block;
+			font-family: FontAwesome;
+			font-style: normal;
+			font-weight: normal;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		
+			&:hover {
+				color: darken($site-yellow, 10%)
+			}
+			
+		}
+		> li:nth-child(2), > li:nth-last-child(2) {
+			&.disabled a {
+				color:#8aa6ad;
+				pointer:default;
+			}
 		}
 	}
-	.jp-previous {
-		float:left;
-		padding-left:20px;	
-	}
-	.jp-next {
-		float:right;
-		padding-right:20px;		
-	}
-	.jp-previous:before {
-		content:"\f0a8"	
-	}
-	.jp-next:before {
-		content:"\f0a9"		
-	}
+		
+	  
 	
 	 
 }
@@ -1433,7 +1454,6 @@ input[type="text"].main-search {
 			
 		}
 		
-		
 	}
 	
 	
@@ -1475,8 +1495,4 @@ input[type="text"].main-search {
 	.closer {
 		float:right;
 	}
-	
 }
-
-
-

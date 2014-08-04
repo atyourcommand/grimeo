@@ -42,10 +42,20 @@
 			//console.log('input change');
 			$this = $(this);
 			$label = $('label[for="'+ $this.attr('id') +'"]');
+			
+			//extra for radio to remove class from all labels others
+			$radioName = $this.attr('name');
+			$nearestLabel = $( 'input[name="'+$radioName+'"]' ).next('label');
+			if ($this.attr('type') == 'radio') {
+				//remove existing selected class first
+				$nearestLabel.removeClass('selected');
+			}
+			//
 			if ($this.is(':checked'))
 			   $label.addClass('selected');
 			else
 			   $label.removeClass('selected');
+
 		});
 		
 		//Adds .has-menu & adds or removes .show-menu when clicked

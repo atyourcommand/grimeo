@@ -61,8 +61,8 @@ $(function() {
 				//add something 
 				timer = setTimeout(function() {
 					$header.addClass("search-active");
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');	
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');	
 				}, 2000); // 2000 is in mil sec eq to 2 sec.
 		
 				$this.data("timer", timer);
@@ -126,11 +126,11 @@ $(function() {
 			//User option radio options to change classes
 			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 			//console.log($userOptionThree);
-			if ($userOptionOne.attr('checked') && !$userOptionOne.attr('disabled')){
-				$body.addClass('show-trailers')
+			if ($userOptionOne.attr('checked')){
+				//$body.addClass('show-trailers')
 				//console.log('is checked');	
 			}else{
-				$body.removeClass('show-trailers')
+				//$body.removeClass('show-trailers')
 				//console.log('is not checked');	
 			}
 			$userOptionOne.change(function(){
@@ -164,14 +164,7 @@ $(function() {
 				$body.toggleClass('show-favourites');
 			});
 			
-			$(document).ajaxStart(function() {
-			  //$("input").attr("disabled", true);
-			  //$("input").closest('label').addClass('disabled');
-			}).ajaxComplete(function() {
-			  //$("input").removeAttr("disabled");
-			  //$("input").closest('label').removeClass('disabled');
-			});
-				
+							
 		});
 		
 		uiOptions();

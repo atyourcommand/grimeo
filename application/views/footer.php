@@ -33,14 +33,16 @@ jQuery(function($) {
 	
 });
 $(window).load(function() {
-    //$('form').FormCache();
+    $('[name="user-options"]').FormCache();
 	$('[name="save-shows"]').SavedList();
 });
 </script>
-<script type="text/javascript" src="main.min.js"></script>
 
-<script type="text/javascript" src="js/jquery.pages.js"></script>
+
+<!--<script type="text/javascript" src="js/jquery.pages.js"></script>-->
 <script>
+
+
 (function($) {
     $(document).ready(function() {
     // variables show in one page
@@ -119,7 +121,7 @@ $(window).load(function() {
 		key = '?api_key=ba5a09dba76b1c3875e487780468ef93';
 		$.ajax({
 			async: false,
-			url: url + media + mode + key+'&page='+k, 
+			url: url + media + mode + key +'&page='+k, 
 			success: function (data) {  
 					$.each(data, function(i, item) {
 						if(i == "results") {
@@ -147,6 +149,7 @@ $(window).load(function() {
 	//alert('s');
 	$getdata = $getdata.replace("undefined", ""); 
 	$('.search-output').html($getdata).fadeIn();
+	
 	// paging function call
 	$("div.holder").jPages({
 		containerID : "content",
@@ -188,7 +191,7 @@ $(window).load(function() {
 		success: function (data) {  
 			
 			loadGenreList(data);
-			loadUpcomingMovies();
+			//loadUpcomingMovies();
 			loadingContent.end(); //Remove loading message
 		}, 
 		error: function (request,error) {
@@ -389,7 +392,7 @@ $(window).load(function() {
         	});
     });
 	//CLICK ON TEXT SEARCH RESULTS LINKS
-	$(document).on('click','.fn-asset-link', function(e){
+	$(document).on('click','.fn-asset-link_', function(e){
 		//console.log('working');
 		
 		var $id  = $(this).attr('id'),
@@ -427,7 +430,6 @@ $(window).load(function() {
 						var $voteCount = "<div class=\"vote-count\">Total votes: "+data.vote_count+"</div>";
 						var $actors = "<div class=\"vote-count\">All Actors: "+actorname($id, $creditsMode )+"</div>";
 						var $poster = "<img src=\""+base_url+data.poster_path+"\"/>";
-						
 						var $backdrop = "<li><img src=\""+base_backdrop_url+data.backdrop_path+"\" class=\"hero\"/></li>";
 						list +="<li class=\"column small-12 medium-12 large-12\"><ul>"+$poster+$title+$tagline+$releaseDate+$voteCount+$actors+$voteAverage+$backdrop+$overview+$videolink+"</ul></li>" ;
 					
@@ -450,7 +452,7 @@ $(window).load(function() {
   	});
 	
 	//CLICK ON TV RESULTS LINKS
-	$(document).on('click','.fn-asset-link-tv', function(e){
+	$(document).on('click','.fn-asset-link-tv_', function(e){
 		//console.log('working');
 		
 		var $id  = $(this).attr('id'),

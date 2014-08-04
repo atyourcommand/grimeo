@@ -241,10 +241,20 @@ var dropDownMenuAlternate = (function() {
 			//console.log('input change');
 			$this = $(this);
 			$label = $('label[for="'+ $this.attr('id') +'"]');
+			
+			//extra for radio to remove class from all labels others
+			$radioName = $this.attr('name');
+			$nearestLabel = $( 'input[name="'+$radioName+'"]' ).next('label');
+			if ($this.attr('type') == 'radio') {
+				//remove existing selected class first
+				$nearestLabel.removeClass('selected');
+			}
+			//
 			if ($this.is(':checked'))
 			   $label.addClass('selected');
 			else
 			   $label.removeClass('selected');
+
 		});
 		
 		//Adds .has-menu & adds or removes .show-menu when clicked
@@ -393,7 +403,6 @@ var dropDownMenuAlternate = (function() {
                         }
                     }
                 });
-                
                 
             }
             else {
@@ -1175,10 +1184,10 @@ var appendAdCode = (function(){
 								var value = dataChecked[input.attr('name')];
 								if(value) {
 									input.attr('checked', input.prop('checked', true));
-									console.log('has a value' + value );
+									//console.log('has a value' + value );
 								} else {
 									input.removeAttr('checked');
-									console.log('no value');
+									//console.log('no value');
 								}
 							}
 						});
@@ -1332,8 +1341,8 @@ var appendAdCode = (function(){
 				//add something 
 				timer = setTimeout(function() {
 					$header.addClass("search-active");
-					$logo.removeClass('logos-logo');
-					$logo.addClass('logos-logo-mobile');	
+					//$logo.removeClass('logos-logo');
+					//$logo.addClass('logos-logo-mobile');	
 				}, 2000); // 2000 is in mil sec eq to 2 sec.
 		
 				$this.data("timer", timer);
@@ -1397,11 +1406,11 @@ var appendAdCode = (function(){
 			//User option radio options to change classes
 			var $userOptionOne = $('input[name="options[2_A]"]', '.user-options');
 			//console.log($userOptionThree);
-			if ($userOptionOne.attr('checked') && !$userOptionOne.attr('disabled')){
-				$body.addClass('show-trailers')
+			if ($userOptionOne.attr('checked')){
+				//$body.addClass('show-trailers')
 				//console.log('is checked');	
 			}else{
-				$body.removeClass('show-trailers')
+				//$body.removeClass('show-trailers')
 				//console.log('is not checked');	
 			}
 			$userOptionOne.change(function(){
@@ -1435,14 +1444,7 @@ var appendAdCode = (function(){
 				$body.toggleClass('show-favourites');
 			});
 			
-			$(document).ajaxStart(function() {
-			  //$("input").attr("disabled", true);
-			  //$("input").closest('label').addClass('disabled');
-			}).ajaxComplete(function() {
-			  //$("input").removeAttr("disabled");
-			  //$("input").closest('label').removeClass('disabled');
-			});
-				
+							
 		});
 		
 		uiOptions();
