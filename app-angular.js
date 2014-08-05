@@ -1,11 +1,12 @@
 var myApp = angular.module('myApp',['restangular', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule' ]);
 
-	var urlBase = 'https://dsp-grimeo.cloud.dreamfactory.com:443/rest/',
-		keyWebService = 'grimeo/',
-		media = 'movie/',
-		urlMovies = urlBase + keyWebService,
-		imageUrlBase = 'http://image.tmdb.org/t/p/w92',
-		base_backdrop_url = 'http://image.tmdb.org/t/p/w780';
+var urlBase = 'https://dsp-grimeo.cloud.dreamfactory.com:443/rest/',
+	keyWebService = 'grimeo/',
+	media = 'movie/',
+	appName = '&app_name=grimeo',
+	urlMovies = urlBase + keyWebService,
+	imageUrlBase = 'http://image.tmdb.org/t/p/w92',
+	base_backdrop_url = 'http://image.tmdb.org/t/p/w780';
 	
 // Configure our routes
 myApp.config(['$routeProvider',
@@ -56,6 +57,7 @@ myApp.config(['$routeProvider',
 			})
 			
 }]);
+
 //Pages work as Hash Bangs #!
 myApp.config(['$locationProvider',
     function($locationProvider) {
@@ -99,7 +101,6 @@ myApp.factory('myCache', function($cacheFactory) {
 myApp.factory('MoviesFactory', function($http, myCache){
 	
 	var mode = 'movie';
-	var appName = '&app_name=grimeo';
 	var filterPopular = '?filter=types%3D%22popular%22';
 	var limitedSet = '&limit=600';
 	
@@ -121,8 +122,9 @@ myApp.factory('MoviesFactory', function($http, myCache){
 
 myApp.factory('MovieFactory', function($http, $routeParams){
 	
-	var mode = 'movie';
-	var appName = '?app_name=grimeo';
+	var mode = 'movie',
+	appName = '?app_name=grimeo';
+	
 	return {
 		
 		getData: function(callback){
@@ -228,6 +230,26 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', '$timeout', 'myCa
 	$scope.message = 'Home - Latest Movies';	
 }]);
 
+//Typeahead Search
+myApp.controller('TypeaheadCtrl',  ['$scope','$http','limitToFilter',
+ 	function($scope, $http, limitToFilter) {
+		var mode = 'movie',
+		appName = '&app_name=grimeo';
+		//var $id = $routeParams.movieId;
+		//$http.get(urlMovies + mode + '/'+ $id + appName)
+		
+		$scope.movies = function(movieName) {
+			                               //?filter=title%20LIKE%20%27%25the%25%27
+										   //http://gd.geobytes.com/AutoCompleteCity?callback=JSON_CALLBACK &filter=US&q="+cityName
+    		var filterTitleContains = '?callback=JSON_CALLBACK&filter=title%20LIKE%20%27%25' + movieName + '%25%27';
+			
+			return $http.get(urlMovies + mode + filterTitleContains + appName)
+			.then(function(response){
+      		return limitToFilter(response.data, 15);
+    		});
+  		};
+	
+}]);
 
 myApp.controller('AboutController', function($scope, Restangular) {
 	$scope.message = 'About us.';
