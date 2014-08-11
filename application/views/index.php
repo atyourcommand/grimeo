@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html ng-app="myApp">
 <head>
+<meta name="google-site-verification" content="QkkZTdvXNHL8afRwsD5Xn7WF6AmrEz2DiBLbmClfzLQ" />
 <?php $header_data = get_header_data();?>
 <meta name="fragment" content="!">  
 <meta charset="utf-8">
