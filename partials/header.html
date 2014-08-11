@@ -152,7 +152,9 @@
                      
                     </div>
                     <div class="search-movie show">
-                      <input type="text" value="" name=""  id="" class="main-search" ng-model="result" typeahead="suggestion for suggestion in movies($viewValue)" placeholder="Search all movies"/ >
+                      <input type="text" name=""  id="" class="main-search" data-ng-model="searchStr" ng-model-options="{debounce: 1000}" placeholder="Search all movies" / >
+                    <!--<div class="search-movie show">
+                      <input type="text" name=""  id="" class="main-search" ng-model="result" typeahead="movies.title for movies in movies($viewValue)" typeahead-template-url="movies.html" placeholder="Search all movies" / >-->
                     </div>
                 </div>
                <!-- <div>

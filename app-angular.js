@@ -121,10 +121,8 @@ myApp.factory('MoviesFactory', function($http, myCache){
 });
 
 myApp.factory('MovieFactory', function($http, $routeParams){
-	
 	var mode = 'movie',
 	appName = '?app_name=grimeo';
-	
 	return {
 		
 		getData: function(callback){
@@ -143,6 +141,30 @@ myApp.factory('MovieFactory', function($http, $routeParams){
 	
 });
 
+		
+myApp.factory('TypeaheadFactory', function($http, $routeParams){
+	var mode = 'movie',
+		appName = '&app_name=grimeo';
+	
+	return {
+		
+		getData: function(tmpStr, callback){
+			
+			$('.in-progress-bg').addClass('show');
+			var filterTitleContains = '?filter=title%20LIKE%20%27%25' + tmpStr + '%25%27';
+			$http.get(urlMovies + mode + filterTitleContains + appName)
+			.success(function(data, status, headers, config){
+				callback(data);
+			})
+			.error(function(data, status, headers, config) {
+				alert("Sorry there was an error connecting to the Database");
+			});
+		}
+	};
+	
+});		
+		
+
 myApp.controller ('ListMoviesCtrl', ['$scope','MoviesFactory', '$timeout', 'myCache','localStorageService',
 	function($scope, MoviesFactory, $timeout, myCache, localStorageService){
 		
@@ -156,7 +178,6 @@ myApp.controller ('ListMoviesCtrl', ['$scope','MoviesFactory', '$timeout', 'myCa
 			});
 			
 		}else{
-			//console.log('we have local storage');
 			paging(movies);
 		}	
 		
@@ -207,6 +228,7 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', '$timeout', 'myCa
 		}else{
 			//console.log('we have local storage');
 			paging(movies);
+			//console.log(movies);
 		}	
 		
 		//Paging
@@ -229,26 +251,26 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', '$timeout', 'myCa
 	$scope.imageUrlBase = imageUrlBase;
 	$scope.message = 'Home - Latest Movies';	
 }]);
-
+//https://gist.github.com/bahattincinic/9671766
 //Typeahead Search
-myApp.controller('TypeaheadCtrl',  ['$scope','$http','limitToFilter',
- 	function($scope, $http, limitToFilter) {
-		var mode = 'movie',
-		appName = '&app_name=grimeo';
-		//var $id = $routeParams.movieId;
-		//$http.get(urlMovies + mode + '/'+ $id + appName)
-		
-		$scope.movies = function(movieName) {
-			                               //?filter=title%20LIKE%20%27%25the%25%27
-										   //http://gd.geobytes.com/AutoCompleteCity?callback=JSON_CALLBACK &filter=US&q="+cityName
-    		var filterTitleContains = '?callback=JSON_CALLBACK&filter=title%20LIKE%20%27%25' + movieName + '%25%27';
-			
-			return $http.get(urlMovies + mode + filterTitleContains + appName)
-			.then(function(response){
-      		return limitToFilter(response.data, 15);
-    		});
-  		};
-	
+myApp.controller('TypeaheadCtrl',  ['TypeaheadFactory','$scope','$http','limitToFilter',
+ 	function(TypeaheadFactory, $scope, $http, limitToFilter) {
+		$scope.searchMovies = []
+		$scope.$watch('searchStr', function(tmpStr){
+			if(tmpStr != '' && tmpStr != undefined && tmpStr.length > 2){
+				TypeaheadFactory.getData(tmpStr, function(data){
+					
+					$('.in-progress-bg').removeClass('show');
+					$scope.searchMovies = limitToFilter(data.record, 15);
+					
+					$scope.imageUrlBase = imageUrlBase;
+					$scope.backdropUrlBase = base_backdrop_url;
+					console.log($scope.searchMovies);
+				});
+			}else {
+				$scope.searchMovies = [];
+			}
+		})
 }]);
 
 myApp.controller('AboutController', function($scope, Restangular) {
