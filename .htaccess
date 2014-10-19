@@ -39,6 +39,22 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
+	
+	### FOR http://console.seo4ajax.com/ and indexing of js pages
+	
+	### If not already activated, activates the RewriteEngine module
+	
+	###RewriteEngine On
+	
+	### If using a .htaccess file, uncomment the following line
+	Options +FollowSymLinks
+	
+	### If the Host header is not correctly set
+	### RequestHeader set Host "api.seo4ajax.com"
+				  
+	### If a bot requests an escaped URL then proxify the request to SEO4Ajax
+	RewriteCond %{QUERY_STRING}  _escaped_fragment_=  [NC]
+	RewriteRule ^(.*)$ http://api.seo4ajax.com/ea3fec1243b79ec2ae439cb3b8c15b1a/$1 [P,QSA,L]
 
 </IfModule>
 
