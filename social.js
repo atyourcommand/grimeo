@@ -1,3 +1,4 @@
+//This is the body of the page and not used
 <!--Facebook SDK--> 
 FBinitIsDone = false;   
 window.fbAsyncInit = function() {

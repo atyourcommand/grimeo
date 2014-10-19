@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp',['restangular', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule' ]);
 
-var urlBase = 'https://dsp-grimeo.cloud.dreamfactory.com:443/rest/',
+var urlBase = 'http://ec2-54-183-177-210.us-west-1.compute.amazonaws.com:80/rest/',
 	keyWebService = 'grimeo/',
 	media = 'movie/',
 	appName = '&app_name=grimeo',
@@ -16,21 +16,21 @@ myApp.config(['$routeProvider',
 
 			// route for the home page
 			when('/', {
-				templateUrl : 'pages/home.html',
+				templateUrl : 'pages/home.php',
 				controller  : 'mainController', 
 				title: 'home'
 			}).
 			
 			// route for a movie page
 			when('/movies/', {
-				templateUrl : 'pages/movies.html',
+				templateUrl : 'pages/movies.php',
 				controller  : 'ListMoviesCtrl',
 				title: 'Latest Movies'
 			}).
 			
 			// route for the movie list page
 			when('/movie/:movieId/:MovieName/', {
-				templateUrl : 'pages/movie.html',
+				templateUrl : 'pages/movie.php',
 				controller  : 'MovieController', 
 				title: 'Movie',
 				description: 'Here are the latest Movies'
@@ -51,9 +51,8 @@ myApp.config(['$routeProvider',
 			}).
 			
 			otherwise({
-				
-					redirectTo: '/grimeo/',
-					title: 'Redirect'
+				redirectTo: '/grimeo/',
+				title: 'Redirect'
 			})
 			
 }]);
@@ -90,7 +89,6 @@ function deSlugify(str){
 	var newStr = str.replace(/-/g,' ');	
 	firstLetter = newStr.substr(0, 1);
 	return firstLetter.toUpperCase() + newStr.substr(1);
-	
 }
 
 // Caching
@@ -98,26 +96,212 @@ myApp.factory('myCache', function($cacheFactory) {
  return $cacheFactory('myData');
 });
 
+myApp.factory('GenreFactory', function($http, myCache){
+	var mode = 'genres';
+	return {
+		getData: function(callback){
+			data =  [
+						{
+						  "id": 1,
+						  "genresId": 28,
+						  "title": "Action"
+						},
+						{
+						  "id": 2,
+						  "genresId": 12,
+						  "title": "Adventure"
+						},
+						{
+						  "id": 3,
+						  "genresId": 16,
+						  "title": "Animation"
+						},
+						{
+						  "id": 4,
+						  "genresId": 35,
+						  "title": "Comedy"
+						},
+						{
+						  "id": 5,
+						  "genresId": 80,
+						  "title": "Crime"
+						},
+						{
+						  "id": 6,
+						  "genresId": 105,
+						  "title": "Disaster"
+						},
+						{
+						  "id": 7,
+						  "genresId": 99,
+						  "title": "Documentary"
+						},
+						{
+						  "id": 8,
+						  "genresId": 18,
+						  "title": "Drama"
+						},
+						{
+						  "id": 9,
+						  "genresId": 82,
+						  "title": "Eastern"
+						},
+						{
+						  "id": 10,
+						  "genresId": 2916,
+						  "title": "Erotic"
+						},
+						{
+						  "id": 11,
+						  "genresId": 10751,
+						  "title": "Family"
+						},
+						{
+						  "id": 12,
+						  "genresId": 10750,
+						  "title": "Fan Film"
+						},
+						{
+						  "id": 13,
+						  "genresId": 14,
+						  "title": "Fantasy"
+						},
+						{
+						  "id": 14,
+						  "genresId": 10753,
+						  "title": "Film Noir"
+						},
+						{
+						  "id": 15,
+						  "genresId": 10769,
+						  "title": "Foreign"
+						},
+						{
+						  "id": 16,
+						  "genresId": 36,
+						  "title": "History"
+						},
+						{
+						  "id": 17,
+						  "genresId": 10595,
+						  "title": "Holiday"
+						},
+						{
+						  "id": 18,
+						  "genresId": 27,
+						  "title": "Horror"
+						},
+						{
+						  "id": 19,
+						  "genresId": 10756,
+						  "title": "Indie"
+						},
+						{
+						  "id": 20,
+						  "genresId": 10402,
+						  "title": "Music"
+						},
+						{
+						  "id": 21,
+						  "genresId": 22,
+						  "title": "Musical"
+						},
+						{
+						  "id": 22,
+						  "genresId": 9648,
+						  "title": "Mystery"
+						},
+						{
+						  "id": 23,
+						  "genresId": 10754,
+						  "title": "Neo-noir"
+						},
+						{
+						  "id": 24,
+						  "genresId": 1115,
+						  "title": "Road Movie"
+						},
+						{
+						  "id": 25,
+						  "genresId": 10749,
+						  "title": "Romance"
+						},
+						{
+						  "id": 26,
+						  "genresId": 878,
+						  "title": "Science Fiction"
+						},
+						{
+						  "id": 27,
+						  "genresId": 10755,
+						  "title": "Short"
+						},
+						{
+						  "id": 28,
+						  "genresId": 9805,
+						  "title": "Sport"
+						},
+						{
+						  "id": 29,
+						  "genresId": 10758,
+						  "title": "Sporting Event"
+						},
+						{
+						  "id": 30,
+						  "genresId": 10757,
+						  "title": "Sports Film"
+						},
+						{
+						  "id": 31,
+						  "genresId": 10748,
+						  "title": "Suspense"
+						},
+						{
+						  "id": 32,
+						  "genresId": 10770,
+						  "title": "TV movie"
+						},
+						{
+						  "id": 33,
+						  "genresId": 53,
+						  "title": "Thriller"
+						},
+						{
+						  "id": 34,
+						  "genresId": 10752,
+						  "title": "War"
+						},
+						{
+						  "id": 35,
+						  "genresId": 37,
+						  "title": "Western"
+						}
+  					];
+				callback(data);
+		}
+	};
+});
+
 myApp.factory('MoviesFactory', function($http, myCache){
 	
 	var mode = 'movie';
 	var filterPopular = '?filter=types%3D%22popular%22';
-	var limitedSet = '&limit=600';
+	var limitedSet = '&limit=100000'; //Most we are only ever going to get 1000 anyways
+	var latestByReleaseDate = '&order=release_date%20DESC';
 	
 	return {
 		getData: function(callback){
 		  $('.in-progress-bg').addClass('show');
-		  
-			$http.get(urlMovies + mode + filterPopular + limitedSet + appName, {cache:true})
+		    //$http.get('fake-data.json')
+			$http.get(urlMovies + mode + filterPopular + latestByReleaseDate + limitedSet + appName, {cache:true})
 			.success(function(data, status, headers, config) {
 				callback(data);
 			})
 			.error(function(data, status, headers, config) {
-				alert("error");
+				alert("Error grabbing popular movies ");
 			});  
 		}
 	};
-	
 });
 
 myApp.factory('MovieFactory', function($http, $routeParams){
@@ -149,10 +333,11 @@ myApp.factory('TypeaheadFactory', function($http, $routeParams){
 	return {
 		
 		getData: function(tmpStr, callback){
-			
-			$('.in-progress-bg').addClass('show');
+			var clearMovie = true;
+			//$('.in-progress-bg').addClass('show');
 			var filterTitleContains = '?filter=title%20LIKE%20%27%25' + tmpStr + '%25%27';
 			$http.get(urlMovies + mode + filterTitleContains + appName)
+			//$http.get('fake-data.json')
 			.success(function(data, status, headers, config){
 				callback(data);
 			})
@@ -164,9 +349,8 @@ myApp.factory('TypeaheadFactory', function($http, $routeParams){
 	
 });		
 		
-
-myApp.controller ('ListMoviesCtrl', ['$scope','MoviesFactory', '$timeout', 'myCache','localStorageService',
-	function($scope, MoviesFactory, $timeout, myCache, localStorageService){
+myApp.controller ('ListMoviesCtrl', ['$scope','MoviesFactory','GenreFactory', '$timeout', 'myCache','localStorageService',
+	function($scope, MoviesFactory, GenreFactory, $timeout, myCache, localStorageService){
 		
 		movies = localStorageService.get('latestMovies');
 		if(movies == null){
@@ -184,21 +368,22 @@ myApp.controller ('ListMoviesCtrl', ['$scope','MoviesFactory', '$timeout', 'myCa
 		//Paging
 		function paging(movies){
 			$scope.movies = movies,
-			$scope.filteredMovies = [],
+			$scope.pagedMovies = [],
 			$scope.currentPage = 1,
 			$scope.numPerPage = 12,
-			$scope.maxSize = 500;
+			$scope.maxSize = 100000;
 			$scope.numPages = function () {
 				return Math.ceil($scope.movies.length / $scope.numPerPage);
 			};
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
-				$scope.filteredMovies = $scope.movies.slice(begin, end);
+				$scope.pagedMovies = $scope.movies.slice(begin, end);
 			});	
 		};	
 		$scope.imageUrlBase = imageUrlBase;
-		$scope.message = 'Latest Movies';	
+		$scope.message = 'Latest Movies';
+				
 }]);
 
 myApp.controller('MovieController',  ['$scope','MovieFactory',
@@ -211,66 +396,111 @@ myApp.controller('MovieController',  ['$scope','MovieFactory',
 			$scope.backdropUrlBase = base_backdrop_url;
 		});
 		$scope.message = 'This is the main movie page';	
-	
 }]);
 
-myApp.controller ('mainController', ['$scope','MoviesFactory', '$timeout', 'myCache','localStorageService',
-	function($scope, MoviesFactory, $timeout, myCache, localStorageService){
+myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
+	function($scope, MoviesFactory, GenreFactory, $timeout, myCache, localStorageService, limitToFilter){
+		
 		movies = localStorageService.get('latestMovies');
+		//newMovies = localStorageService.get('latestMovies');
+		
+		filteredMovies = []
+		//console.log(filteredMovies);
+				
 		if(movies == null){
 			MoviesFactory.getData(function(data){
 				movies = data.record;
+				//console.log('we have no local storage');
 				paging(movies);
-				localStorageService.add('latestMovies',$scope.movies);
+				localStorageService.add('latestMovies', $scope.movies);
 				$('.in-progress-bg').removeClass('show');
+				
 			});
-			
 		}else{
 			//console.log('we have local storage');
-			paging(movies);
-			//console.log(movies);
+			
+			// What genre has been selected
+			var sltVal = null;
+			$scope.$watch('showGenre', function(sltVal){
+				//console.log('hit it:' + sltVal);
+				//$scope.selectedGenres = null;
+				$scope.selectedGenres = sltVal;
+				
+				if($scope.selectedGenres == null || $scope.selectedGenres == ''){
+					$scope.pagedMovies = []	
+					paging(movies);
+					//console.log('genre is ' + $scope.selectedGenres);
+				}else {
+					
+					filteredMovies = $.grep(movies, function(v){
+						return v.genresId == sltVal;	
+					});
+					$scope.pagedMovies = []	
+					paging(filteredMovies);	
+					//console.log('genre is ' + $scope.selectedGenres);
+				}
+			});
+			
 		}	
 		
 		//Paging
 		function paging(movies){
+			//movies = limitToFilter(movies, sltVal);
+			
 			$scope.movies = movies,
-			$scope.filteredMovies = [],
+			$scope.pagedMovies = [],
 			$scope.currentPage = 1,
 			$scope.numPerPage = 12,
-			$scope.maxSize = 500;
+			$scope.maxSize = 100000;
 			$scope.numPages = function () {
 				return Math.ceil($scope.movies.length / $scope.numPerPage);
 			};
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
-				$scope.filteredMovies = $scope.movies.slice(begin, end);
-			});	
-		};	
+				$scope.pagedMovies = $scope.movies.slice(begin, end).reverse();
+			});
+			//console.log('paging');	
+		};
+		
+		// Get Genres for drop down
+		GenreFactory.getData(function(data){
+			$scope.genres = [];
+			$scope.genres = data;
+		});
+		
 		
 	$scope.imageUrlBase = imageUrlBase;
 	$scope.message = 'Home - Latest Movies';	
 }]);
 //https://gist.github.com/bahattincinic/9671766
 //Typeahead Search
-myApp.controller('TypeaheadCtrl',  ['TypeaheadFactory','$scope','$http','limitToFilter',
- 	function(TypeaheadFactory, $scope, $http, limitToFilter) {
+
+myApp.controller('TypeaheadCtrl',  ['TypeaheadFactory','$scope','$http','limitToFilter','$rootScope',
+ 	function(TypeaheadFactory, $scope, $http, limitToFilter, $rootScope) {
 		$scope.searchMovies = []
 		$scope.$watch('searchStr', function(tmpStr){
 			if(tmpStr != '' && tmpStr != undefined && tmpStr.length > 2){
 				TypeaheadFactory.getData(tmpStr, function(data){
-					
-					$('.in-progress-bg').removeClass('show');
-					$scope.searchMovies = limitToFilter(data.record, 15);
-					
-					$scope.imageUrlBase = imageUrlBase;
-					$scope.backdropUrlBase = base_backdrop_url;
+					$('.in-progress-bg').fadeIn();
+					movies = limitToFilter(data.record, 15);
+					$scope.searchMovies = movies;
 					console.log($scope.searchMovies);
+					$scope.imageUrlBase = imageUrlBase;
+					
+					$scope.backdropUrlBase = base_backdrop_url;
 				});
 			}else {
 				$scope.searchMovies = [];
 			}
+			if(tmpStr != '' && tmpStr != undefined && tmpStr.length > 0){
+				$rootScope.clearMovies = true;
+			} else {
+				$rootScope.clearMovies = false;
+			}
+			
 		})
+	$scope.searchMessage = 'Searching for:';	
 }]);
 
 myApp.controller('AboutController', function($scope, Restangular) {

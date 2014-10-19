@@ -36,9 +36,12 @@
 </head>
 <body class="show-trailers" ng-controller="mainController">
 <?php include ('partials/options.html') ?>
+<section ng-controller="TypeaheadCtrl">
 <?php include ('partials/header.html') ?>
+<?php include ('partials/movies-template-search.html') ?>
+</section>
 <section id="main" class="main"> 
-	<div ng-view onload="onViewLoad()"></div>
+	<div ng-view class="slide" onload="onViewLoad()"></div>
     <!--In progress message-->
     <div class="in-progress-bg">
         <div class="in-progress">
@@ -46,7 +49,7 @@
         </div>
     </div>
     <!--//In progress message--> 
- 	<div id='fb-root'></div>
+    <div id='fb-root'></div>
 <!--<script src='http://connect.facebook.net/en_US/all.js'></script>-->
 <!--<script src="social.js"></script> -->
 <script><!--Facebook SDK--> 

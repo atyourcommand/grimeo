@@ -29,20 +29,14 @@ jQuery(function($) {
 	dropDownMenuAlternate.init();
 	swapText.init();
 	$('.fn-blocks').responsiveEqualHeightGrid();
-	
-	
 });
 $(window).load(function() {
     $('[name="user-options"]').FormCache();
 	$('[name="save-shows"]').SavedList();
 });
 </script>
-
-
 <!--<script type="text/javascript" src="js/jquery.pages.js"></script>-->
 <script>
-
-
 (function($) {
     $(document).ready(function() {
     // variables show in one page
@@ -629,10 +623,8 @@ $('input[id="1_B"]', '.ui-options').on('click', function(){
 		beforeSend: function(){
 			loadingContent.start('Please wait, loading top rated TV');
 			$('.title').html(modeHeading);	
-			
 		},
 		success: function (data) {  
-			
 			//loadGenreList(data);
 			//loadUpcomingMovies();
 			loadTopRatedTV();
@@ -670,10 +662,7 @@ $('input[id="1_B"]', '.ui-options').on('click', function(){
 
 </script>
 <script>
-$(document).ajaxStop(function(){
-     appendAdCode.loadAds();
-});
-
+appendAdCode.loadAds();
 </script>
 <!--//GA-->
 </html>

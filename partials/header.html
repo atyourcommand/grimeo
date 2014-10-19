@@ -145,17 +145,18 @@
                 </div>
               </div>
               <div class="column small-6 medium-8 small-pull-3 medium-pull-2">
-               	<div class="search-container" ng-controller="TypeaheadCtrl">
+               	<div class="search-container">
                     <div class="search-tv">
                       <input type="text" value="" name="" id="" class="main-search" placeholder="Search all television shows"/ >
                       
                      
                     </div>
                     <div class="search-movie show">
-                      <input type="text" name=""  id="" class="main-search" data-ng-model="searchStr" ng-model-options="{debounce: 1000}" placeholder="Search all movies" / >
+                      <input type="text" name=""  id="" class="main-search" ng-model="searchStr" ng-model-options="{debounce: 1000}" placeholder="Search all movies" / >
                     <!--<div class="search-movie show">
                       <input type="text" name=""  id="" class="main-search" ng-model="result" typeahead="movies.title for movies in movies($viewValue)" typeahead-template-url="movies.html" placeholder="Search all movies" / >-->
                     </div>
+                  
                 </div>
                <!-- <div>
                 
