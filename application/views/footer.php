@@ -662,7 +662,9 @@ $('input[id="1_B"]', '.ui-options').on('click', function(){
 
 </script>
 <script>
-appendAdCode.loadAds();
+$(window).bind("load", function() {
+   appendAdCode.loadAds();	
+});
 </script>
 <!--//GA-->
 </html>
