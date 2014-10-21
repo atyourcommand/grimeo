@@ -78,21 +78,14 @@ window.fbAsyncInit = function() {
          }(document));
 
 function fb_callout() {
-     (function(d){
-         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement('script'); js.id = id; js.async = true;
-         js.src = "//connect.facebook.net/en_US/all.js";
-         ref.parentNode.insertBefore(js, ref);
-         }(document));
-     }
-/*(function(d){
-	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-	if (d.getElementById(id)) {return;}
-	js = d.createElement('script'); js.id = id; js.async = true;
-	js.src = "//connect.facebook.net/en_US/all.js";
-	ref.parentNode.insertBefore(js, ref);
-}(document));*/
+	(function(d){
+	 var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	 if (d.getElementById(id)) {return;}
+	 js = d.createElement('script'); js.id = id; js.async = true;
+	 js.src = "//connect.facebook.net/en_US/all.js";
+	 ref.parentNode.insertBefore(js, ref);
+	 }(document));
+	}
 
 $('#facebook').click(function(e) {
 	FB.login(function(response) {
@@ -105,7 +98,6 @@ $('#facebook').click(function(e) {
 
 function fbFeed(elem) {
 			
-		//console.log(elem);			
 		var url = $(elem).attr('data-url');
 		var pic = $(elem).attr('data-picture');
 		var titl = $(elem).attr('data-name');
@@ -118,10 +110,8 @@ function fbFeed(elem) {
 		fbShare.url = 'http://www.grimeo.com/' + url;	
 		fbShare.name = titl;
 		fbShare.picture = pic; 
-		fbShare.caption = 'I just watched this movie trailer - check it out here'; 
+		fbShare.caption = 'Watch this movie trailer now!'; 
 		fbShare.description = desc; 
-		//console.log(fbShare);
-		
 		postToFeed(fbShare);
 		return false
 	
