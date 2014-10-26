@@ -22,14 +22,14 @@
 <link href="css/app.css?version=08.04.14" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!-- ANGULAR SPELLS -->
-<script src="lib/angular/angular.js"></script>
-<script src="lib/angular/angular-resource.js"></script>
-<script src="bower_components/angular-cache/dist/angular-cache.min.js"></script>
-<!--<script src="bower_components/angular-route/angular-route.js"></script>-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/lodash/dist/lodash.min.js"></script>
-<script src="bower_components/restangular/dist/restangular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cache/dist/angular-cache.min.js"></script>
 <script src="bower_components/angular-local-storage/angular-local-storage.min.js"></script>
-<script src="lib/angular/angular-slugify.js"></script>  
+<script src="bower_components/slugify/slugify.js"></script>  
 <script type="text/javascript" src="app-angular.js"></script>
 <!-- //ANGULAR SPELLS -->
 <script data-require="angular-ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>

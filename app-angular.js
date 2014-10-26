@@ -1,16 +1,18 @@
-var myApp = angular.module('myApp',['restangular', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule' ]);
+var myApp = angular.module('myApp',['ngRoute', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule', 'ngAnimate' ]);
 
 var urlBase = 'http://ec2-54-183-177-210.us-west-1.compute.amazonaws.com:80/rest/',
 	keyWebService = 'grimeo/',
 	media = 'movie/',
 	appName = '&app_name=grimeo',
+	
+	
 	urlMovies = urlBase + keyWebService,
 	imageUrlBase = 'http://image.tmdb.org/t/p/w92',
 	base_backdrop_url = 'http://image.tmdb.org/t/p/w780';
 	
 // Configure our routes
 myApp.config(['$routeProvider',
-	function($routeProvider, RestangularProvider) {
+	function($routeProvider) {
 		
 		$routeProvider.
 
@@ -90,6 +92,18 @@ function deSlugify(str){
 	firstLetter = newStr.substr(0, 1);
 	return firstLetter.toUpperCase() + newStr.substr(1);
 }
+
+//Fallback images 
+myApp.directive('fallbackSrc', function () {
+  var fallbackSrc = {
+    link: function postLink(scope, iElement, iAttrs) {
+      iElement.bind('error', function() {
+        angular.element(this).attr("src", iAttrs.fallbackSrc);
+      });
+    }
+   }
+   return fallbackSrc;
+});
 
 // Caching
 myApp.factory('myCache', function($cacheFactory) {
@@ -503,10 +517,10 @@ myApp.controller('TypeaheadCtrl',  ['TypeaheadFactory','$scope','$http','limitTo
 	$scope.searchMessage = 'Searching for:';	
 }]);
 
-myApp.controller('AboutController', function($scope, Restangular) {
+myApp.controller('AboutController', function($scope) {
 	$scope.message = 'About us.';
 });
 
-myApp.controller('ContactController', function($scope, Restangular) {
+myApp.controller('ContactController', function($scope) {
 	$scope.message = 'Contact us';
 });

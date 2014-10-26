@@ -1,0 +1,40 @@
+<div class="results-header">
+  <div class="row">
+    <div class="column medium-3 show-for-medium-up">&nbsp;</div>
+    <div class="column medium-6">
+      <div class="searching-for center" style="display: none;">Searching for: <span class="term" style="display: none;">&nbsp;</span> </div>
+      <div class="category center"> <span class="title">Latest Movies</span> </div>
+    </div>
+    <div class="column medium-3 show-for-medium-up">&nbsp;</div>
+  </div>
+</div>
+<div class="results relative"> 
+  <!--Detailed Output-->
+  <div class="row">
+    <div class="column large-12">
+      <ul class="asset-detail">
+        <li class="column small-12 medium-12 large-12">
+          <ul>
+            <img src="{{imageUrlBase}}/{{movie.poster_path}}">
+            <h1>{{movie.title}}</h1>
+            <div class="tagline">{{movie.tagline}}</div>
+            <div class="vote-average">Release date: {{movie.release_date}}</div>
+            <div class="vote-count">Total votes: {{movie.vote_count}}</div>
+            <div class="vote-average">Vote average: {{movie.vote_average}}</div>
+            <div class="vote-count">All Actors: {{movie.actores}}</div>
+            <li><img src="{{backdropUrlBase}}/{{movie.backdrop_path}}" class="hero"></li>
+            <p>{{movie.overview}}</p>
+            <!--<p><iframe width="560" height="315" src="//www.youtube.com/embed/undefined" frameborder="0" allowfullscreen=""></iframe></p>-->
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--In progress message-->
+  <div class="in-progress-bg">
+    <div class="in-progress">
+      <div class="in-progress-msg"></div>
+    </div>
+  </div>
+  <!--//In progress message--> 
+</div>

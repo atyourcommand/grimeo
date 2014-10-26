@@ -1,11 +1,11 @@
 {
-  "name": "fast-prototyping-with-ng-and-json-server",
+  "name": "my-bower-packages",
   "version": "0.0.0",
-  "homepage": "https://github.com/bahmutov/fast-prototyping-with-ng-and-json-server",
+  "homepage": "http://www.atyourcommand.com.au",
   "authors": [
-    "Gleb Bahmutov <gleb.bahmutov@gmail.com>"
+    "JB <admin@atyourcommand.com.au>"
   ],
-  "description": "Fast prototyping using ng restangular against json-server example",
+  "description": "My project packages",
   "main": "index.html",
   "keywords": [
     "angularjs",
