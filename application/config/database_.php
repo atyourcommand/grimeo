@@ -48,10 +48,13 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql51-098.wc1.ord1.stabletransit.com';
-$db['default']['username'] = '332057_admin';
-$db['default']['password'] = 'fdn3Fj5eZ6';
-$db['default']['database'] = '332057_app';
+//$db['default']['hostname'] = 'mysql51-120.wc1:3306';
+$db['default']['hostname'] = 'localhost';
+//$db['default']['username'] = '332057_grimeo';
+$db['default']['username'] = 'root';
+//$db['default']['password'] = 'JZnFj5Z6';
+$db['default']['password'] = '';
+$db['default']['database'] = '332057_application';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

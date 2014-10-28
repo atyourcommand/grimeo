@@ -1,6 +1,6 @@
 #!/usr/local/bin/php
 <?php include_once "db.php";
-//mail("sanjay.vns1987@gmail.com",'Run at'.date("H:i:s"),"Done");
+mail("admin@atyourcommand.com.au",'Run at'.date("H:i:s"),"Done");
 function useCurl($url){
 	// OK cool - then let's create a new cURL resource handle
     $ch = curl_init();

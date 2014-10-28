@@ -13,7 +13,7 @@ class Sitemap extends CI_Controller {
     //put your code here
 
     function index() {
-       $query = $this->db->query("SELECT id, title, date(release_date) as release_date from movie");
+       $query = $this->db->query("SELECT id, title, date(release_date) as release_date from genres_move");
        // 
        header("Content-Type: text/xml;charset=iso-8859-1");
        echo '<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">';

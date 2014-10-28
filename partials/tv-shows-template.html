@@ -1,0 +1,46 @@
+<!--Paging results-->
+<div data-pagination="" data-num-pages="numPages()" 
+      data-current-page="currentPage" data-max-size="maxSize"  
+      data-boundary-links="true" previous-text="" next-text="" ng-show="clearMovies != true"></div>
+<div id="ad-location-one"></div>
+<!--Paging results-->
+<div class="holder"></div>
+<!--Results Header-->
+<div class="results-header" ng-show="clearMovies != true">
+  <div class="row">
+    <div class="column medium-3 show-for-medium-up">&nbsp;</div>
+    <div class="column medium-6">
+      <div class="searching-for center" style="display:none">Searching for: <span class="term">&nbsp;</span> </div>
+      <div class="category center"> <span class="name">{{ message }}</span>
+        <select ng-model="showGenre" style="display:inline; width:auto;margin:0; padding:5px 10px;height:auto;">
+          <option value="" selected="selected">All</option>
+          <option ng-repeat="genre in genres" value="{{genre.genresId}}">{{genre.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="column medium-3 show-for-medium-up" >&nbsp;</div>
+  </div>
+</div>
+<!--Search Output-->
+<div class="results relative" ng-show="clearMovies != true">
+  <div class="row">
+    <div class="column medium-12">
+      <form name="save-shows">
+        <ul class="row search-output-new">
+          <!--<li class="column small-6 medium-3 large-2 end fn-add-hover" ng-repeat="show in pagedMovies | filter:showGenre">-->
+          <li class="column small-6 medium-3 large-2 end fn-add-hover" ng-repeat="show in pagedShows" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" >
+            <div class="image-container fn-add-hover"><img fallback-src="images/misc/poster-missing.gif" ng-src="{{imageUrlBase}}{{show.poster_path}}" style="display:block;" alt="{{show.name}}"/><a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{show.tv_id}}" data-video-mode="show"><i></i><b>Play Trailer</b></a><a href="#!/tv/{{show.id}}/{{show.name | slugify}}" class="btn fn-asset-link" id="{{show.tv_id}}"><i></i><b>Show more</b></a>
+              <h3><a href="#!/show/{{show.tv_id}}/{{show.name | slugify}}" class="fn-asset-link" id="{{show.tv_id}}">{{show.name}}</a></h3>
+              <div class="myshows-actions relative">
+                <input name="asset[{{show.tv_id}}]" id="{{show.tv_id}}" type="checkbox" data-asset-name="{{show.name}}" data-asset-poster-path="{{imageUrlBase}}/{{show.poster_path}}" value="save">
+                <label for="{{show.tv_id}}" class="fn-add-hover checkboxes"><span class="first">Save it</span><span class="second">Saved</span></label>
+              </div>
+            </div>
+            <a href="#" data-name="{{show.name}}" data-votes="{{show.vote_count}}" data-url="#!/show/{{show.id}}/{{show.name | slugify}}" onclick="return fbFeed(this);" data-picture="{{imageUrlBase}}{{show.poster_path}}" data-description="{{show.overview}}" class="facebook-share">Faceboook share</a> </li>
+        </ul>
+        <p>There are {{shows.length}} shows to see.</p>
+      </form>
+    </div>
+  </div>
+  <!--//Search Output--> 
+</div>
