@@ -149,6 +149,19 @@ a:hover, a:focus {
 /* ==========================================================================
    Main blocks
    ========================================================================== */
+//Add to images for a fade in
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-in;
+  -moz-transition: opacity 0.25s ease-in;
+  -o-transition: opacity 0.25s ease-in;
+  -ms-transition: opacity 0.25s ease-in;
+  transition: opacity 0.25s ease-in;
+}
+.fade.in{
+  opacity: 1;
+}   
+   
 div {
 	@include border-radius(0);
 }

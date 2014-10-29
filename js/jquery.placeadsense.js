@@ -25,7 +25,6 @@ var appendAdCode = (function(){
 			$(window).resize(function(){     
 			   
 			});
-		
 	}
 	
 	return {loadAds: loadAds, init: init}

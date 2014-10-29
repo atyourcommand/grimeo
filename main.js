@@ -892,7 +892,6 @@ var appendAdCode = (function(){
 			$(window).resize(function(){     
 			   
 			});
-		
 	}
 	
 	return {loadAds: loadAds, init: init}
@@ -1277,7 +1276,10 @@ var appendAdCode = (function(){
 
 ;$(function() {
 	//With ajax content need to wait for all events for some of these listeners
+	
 	$(window).load(function(){    
+		
+		//$('img').fadeIn('fast');
 		
 		var $header = $('.not-in-use');
 		$(window).scroll(function () {
@@ -1382,7 +1384,6 @@ var appendAdCode = (function(){
 					//$('.options-nav').removeClass('show');
 					//$userOptions.delay('400').fadeIn('slow');
 				}
-					
 			});
 			
 			$('input[name="options[3_A]"]').change(function(){
