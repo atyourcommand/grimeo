@@ -522,7 +522,7 @@ myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', '$timeo
 				//console.log('we have no local storage');
 				paging(shows);
 				localStorageService.add('latestShows', $scope.shows);
-				//$('.in-progress-bg').removeClass('show');
+				$('.in-progress-bg').removeClass('show');
 				
 			});
 		}else{

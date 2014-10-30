@@ -45,8 +45,11 @@
 	<div ng-view class="slide" onload="onViewLoad()"></div>
     <!--In progress message-->
     <div class="in-progress-bg">
-        <div class="in-progress">
-          <div class="in-progress-msg"></div>
+        <div class="in-progress" style="text-align:center;">
+          <div class="in-progress-msg" style="width:100%; text-align:center;color:#ffffff;font-size:12px">Fetching Data<br>
+<br>
+<img src="images/misc/loading-small.gif"/></div>
+          
         </div>
     </div>
     <!--//In progress message--> 
