@@ -15,7 +15,7 @@ var appendAdCode = (function(){
 			var adBlockOne = '<li class="ad-block-one">'+$adsense1+'</li>';
 			var adBlockTwo = '<div class="ad-block-two">'+$adsense2+'</div>';
 			//adSpotOne.hide().html(adBlockOne).fadeIn('2000');	
-			if ($('header').width() <= 480 ){
+			if ($('header').width() <= 960 ){
 				adSpotOne.html(''); 
 			} else {
 				console.log('ads loading');
@@ -26,6 +26,10 @@ var appendAdCode = (function(){
 			   
 			});
 	}
+	$(window).resize(function(){     
+		
+	});
+		
 	
 	return {loadAds: loadAds, init: init}
 	
