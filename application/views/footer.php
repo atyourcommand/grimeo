@@ -38,10 +38,20 @@ $(window).load(function() {
 <!--<script type="text/javascript" src="js/jquery.pages.js"></script>-->
 <script>
 (function($) {
-    $(document).ready(function() {
+    $(window).ready(function() {
     // variables show in one page
 	var $header = $('header');
 	var onepagerecord = 18;
+	
+	//CHECK IF VIDEO EXISTS
+	$('.fn-play-video').each(function(){
+		var $id = $(this).attr('data-asset-id');	
+		var $videoMode = $(this).attr('data-video-mode');	
+		console.log($id, $videoMode );
+	});
+	
+	
+	
 	// GET VIDEO 
 	function videoLink($id, $videoMode){
 		var src;
@@ -50,12 +60,22 @@ $(window).load(function() {
 			url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+$id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
 			success: function (data) { 
 						$.each(data, function(i, item) {
+							//console.log(i);   
+							//may be quicktime to check here too!
 							if(i == "youtube") {
 								da = data[i];
-								$.each(da, function (j, item) {  
-									 if(item.source!="") { src  = item.source; }
-								});
-							}  
+								//is there an object?   
+								if(da.length){
+									$.each(da, function (j, item) { 
+										 console.log(item.source); 
+										 if(item.source !== "") {  
+											src  = item.source; 
+										 }
+									});
+								}else{
+									//console.log('no video object');}
+								}
+							} 
 						});  
 			}   
 		});  
