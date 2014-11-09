@@ -18,7 +18,7 @@
     # If you have subdomains, you can add them to 
     # the list using the "|" (OR) regex operator
     RewriteCond %{HTTP_HOST} !^(www|subdomain) [NC]
-    RewriteRule ^(.*)$ http://www.YOURSITE.COM/$1 [L,R=301]
+    RewriteRule ^(.*)$ http://www.grimeo.com/$1 [L,R=301]
 
     # Enforce NO www
     #RewriteCond %{HTTP_HOST} ^www [NC]
@@ -53,8 +53,8 @@
 	### RequestHeader set Host "api.seo4ajax.com"
 				  
 	### If a bot requests an escaped URL then proxify the request to SEO4Ajax
-	RewriteCond %{QUERY_STRING}  _escaped_fragment_=  [NC]
-	RewriteRule ^(.*)$ http://api.seo4ajax.com/ea3fec1243b79ec2ae439cb3b8c15b1a/$1 [P,QSA,L]
+	RewriteCond %{QUERY_STRING} _escaped_fragment_=  [NC]
+	RewriteRule ^(.*)$ s4a.php [L]
 
 </IfModule>
 

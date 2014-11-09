@@ -77,6 +77,7 @@ myApp.config(['$routeProvider',
 myApp.config(['$locationProvider',
     function($locationProvider) {
         $locationProvider.hashPrefix('!');
+		//$locationProvider.html5Mode(true);
     }
 ]);
 	
@@ -92,8 +93,6 @@ myApp.controller('titleController', function($scope, $route, $log, $routeParams)
 		}
 	});
 })
-
-
 
 //Slugify filter
 function MyCtrl($scope, Slug) {
@@ -135,13 +134,14 @@ myApp.directive('videoCheck', function(){
 		
 		scope.assetId = value;
 		id = scope.assetId
+		var videoStatus;
 		
-		var checkVideo = function(assetId){
+		var checkVideo = function(assetId, callback){
 				var src;
+				
 				
 				var $videoMode = 'movie';
 				//console.log(assetId);
-				
 				$.ajax({
 					async: false,
 					url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+assetId+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
@@ -154,27 +154,41 @@ myApp.directive('videoCheck', function(){
 								//is there an object?   
 								if(da.length){
 									$.each(da, function (j, item) { 
-										 console.log(item.source); 
+										 //console.log(item.source); 
 										 if(item.source !== "") {  
 											src  = item.source; 
 										 }
 									});
+									//console.log(assetId + ' ' + 'video')	
+									return videoStatus = true
 									
 								}else{
+									//console.log(assetId + ' ' + 'no video object')
+									return videoStatus = false
 									
-									console.log('no video object')
 								}
 							} 
-						});  
+							
+							
+							
+						}); 
 					}   
-				});  
+				});
 				
-    		}
+				if (typeof(callback) === 'function') {
+					callback(videoStatus)
+				} 
 			
-			setTimeout(function(){
-            	checkVideo(id)
-			},1000);
-			
+    	}
+		checkVideo(id)
+		
+		if (videoStatus == false){
+			console.log(id + ' ' + 'no video');	
+		} else {
+			console.log(id + ' ' + 'yes video');	
+		}
+		
+		
       });
     }, 
 	
