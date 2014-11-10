@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp',['ngRoute', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule', 'ngAnimate' ]);
-
+//http://stackoverflow.com/questions/18892793/angularjs-directives-how-to-conditionally-apply-a-template
 var urlBase = 'http://ec2-54-183-177-210.us-west-1.compute.amazonaws.com:80/rest/',
 	keyWebService = 'grimeo/',
 	//media = 'movie/',
@@ -134,7 +134,7 @@ myApp.directive('videoCheck', function(){
 		
 		scope.assetId = value;
 		id = scope.assetId
-		var videoStatus;
+		scope.videoStatus;
 		
 		var checkVideo = function(assetId, callback){
 				var src;
@@ -160,11 +160,11 @@ myApp.directive('videoCheck', function(){
 										 }
 									});
 									//console.log(assetId + ' ' + 'video')	
-									return videoStatus = true
+									return scope.videoStatus = true
 									
 								}else{
 									//console.log(assetId + ' ' + 'no video object')
-									return videoStatus = false
+									return scope.videoStatus = false
 									
 								}
 							} 
@@ -182,7 +182,7 @@ myApp.directive('videoCheck', function(){
     	}
 		checkVideo(id)
 		
-		if (videoStatus == false){
+		if (scope.videoStatus == false){
 			console.log(id + ' ' + 'no video');	
 		} else {
 			console.log(id + ' ' + 'yes video');	

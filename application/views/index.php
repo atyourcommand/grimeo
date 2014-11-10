@@ -4,14 +4,16 @@
 <html ng-app="myApp">
 <head>
 <?php $header_data = get_header_data();?>
+<!--<base href="/" />-->
 <meta name="fragment" content="!">  
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <meta name="google-site-verification" content="QkkZTdvXNHL8afRwsD5Xn7WF6AmrEz2DiBLbmClfzLQ" />
 <!--<title>Best Movie and TV Search | Thousands of titles | Grimeo</title>-->
 <!--Facebook Meta-->
-<title ng-controller="titleController">{{ pageTitle}} | Grimeo | Movie Search</title>
-<meta property="og:title" content="Grimeo - Movie Search" />
+<title ng-controller="titleController">{{ pageTitle}} | Movie and TV Trailers</title>
+<meta name="description" content="Grimeo is an extensive archive of Movie and Television Trailers. Watch the Trailers and read reviews of 1000's of Movies and TV shows" />
+<meta property="og:title" content="Grimeo - Movie and TV Trailers" />
 <meta property="og:type" content="video.movie" />
 <meta property="og:url" content="http://www.grimeo.com" />
 <meta property="og:image" content="http://www.grimeo.com/facebook-image-og.jpg" />

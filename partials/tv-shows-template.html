@@ -36,7 +36,7 @@
                 <label for="{{show.tv_id}}" class="fn-add-hover checkboxes"><span class="first">Save it</span><span class="second">Saved</span></label>
               </div>
             </div>
-            <a href="#" data-name="{{show.name}}" data-votes="{{show.vote_count}}" data-url="#!/show/{{show.id}}/{{show.name | slugify}}" onclick="return fbFeed(this);" data-picture="{{imageUrlBase}}{{show.poster_path}}" data-description="{{show.overview}}" class="facebook-share">Faceboook share</a> </li>
+            <a href="#!" data-name="{{show.name}}" data-votes="{{show.vote_count}}" data-url="#/show/{{show.id}}/{{show.name | slugify}}" onclick="return fbFeed(this);" data-picture="{{imageUrlBase}}{{show.poster_path}}" data-description="{{show.overview}}" class="facebook-share">Faceboook share</a> </li>
         </ul>
         <p>There are {{shows.length}} shows to see.</p>
       </form>
