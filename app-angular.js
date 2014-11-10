@@ -121,13 +121,15 @@ myApp.directive('fallbackSrc', function () {
 });
 
 //Check if resource has video available
-myApp.directive('videoCheck', function(){
+myApp.directive('videoCheck', function($compile){
   return {
     restrict: 'A',
+	//require: '^videoCheck',
 	scope: {
-      dataId: '&'
-	  //dataVideoMode: '&'
+      dataId: '&',
+	  movie: '='
     },
+	//template:'<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>',
     
 	link: function(scope, iElement, iAttrs) {
       iAttrs.$observe('id', function(value){
@@ -135,10 +137,10 @@ myApp.directive('videoCheck', function(){
 		scope.assetId = value;
 		id = scope.assetId
 		scope.videoStatus;
+		scope.playVideoHtml = '<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>';
 		
 		var checkVideo = function(assetId, callback){
 				var src;
-				
 				
 				var $videoMode = 'movie';
 				//console.log(assetId);
@@ -169,8 +171,6 @@ myApp.directive('videoCheck', function(){
 								}
 							} 
 							
-							
-							
 						}); 
 					}   
 				});
@@ -183,9 +183,11 @@ myApp.directive('videoCheck', function(){
 		checkVideo(id)
 		
 		if (scope.videoStatus == false){
-			console.log(id + ' ' + 'no video');	
+			console.log(id + ' ' + 'no video');
+			iElement.hide();	
 		} else {
-			console.log(id + ' ' + 'yes video');	
+			//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
+			iElement.show();	
 		}
 		
 		
