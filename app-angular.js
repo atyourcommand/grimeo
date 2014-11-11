@@ -121,23 +121,24 @@ myApp.directive('fallbackSrc', function () {
 });
 
 //Check if resource has video available
-myApp.directive('videoCheck', function($compile){
+myApp.directive('videoCheck', function(){
   return {
     restrict: 'A',
 	//require: '^videoCheck',
 	scope: {
       dataId: '&',
-	  movie: '='
+	  assetId: '@assetId', 
+	  videoMode: '@videoMode', 
     },
-	//template:'<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>',
+	template:'<a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{assetId}}" data-video-mode="{{videoMode}}"><i></i><b>Play Trailer</b></a>',
     
 	link: function(scope, iElement, iAttrs) {
+	  
       iAttrs.$observe('id', function(value){
-		
 		scope.assetId = value;
 		id = scope.assetId
-		scope.videoStatus;
-		scope.playVideoHtml = '<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>';
+		//scope.videoStatus;
+		//scope.playVideoHtml = '<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>';
 		
 		var checkVideo = function(assetId, callback){
 				var src;
@@ -178,8 +179,10 @@ myApp.directive('videoCheck', function($compile){
 				if (typeof(callback) === 'function') {
 					callback(videoStatus)
 				} 
-			
     	}
+		/*setTimeout(function(){
+			checkVideo(id)
+		}, 0);*/
 		checkVideo(id)
 		
 		if (scope.videoStatus == false){

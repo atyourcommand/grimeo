@@ -29,7 +29,7 @@
         <ul class="row search-output-new">
           <!--<li class="column small-6 medium-3 large-2 end fn-add-hover" ng-repeat="movie in pagedMovies | filter:showGenre">-->
           <li class="column small-6 medium-3 large-2 end fn-add-hover" ng-repeat="movie in pagedMovies" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" >
-            <div class="image-container fn-add-hover"><img fallback-src="images/misc/poster-missing.gif" ng-src="{{imageUrlBase}}{{movie.poster_path}}" class="fade" ng-class="{in:movie.poster_path.length}" alt="{{movie.title}}"/><a href="#" video-check data-id="{{movie.mov_id}}" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a><a href="#!/movie/{{movie.id}}/{{movie.title | slugify}}" class="btn fn-asset-link" id="{{movie.mov_id}}"><i></i><b>Show more</b></a>
+            <div class="image-container fn-add-hover"><img fallback-src="images/misc/poster-missing.gif" ng-src="{{imageUrlBase}}{{movie.poster_path}}" class="fade" ng-class="{in:movie.poster_path.length}" alt="{{movie.title}}"/><div video-check data-id="{{movie.mov_id}}" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"></div><a href="#!/movie/{{movie.id}}/{{movie.title | slugify}}" class="btn fn-asset-link" id="{{movie.mov_id}}"><i></i><b>Show more</b></a>
               <h3><a href="#/movie/{{movie.id}}/{{movie.title | slugify}}" class="fn-asset-link" id="{{movie.mov_id}}">{{movie.title}}</a></h3>
               <div class="myshows-actions relative">
                 <input name="asset[{{movie.mov_id}}]" id="{{movie.mov_id}}" type="checkbox" data-asset-name="{{movie.title}}" data-asset-poster-path="{{imageUrlBase}}/{{movie.poster_path}}" value="save">
