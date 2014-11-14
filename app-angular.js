@@ -127,6 +127,7 @@ myApp.directive('videoCheck', function(){
 	//require: '^videoCheck',
 	scope: {
       dataId: '&',
+	  videoMode: '&',
 	  assetId: '@assetId', 
 	  videoMode: '@videoMode', 
     },
@@ -137,38 +138,29 @@ myApp.directive('videoCheck', function(){
       iAttrs.$observe('id', function(value){
 		scope.assetId = value;
 		id = scope.assetId
-		//scope.videoStatus;
-		//scope.playVideoHtml = '<a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.mov_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a>';
-		
-		var checkVideo = function(assetId, callback){
-				var src;
+			
+		var checkVideo = function(id){
 				
-				var $videoMode = 'movie';
-				//console.log(assetId);
+				iAttrs.$observe('videoMode', function(value){
+					scope.videoMode = value;	
+				});
+				
 				$.ajax({
 					async: false,
-					url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+assetId+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+					url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
 					success: function (data) { 
 						$.each(data, function(i, item) {
-							//console.log(i);   
 							//may be quicktime to check here too!
 							if(i == "youtube") {
 								da = data[i];
 								//is there an object?   
 								if(da.length){
-									$.each(da, function (j, item) { 
-										 //console.log(item.source); 
-										 if(item.source !== "") {  
-											src  = item.source; 
-										 }
-									});
 									//console.log(assetId + ' ' + 'video')	
 									return scope.videoStatus = true
 									
 								}else{
 									//console.log(assetId + ' ' + 'no video object')
 									return scope.videoStatus = false
-									
 								}
 							} 
 							
@@ -177,27 +169,29 @@ myApp.directive('videoCheck', function(){
 				});
 				
 				if (typeof(callback) === 'function') {
-					callback(videoStatus)
+					//callback(scope.videoStatus)
 				} 
+				
+				$assetContainer = iElement.closest('.image-container');
+				if (scope.videoStatus == true){
+					//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
+					console.log(id + ' ' + 'YES video');
+					$assetContainer.addClass('hasVideo');
+					iElement.show();
+				
+				} else {
+					console.log(id + ' ' + 'no video');
+					iElement.hide();		
+				}
+				
     	}
 		/*setTimeout(function(){
-			checkVideo(id)
-		}, 0);*/
-		checkVideo(id)
-		
-		if (scope.videoStatus == false){
-			console.log(id + ' ' + 'no video');
-			iElement.hide();	
-		} else {
-			//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
-			iElement.show();	
-		}
-		
+			checkVideo(id);
+		}, 100);*/
+		checkVideo(id);
 		
       });
     }, 
-	
-	
   };
   
 });
@@ -513,8 +507,14 @@ myApp.controller ('MoviesCtrl', ['$scope','MoviesFactory', 'GenreFactory', '$tim
 				
 		if(movies == null){
 			MoviesFactory.getData(function(data){
-				movies = data.record;
+				records = data.record;
 				//console.log('we have no local storage');
+				//There seems to be dups to
+				movies = $.grep(records,function(v,k){
+                	return $.inArray(v,arr) === k;
+            	});
+				
+				
 				paging(movies);
 				localStorageService.add('latestMovies', $scope.movies);
 				$('.in-progress-bg').removeClass('show');
@@ -660,7 +660,6 @@ myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', '$timeo
 			$scope.genres = [];
 			$scope.genres = data;
 		});
-		
 		
 	$scope.imageUrlBase = imageUrlBase;
 	$scope.message = 'Latest TV Shows';	
