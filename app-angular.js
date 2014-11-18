@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',['ngRoute', 'ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule', 'ngAnimate' ]);
+var myApp = angular.module('myApp',['ngRoute','ui.bootstrap', 'slugifier', 'ngResource', 'LocalStorageModule', 'ngAnimate' ]);
 //http://stackoverflow.com/questions/18892793/angularjs-directives-how-to-conditionally-apply-a-template
 var urlBase = 'http://ec2-54-183-177-210.us-west-1.compute.amazonaws.com:80/rest/',
 	keyWebService = 'grimeo/',
@@ -392,7 +392,7 @@ myApp.factory('MoviesFactory', function($http, myCache){
 	var mode = 'genres_move';
 	//var filterPopular = '?filter=types%3D%22popular%22';
 	var limitedSet = '&limit=1000'; //Most we are only ever going to get 1000 anyways
-	var latestByReleaseDate = '?order=release_date%20DESC';
+	var latestByReleaseDate = '?order=release_date%20DESC&related=group_by_mov_id';
 	
 	return {
 		getData: function(callback){
@@ -417,7 +417,7 @@ myApp.factory('MovieFactory', function($http, $routeParams){
 		getData: function(callback){
 		  $('.in-progress-bg').addClass('show');
 		  
-		  var $id = $routeParams.movieId;
+		  var $id = $routeParams.movieId;et 
 		  $http.get(urlMovies + mode + '/'+ $id + appName)
 		  .success(function(data, status, headers, config) {
 		  	callback(data);
@@ -688,8 +688,13 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 				
 		if(movies == null){
 			MoviesFactory.getData(function(data){
-				movies = data.record;
-				//console.log('we have no local storage');
+				rawMovies = data.record;
+				
+				//filter out duplicates
+				movies = _.uniq(rawMovies, true /* array already sorted */, function(item) {
+				return item.mov_id;
+				});
+							
 				paging(movies);
 				localStorageService.add('latestMovies', $scope.movies);
 				$('.in-progress-bg').removeClass('show');

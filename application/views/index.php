@@ -1,8 +1,7 @@
 <?php $this->load->helper('html');?>
 <?php $base_url=$this->config->item('base_url'); ?>
 <!DOCTYPE HTML>
-<html ng-app="myApp">
-<head>
+<html ng-app="myApp"><head>
 <?php $header_data = get_header_data();?>
 <!--<base href="/" />-->
 <meta name="fragment" content="!">  
@@ -23,8 +22,11 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link href="css/app.css?version=08.04.14" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
 <!-- ANGULAR SPELLS -->
+
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/lodash/dist/lodash.min.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
