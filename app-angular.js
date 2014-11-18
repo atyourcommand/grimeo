@@ -168,10 +168,6 @@ myApp.directive('videoCheck', function(){
 					}   
 				});
 				
-				if (typeof(callback) === 'function') {
-					//callback(scope.videoStatus)
-				} 
-				
 				$assetContainer = iElement.closest('.image-container');
 				if (scope.videoStatus == true){
 					//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
@@ -417,7 +413,7 @@ myApp.factory('MovieFactory', function($http, $routeParams){
 		getData: function(callback){
 		  $('.in-progress-bg').addClass('show');
 		  
-		  var $id = $routeParams.movieId;et 
+		  var $id = $routeParams.movieId;
 		  $http.get(urlMovies + mode + '/'+ $id + appName)
 		  .success(function(data, status, headers, config) {
 		  	callback(data);
