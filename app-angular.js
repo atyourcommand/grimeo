@@ -119,7 +119,7 @@ myApp.directive('fallbackSrc', function () {
    }
    return fallbackSrc;
 });
-
+////http://stackoverflow.com/questions/14968690/sending-event-when-angular-js-finished-loading
 //Check if resource has video available
 myApp.directive('videoCheck', function(){
   return {
