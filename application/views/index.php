@@ -12,7 +12,7 @@
 <!--Facebook Meta-->
 <title ng-controller="titleController">{{ pageTitle}} | Movie and TV Trailers</title>
 <meta name="description" content="Grimeo is an extensive archive of Movie and Television Trailers. Watch the Trailers and read reviews of 1000's of Movies and TV shows" />
-<meta property="og:title" content="Grimeo - Movie and TV Trailers" />
+<meta property="og:title" content="Movie and TV Trailers | Grimeo" />
 <meta property="og:type" content="video.movie" />
 <meta property="og:url" content="http://www.grimeo.com" />
 <meta property="og:image" content="http://www.grimeo.com/facebook-image-og.jpg" />

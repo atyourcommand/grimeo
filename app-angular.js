@@ -121,7 +121,7 @@ myApp.directive('fallbackSrc', function () {
 });
 ////http://stackoverflow.com/questions/14968690/sending-event-when-angular-js-finished-loading
 //Check if resource has video available
-myApp.directive('videoCheck', function(){
+myApp.directive('videoCheck',['$timeout', function(timer){
   return {
     restrict: 'A',
 	//require: '^videoCheck',
@@ -132,65 +132,87 @@ myApp.directive('videoCheck', function(){
 	  videoMode: '@videoMode', 
     },
 	template:'<a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{assetId}}" data-video-mode="{{videoMode}}"><i></i><b>Play Trailer</b></a>',
-    
+    /*compile: function() {
+            console.log("Compiling test-directive");
+            return {
+                pre: function() { console.log("Prelink"); },
+                post: function() { console.log("Postlink"); }
+            };
+        },*/
 	link: function(scope, iElement, iAttrs) {
-	  
-      iAttrs.$observe('id', function(value){
-		scope.assetId = value;
-		id = scope.assetId
+	
+		iAttrs.$observe('id', function(value){
+			scope.id = value;
+			//id = scope.assetId
+			scope.idArray = []
+			scope.addId = function(){
+				return scope.idArray.push(scope.id);	
+			}();
+			console.log(scope.idArray);
+			var hello = function () {                
+                for (var i = 0; i < iAttrs.videoCheck; i++) {
+                    console.log('Hello world!');
+                }
+				console.log('Hello world!');
+            }
+           
+            //timer(hello, 10000);
 			
-		var checkVideo = function(id){
-				
-				iAttrs.$observe('videoMode', function(value){
-					scope.videoMode = value;	
-				});
-				
-				$.ajax({
-					async: false,
-					url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
-					success: function (data) { 
-						$.each(data, function(i, item) {
-							//may be quicktime to check here too!
-							if(i == "youtube") {
-								da = data[i];
-								//is there an object?   
-								if(da.length){
-									//console.log(assetId + ' ' + 'video')	
-									return scope.videoStatus = true
-									
-								}else{
-									//console.log(assetId + ' ' + 'no video object')
-									return scope.videoStatus = false
-								}
-							} 
-							
-						}); 
-					}   
-				});
-				
-				$assetContainer = iElement.closest('.image-container');
-				if (scope.videoStatus == true){
-					//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
-					console.log(id + ' ' + 'YES video');
-					$assetContainer.addClass('hasVideo');
-					iElement.show();
-				
-				} else {
-					console.log(id + ' ' + 'no video');
-					iElement.hide();		
-				}
-				
-    	}
-		/*setTimeout(function(){
-			checkVideo(id);
-		}, 100);*/
-		checkVideo(id);
-		
-      });
-    }, 
+			var checkVideo = function(id){
+					
+					iAttrs.$observe('videoMode', function(value){
+						scope.videoMode = value;	
+					});
+					
+					$.ajax({
+						async: false,
+						url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+						success: function (data) { 
+							$.each(data, function(i, item) {
+								//may be quicktime to check here too!
+								if(i == "youtube") {
+									da = data[i];
+									//is there an object?   
+									if(da.length){
+										//console.log(assetId + ' ' + 'video')	
+										return scope.videoStatus = true
+										
+									}else{
+										//console.log(assetId + ' ' + 'no video object')
+										return scope.videoStatus = false
+									}
+								} 
+								
+							}); 
+						}   
+					});
+					
+					$assetContainer = iElement.closest('.image-container');
+					if (scope.videoStatus == true){
+						//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
+						console.log(id + ' ' + 'YES video');
+						$assetContainer.addClass('hasVideo');
+						iElement.show();
+					
+					} else {
+						console.log(id + ' ' + 'no video');
+						iElement.hide();		
+					}
+					
+			}
+			/*setTimeout(function(){
+				checkVideo(id);
+			}, 100);*/
+			timer(checkVideo,1000);	
+			//console.log(scope.idArray);
+			
+		  });
+		 
+	  
+	}, 
   };
   
-});
+}]);
 
 // Caching
 myApp.factory('myCache', function($cacheFactory) {
