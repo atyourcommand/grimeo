@@ -8,7 +8,7 @@ var urlBase = 'http://ec2-54-183-177-210.us-west-1.compute.amazonaws.com:80/rest
 	urlMovies = urlBase + keyWebService,
 	imageUrlBase = 'http://image.tmdb.org/t/p/w92',
 	base_backdrop_url = 'http://image.tmdb.org/t/p/w780';
-	
+		
 // Configure our routes
 myApp.config(['$routeProvider',
 	function($routeProvider) {
@@ -132,73 +132,66 @@ myApp.directive('videoCheck',['$timeout', function(timer){
 	  videoMode: '@videoMode', 
     },
 	template:'<a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{assetId}}" data-video-mode="{{videoMode}}"><i></i><b>Play Trailer</b></a>',
-    /*compile: function() {
-            console.log("Compiling test-directive");
-            return {
-                pre: function() { console.log("Prelink"); },
-                post: function() { console.log("Postlink"); }
-            };
-        },*/
+   
 	link: function(scope, iElement, iAttrs) {
 	
 		iAttrs.$observe('id', function(value){
 			scope.id = value;
 			//id = scope.assetId
-			scope.idArray = []
+			idArray = []
 			scope.addId = function(){
-				return scope.idArray.push(scope.id);	
+				return idArray.push(scope.id);	
 			}();
 			console.log(scope.idArray);
 			var hello = function () {                
                 for (var i = 0; i < iAttrs.videoCheck; i++) {
-                    console.log('Hello world!');
+                    //console.log('Hello world!');
                 }
-				console.log('Hello world!');
+				//console.log('Hello world!');
             }
            
-            //timer(hello, 10000);
+            timer(hello, 1000);
 			
 			var checkVideo = function(id){
 					
-					iAttrs.$observe('videoMode', function(value){
-						scope.videoMode = value;	
-					});
-					
-					$.ajax({
-						async: false,
-						url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
-						success: function (data) { 
-							$.each(data, function(i, item) {
-								//may be quicktime to check here too!
-								if(i == "youtube") {
-									da = data[i];
-									//is there an object?   
-									if(da.length){
-										//console.log(assetId + ' ' + 'video')	
-										return scope.videoStatus = true
-										
-									}else{
-										//console.log(assetId + ' ' + 'no video object')
-										return scope.videoStatus = false
-									}
-								} 
-								
-							}); 
-						}   
-					});
-					
-					$assetContainer = iElement.closest('.image-container');
-					if (scope.videoStatus == true){
-						//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
-						console.log(id + ' ' + 'YES video');
-						$assetContainer.addClass('hasVideo');
-						iElement.show();
-					
-					} else {
-						console.log(id + ' ' + 'no video');
-						iElement.hide();		
-					}
-					
+				iAttrs.$observe('videoMode', function(value){
+					scope.videoMode = value;	
+				});
+				
+				$.ajax({
+					async: false,
+					url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+					success: function (data) { 
+						$.each(data, function(i, item) {
+							//may be quicktime to check here too!
+							if(i == "youtube") {
+								da = data[i];
+								//is there an object?   
+								if(da.length){
+									//console.log(assetId + ' ' + 'video')	
+									return scope.videoStatus = true
+									
+								}else{
+									//console.log(assetId + ' ' + 'no video object')
+									return scope.videoStatus = false
+								}
+							} 
+							
+						}); 
+					}   
+				});
+				
+				$assetContainer = iElement.closest('.image-container');
+				if (scope.videoStatus == true){
+					//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
+					console.log(id + ' ' + 'YES video');
+					$assetContainer.addClass('hasVideo');
+					iElement.show();
+				
+				} else {
+					console.log(id + ' ' + 'no video');
+					iElement.hide();		
+				}
 			}
 			/*setTimeout(function(){
 				checkVideo(id);
@@ -207,12 +200,18 @@ myApp.directive('videoCheck',['$timeout', function(timer){
 			//console.log(scope.idArray);
 			
 		  });
-		 
-	  
 	}, 
   };
   
 }]);
+
+function checkVideos(){
+	setTimeout(function(){
+		console.log('checking video');	
+		
+	}, 100);
+};
+
 
 // Caching
 myApp.factory('myCache', function($cacheFactory) {
@@ -514,7 +513,7 @@ myApp.factory('TypeaheadFactory', function($http, $routeParams){
 	
 });		
 		
-myApp.controller ('MoviesCtrl', ['$scope','MoviesFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
+myApp.controller ('MoviesCtrl', ['$scope', 'MoviesFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
 	function($scope, MoviesFactory, GenreFactory, $timeout, myCache, localStorageService, limitToFilter){
 		
 		movies = localStorageService.get('latestMovies');
@@ -531,7 +530,6 @@ myApp.controller ('MoviesCtrl', ['$scope','MoviesFactory', 'GenreFactory', '$tim
 				movies = $.grep(records,function(v,k){
                 	return $.inArray(v,arr) === k;
             	});
-				
 				
 				paging(movies);
 				localStorageService.add('latestMovies', $scope.movies);
@@ -591,9 +589,8 @@ myApp.controller ('MoviesCtrl', ['$scope','MoviesFactory', 'GenreFactory', '$tim
 			$scope.genres = data;
 		});
 		
-		
-	$scope.imageUrlBase = imageUrlBase;
-	$scope.message = 'Home - Latest Movies';	
+		$scope.imageUrlBase = imageUrlBase;
+		$scope.message = 'Home - Latest Movies';	
 }]);
 
 myApp.controller('MovieCtrl',  ['$scope','MovieFactory',
@@ -710,7 +707,7 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 				
 				//filter out duplicates
 				movies = _.uniq(rawMovies, true /* array already sorted */, function(item) {
-				return item.mov_id;
+					return item.mov_id;
 				});
 							
 				paging(movies);
@@ -732,6 +729,7 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 					$scope.pagedMovies = []	
 					paging(movies);
 					//console.log('genre is ' + $scope.selectedGenres);
+					
 				}else {
 					
 					filteredMovies = $.grep(movies, function(v){
@@ -761,8 +759,16 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
 				$scope.pagedMovies = $scope.movies.slice(begin, end).reverse();
+				
+				//console.log($scope.pagedMovies);
+				videoIds = []
+				$.each($scope.pagedMovies, function(i, obj){
+						videoIds .push(obj.mov_id)
+						//console.log(obj.mov_id);	
+					});
+				console.log(videoIds);	
+				//checkVideos()
 			});
-			//console.log('paging');	
 		};
 		
 		// Get Genres for drop down
@@ -775,6 +781,44 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 	$scope.imageUrlBase = imageUrlBase;
 	$scope.message = 'Home - Latest Movies';	
 }]);
+
+var checkVideos = function(id){
+				
+				$.ajax({
+					async: false,
+					url: 'http://api.themoviedb.org/3/'+scope.videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+					success: function (data) { 
+						$.each(data, function(i, item) {
+							//may be quicktime to check here too!
+							if(i == "youtube") {
+								da = data[i];
+								//is there an object?   
+								if(da.length){
+									//console.log(assetId + ' ' + 'video')	
+									return scope.videoStatus = true
+									
+								}else{
+									//console.log(assetId + ' ' + 'no video object')
+									return scope.videoStatus = false
+								}
+							} 
+							
+						}); 
+					}   
+				});
+				
+				$assetContainer = iElement.closest('.image-container');
+				if (scope.videoStatus == true){
+					//iElement.replaceWith($compile(scope.playVideoHtml)(scope));
+					console.log(id + ' ' + 'YES video');
+					$assetContainer.addClass('hasVideo');
+					iElement.show();
+				
+				} else {
+					console.log(id + ' ' + 'no video');
+					iElement.hide();		
+				}
+			}
 
 //https://gist.github.com/bahattincinic/9671766
 //Typeahead Search
