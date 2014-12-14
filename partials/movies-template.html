@@ -38,7 +38,7 @@
                 <label for="{{movie.mov_id}}" class="fn-add-hover checkboxes"><span class="first">Save it</span><span class="second">Saved</span></label>
               </div>
             </div>
-            <a href="#!" data-name="{{movie.title}}" data-votes="{{movie.vote_count}}" data-url="#/movie/{{movie.id}}/{{movie.title | slugify}}" onclick="return fbFeed(this);" data-picture="{{imageUrlBase}}{{movie.poster_path}}" data-description="{{movie.overview}}" class="facebook-share">Faceboook share</a> </li>
+            <a href="#!" data-name="{{movie.title}}" data-votes="{{movie.vote_count}}" data-url="#!/movie/{{movie.id}}/{{movie.title | slugify}}" onclick="return fbFeed(this);" data-picture="{{imageUrlBase}}{{movie.poster_path}}" data-description="{{movie.overview}}" class="facebook-share">Faceboook share</a> </li>
         </ul>
         <p>There are {{movies.length}} movies to see.</p>
       </form>
