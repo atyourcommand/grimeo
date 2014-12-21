@@ -15,7 +15,7 @@
     <div class="column medium-12">
       <ul id="content" class="row search-output-new">
         <li class="column small-6 medium-3 large-2 end fn-add-hover" ng-repeat="movie in searchMovies">
-          <div class="image-container fn-add-hover"><img src="images/misc/loading.gif" class="loader" /><img fallback-src="images/misc/poster-missing.gif" ng-src="{{imageUrlBase}}{{movie.poster_path}}" class="fade" ng-class="{in:movie.poster_path.length}" alt="{{movie.title}}"/><a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.movid}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a><a href="#/movie/{{movie.id}}/{{movie.title | slugify}}" class="btn fn-asset-link" id="{{movie.movid}}"><i></i><b>Show more</b></a>
+          <div class="image-container fn-add-hover"><img src="images/misc/loading.gif" class="loader" /><img fallback-src="images/misc/poster-missing.gif" ng-src="{{imageUrlBase}}{{movie.poster_path}}" class="fade" ng-class="{in:movie.poster_path.length}" alt="{{movie.title}}"/><a href="#!" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{movie.movid}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a><a href="#!/movie/{{movie.id}}/{{movie.title | slugify}}" class="btn fn-asset-link" id="{{movie.movid}}"><i></i><b>Show more</b></a>
             <h3><a href="#!/movie/{{movie.id}}/{{movie.title | slugify}}" class="fn-asset-link" id="{{movie.movid}}">{{movie.title}}</a></h3>
             <div class="myshows-actions relative">
               <input name="asset[{{movie.movid}}]" id="{{movie.movid}}" type="checkbox" data-asset-name="{{movie.title}}" data-asset-poster-path="{{imageUrlBase}}/{{movie.poster_path}}" value="save">
