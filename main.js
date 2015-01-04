@@ -1415,7 +1415,7 @@ var appendAdCode = (function(){
 				//console.log('is not checked');	
 			}
 			$userOptionOne.change(function(){
-				$body.toggleClass('show-trailers');
+				//$body.toggleClass('show-trailers');
 				previewFeature($body);
 			});
 			

@@ -67,7 +67,7 @@ myApp.config(['$routeProvider',
 			}).
 			
 			otherwise({
-				redirectTo: '/grimeo/',
+				redirectTo: '/',
 				title: 'Redirect'
 			})
 			
@@ -86,14 +86,35 @@ myApp.controller('titleController', function($scope, $route, $log, $routeParams)
 	$scope.$on('$routeChangeSuccess', function(){
 		//$scope.pageTitle = '';
 		
-		if (! $routeParams.MovieName){
+		if ($routeParams.MovieName){
+			$scope.pageTitle = deSlugify($routeParams.MovieName);			
+			
+		} else if ($routeParams.tvName){	
+			$scope.pageTitle = deSlugify($routeParams.tvName);	
+		} else {
 			$scope.pageTitle = $route.current.title;
-		}else{
-			$scope.pageTitle = deSlugify($routeParams.MovieName);	
 		}
 	});
 })
 
+//Dynamic Description Tags
+myApp.controller('descriptionController', function($scope, $route, $log, $routeParams){
+	$scope.$on('$routeChangeSuccess', function(){
+		
+		if ($routeParams.MovieName){
+			$scope.descriptionKeyword = deSlugify($routeParams.MovieName);	
+			$scope.description = "Watch the trailer for";
+			$scope.pageDescription = $scope.description + ' ' + $scope.descriptionKeyword;		
+			
+		} else if ($routeParams.tvName){	
+			$scope.descriptionKeyword = deSlugify($routeParams.tvName);	
+			$scope.description = "Watch the trailer for";
+			$scope.pageDescription = $scope.description + ' ' + $scope.descriptionKeyword;	
+		} else {
+			$scope.pageDescription = $route.current.description;
+		}
+	});
+})
 //Slugify filter
 function MyCtrl($scope, Slug) {
     $scope.slugify = function(input) {
@@ -121,7 +142,7 @@ myApp.directive('fallbackSrc', function () {
 });
 ////http://stackoverflow.com/questions/14968690/sending-event-when-angular-js-finished-loading
 //Check if resource has video available
-myApp.directive('videoCheck',['$timeout', function(timer){
+myApp.directive('_videoCheck',['$timeout', function(timer){
   return {
     restrict: 'A',
 	//require: '^videoCheck',
@@ -130,9 +151,9 @@ myApp.directive('videoCheck',['$timeout', function(timer){
 	  videoMode: '&',
 	  assetId: '@assetId', 
 	  videoMode: '@videoMode', 
+	  mediaName: '@mediaName', 
     },
-	template:'<a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{assetId}}" data-video-mode="{{videoMode}}"><i></i><b>Play Trailer</b></a>',
-   
+	template:'<a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{assetId}}" data-video-mode="{{videoMode}}" data-media-name="{{mediaName}}"><i></i><b>Play Trailer</b></a>',
 	
   };
   
@@ -438,8 +459,8 @@ myApp.factory('TypeaheadFactory', function($http, $routeParams){
 	
 });		
 		
-myApp.controller ('MoviesCtrl', ['$scope', 'MoviesFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
-	function($scope, MoviesFactory, GenreFactory, $timeout, myCache, localStorageService, limitToFilter){
+myApp.controller ('MoviesCtrl', ['$scope', 'MoviesFactory', 'GenreFactory', 'videoFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
+	function($scope, MoviesFactory, GenreFactory, videoFactory, $timeout, myCache, localStorageService, limitToFilter){
 		
 		movies = localStorageService.get('latestMovies');
 		//newMovies = localStorageService.get('latestMovies');
@@ -504,8 +525,18 @@ myApp.controller ('MoviesCtrl', ['$scope', 'MoviesFactory', 'GenreFactory', '$ti
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
 				$scope.pagedMovies = $scope.movies.slice(begin, end).reverse();
+				
+				//console.log($scope.pagedMovies);
+				videoIds = []
+				videoMode = 'movie';
+				mediaName = 'trailers';
+				$.each($scope.pagedMovies, function(i, obj){
+						videoIds.push(obj.mov_id)
+						//console.log(obj.mov_id);	
+					});
+				//console.log(videoIds);	
+				videoFactory.checkData(videoIds, videoMode, mediaName)
 			});
-			//console.log('paging');	
 		};
 		
 		// Get Genres for drop down
@@ -518,20 +549,28 @@ myApp.controller ('MoviesCtrl', ['$scope', 'MoviesFactory', 'GenreFactory', '$ti
 		$scope.message = 'Home - Latest Movies';	
 }]);
 
-myApp.controller('MovieCtrl',  ['$scope','MovieFactory',
- 	function($scope, MovieFactory) {
+myApp.controller('MovieCtrl',  ['$scope','MovieFactory', 'videoFactory',
+ 	function($scope, MovieFactory, videoFactory) {
 		MovieFactory.getData(function(data){
 			$('.in-progress-bg').removeClass('show');
 			console.log(data);
 			$scope.movie = data;
 			$scope.imageUrlBase = imageUrlBase;
 			$scope.backdropUrlBase = base_backdrop_url;
+			
+			//CHECK FOR VIDEOS
+			videoIds = []
+			videoMode = 'movie';
+			mediaName = 'trailers';
+			id = data.mov_id
+			videoIds.push(id)
+			videoFactory.checkData(videoIds, videoMode, mediaName)
 		});
 		$scope.message = 'This is the main movie page';	
 }]);
 
-myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
-	function($scope, ShowsFactory, GenreFactory, $timeout, myCache, localStorageService, limitToFilter){
+myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', 'videoFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
+	function($scope, ShowsFactory, GenreFactory, videoFactory, $timeout, myCache, localStorageService, limitToFilter){
 		
 		shows = localStorageService.get('latestShows');
 		//newMovies = localStorageService.get('latestShows');
@@ -591,6 +630,17 @@ myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', '$timeo
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
 				$scope.pagedShows = $scope.shows.slice(begin, end).reverse();
+				
+				//console.log($scope.pagedMovies);
+				videoIds = []
+				videoMode = 'tv';
+				mediaName = 'videos';
+				$.each($scope.pagedShows, function(i, obj){
+						videoIds.push(obj.tv_id)
+						//console.log(obj.mov_id);	
+					});
+				//console.log(videoIds);	
+				videoFactory.checkData(videoIds, videoMode, mediaName)
 			});
 			//console.log('paging');	
 		};
@@ -605,20 +655,30 @@ myApp.controller ('ShowsCtrl', ['$scope','ShowsFactory', 'GenreFactory', '$timeo
 	$scope.message = 'Latest TV Shows';	
 }]);
 
-myApp.controller('ShowCtrl',  ['$scope','ShowFactory',
- 	function($scope, ShowFactory) {
+myApp.controller('ShowCtrl',  ['$scope','ShowFactory','videoFactory',
+ 	function($scope, ShowFactory, videoFactory) {
 		ShowFactory.getData(function(data){
 			$('.in-progress-bg').removeClass('show');
 			//console.log(data);
 			$scope.show = data;
 			$scope.imageUrlBase = imageUrlBase;
 			$scope.backdropUrlBase = base_backdrop_url;
+			
+			//CHECK FOR VIDEOS
+			videoIds = []
+			videoMode = 'tv';
+			mediaName = 'videos';
+			id = data.tv_id
+			videoIds.push(id)
+				
+			videoFactory.checkData(videoIds, videoMode, mediaName)
 		});
 		$scope.message = 'This is the main show page';	
+		
 }]);
 
-myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
-	function($scope, MoviesFactory, GenreFactory, $timeout, myCache, localStorageService, limitToFilter){
+myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', 'videoFactory', '$timeout', 'myCache','localStorageService','limitToFilter',
+	function($scope, MoviesFactory, GenreFactory, videoFactory, $timeout, myCache, localStorageService, limitToFilter){
 		
 		movies = localStorageService.get('latestMovies');
 		//newMovies = localStorageService.get('latestMovies');
@@ -688,12 +748,13 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 				//console.log($scope.pagedMovies);
 				videoIds = []
 				videoMode = 'movie';
+				mediaName = 'trailers';
 				$.each($scope.pagedMovies, function(i, obj){
 						videoIds.push(obj.mov_id)
 						//console.log(obj.mov_id);	
 					});
 				//console.log(videoIds);	
-				checkVideos(videoIds, videoMode)
+				videoFactory.checkData(videoIds, videoMode, mediaName)
 			});
 		};
 		
@@ -707,49 +768,6 @@ myApp.controller ('mainController', ['$scope','MoviesFactory', 'GenreFactory', '
 	$scope.message = 'Home - Latest Movies';	
 }]);
 
-var checkVideos = function(array, videoMode){
-	setTimeout(function(){
-		arrayLength = array.length;
-		
-		for(var i = 0; i < arrayLength; i++){
-			console.log(array[i]);
-			id = array[i];
-			var videoStatus = false;	
-		
-			$.ajax({
-				async: false,
-				url: 'http://api.themoviedb.org/3/'+videoMode+'/'+id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
-				success: function (data) { 
-					$.each(data, function(i, item) {
-						//may be quicktime to check here too!
-						if(i == "youtube") {
-							da = data[i];
-							//is there an object?   
-							if(da.length){
-								//console.log(assetId + ' ' + 'video')	
-								return videoStatus = true
-								
-							}else{
-								//console.log(assetId + ' ' + 'no video object')
-								return videoStatus = false
-							}
-						} 
-						
-					}); 
-				}   
-			});
-			if (videoStatus == true){
-				console.log(id + ' ' + 'YES video');
-			} else {
-				console.log(id + ' ' + 'no video');
-				$('div[data-asset-id='+id+']').remove();
-				
-			}
-		}
-	
-	}, 1000);				
-				
-}
 
 //https://gist.github.com/bahattincinic/9671766
 //Typeahead Search
@@ -787,4 +805,114 @@ myApp.controller('AboutController', function($scope) {
 
 myApp.controller('ContactController', function($scope) {
 	$scope.message = 'Contact us';
+});
+
+myApp.factory('videoFactory', ['$location', function($location){
+	var url = $location.url(),
+		homeUrl = '/',
+		moviesUrl = '/movies/',
+		tvUrl = '/tv/';
+	
+	return {
+		checkData: function(array, videoMode, mediaName){
+				setTimeout(function(){
+					arrayLength = array.length;
+					
+					for(var i = 0; i < arrayLength; i++){
+						//console.log(array[i]);
+						id = array[i];
+						var url = $location.url(),
+							videoStatus = false,
+							$videoList = $('.video-list'),
+							list, 
+							videoBtn;
+								
+						function previewUi(id){
+							
+								if(url == moviesUrl || url == tvUrl || url == homeUrl){
+									var videoWrap = $('div[data-asset-id='+id+']');
+									$.each(videoWrap, function(){
+										$(this).html(videoBtn);
+										$(this).addClass('preview');
+										console.log('assetid'+ id +' '+ url + ' '+'add the button');	
+									});
+									//$('div[data-asset-id='+id+']').html(videoBtn);
+									//$('div[data-asset-id='+id+']').addClass('preview');
+									//console.log('assetid'+ id +' '+ url + ' '+'add the button');
+								} else {
+									//list = list.replace("undefined", ""); //For detail page
+									$videoList.html(list).fadeIn();	
+									console.log(url + ' '+'add the list');		
+								}
+							
+						}	
+					
+						$.ajax({
+							async: false,
+							url: 'http://api.themoviedb.org/3/'+videoMode+'/'+id+'/'+mediaName+'?api_key=ba5a09dba76b1c3875e487780468ef93', 
+							success: function (data) { 
+								$.each(data, function(i, item) {
+									//may be quicktime to check here too!
+									if(videoMode != "movie") {
+										console.log(i, item);
+										if(i == "results"){
+											da = data[i];
+											$.each(da, function(j, item){
+												v_id = item.id;
+												v_lang = item.iso_639_1;
+												v_key = item.key;
+												v_name = item.name;
+												v_name = v_name.replace(/\"/g, "");  
+												v_type = item.type;	
+												v_site = item.site;
+												v_size = item.size;
+												videoBtn = '<a href=\"#\" class=\"btn fn-play-video\" data-reveal-id=\"myModal\" data-video-key="'+ v_key +'" data-asset-id="'+ id +'"><i></i><b>Play Trailer</b></a>';	
+												list +='<li><a href=\"#\" class=\"fn-play-video\" data-reveal-id=\"myModal\" data-video-key="'+ v_key +'">'+v_name+'</a></li>';
+											});
+										}
+										
+									}else {
+										console.log(i, item);
+										if (i == "youtube"){
+											da = data[i];
+											$.each(da, function(j, item){
+												v_key = item.source;
+												v_name = item.name;
+												//v_name = v_name.replace(/\"/g, "");  
+												v_type = item.type;	
+												v_size = item.size;
+												videoBtn = '<a href=\"#\" class=\"btn fn-play-video\" data-reveal-id=\"myModal\" data-video-key="'+ v_key +'" data-asset-id="'+ id +'"><i></i><b>Play Trailer</b></a>';									
+												list +='<li><a href=\"#\" class=\"fn-play-video\" data-reveal-id=\"myModal\" data-video-key="'+ v_key +'">'+v_name+'</a></li>';
+											});
+											previewUi(id)
+										}
+									}
+									
+								}); 
+								
+								
+								
+								
+							}   
+						});
+						
+						
+					}
+	
+				}, 2000);				
+		}
+	}
+	
+	
+	
+}]);
+// PLAY VIDEO IN MODAL
+$(document).on('click','.fn-play-video', function(e){	
+	var $modal = $('.reveal-modal');
+	var $videoKey = $(this).attr('data-video-key');
+	var $src = '//www.youtube.com/embed/'+$videoKey;
+	var $videolink = '<iframe width="560"  height="315" src="'+$src+'?autoplay=1" frameborder="0" allowfullscreen=""></iframe>';
+	var $videoContainer = $('.video-container');
+	$videoContainer.html($videolink);
+	e.preventDefault();
 });

@@ -20,7 +20,7 @@
 <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-<link href="css/app.css?version=08.04.14" rel="stylesheet" type="text/css">
+<link href="css/app.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 
 <!-- ANGULAR SPELLS -->
@@ -39,7 +39,7 @@
 <script data-require="angular-ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
 <script type="text/javascript" src="main.min.js"></script>
 </head>
-<body class="show-trailers" ng-controller="mainController">
+<body class="">
 <?php include ('partials/options.html') ?>
 <section ng-controller="TypeaheadCtrl">
 <?php include ('partials/header.html') ?>

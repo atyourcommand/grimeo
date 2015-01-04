@@ -53,11 +53,11 @@ $(window).load(function() {
 	
 	
 	// GET VIDEO 
-	function videoLink($id, $videoMode){
+	function videoLink($id, $videoMode, $mediaName){
 		var src;
 		$.ajax({
 			async: false,
-			url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+$id+'/trailers?api_key=ba5a09dba76b1c3875e487780468ef93', 
+			url: 'http://api.themoviedb.org/3/'+$videoMode+'/'+$id+'/'+$mediaName+'?api_key=ba5a09dba76b1c3875e487780468ef93', 
 			success: function (data) { 
 						$.each(data, function(i, item) {
 							//console.log(i);   
@@ -70,6 +70,7 @@ $(window).load(function() {
 										 console.log(item.source); 
 										 if(item.source !== "") {  
 											src  = item.source; 
+											console.log(src);
 										 }
 									});
 								}else{
@@ -195,15 +196,12 @@ $(window).load(function() {
 		//type: 'GET',
 		//url: url + mode + key + '&query='+movieName ,
 		url: url + mode + key ,
-		 
 		contentType: 'application/json',
 		dataType: 'jsonp',
-		
 		beforeSend: function(){
 			loadingContent.start('Please wait, loading up coming movies');
 		},
 		success: function (data) {  
-			
 			loadGenreList(data);
 			//loadUpcomingMovies();
 			loadingContent.end(); //Remove loading message
@@ -231,7 +229,6 @@ $(window).load(function() {
 					$('.searching-for').hide();
 					$('.category').show();
 					$('.title').html(linkValue);
-					
 					//close drop down menu
 					dropDownMenu.closeMenu();
 					dropDownMenuAlternate.closeMenu();
@@ -248,12 +245,12 @@ $(window).load(function() {
 							da = data[i];
 							$.each(da, function (j, item) {  
 									
-									var $poster_path = base_url+item.poster_path;
-									var $id = item.id;
-									//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
-									var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
-									var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
-									list +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ;
+								var $poster_path = base_url+item.poster_path;
+								var $id = item.id;
+								//var $title = "<li><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></li>";
+								var $poster = "<div class=\"image-container fn-add-hover\" ><img src=\""+$poster_path+"\"/><a href=\"#\" data-reveal-id=\"myModal\" class=\"btn fn-play-video\" data-asset-id=\""+$id+"\" data-video-mode=\"movie\"><i></i><b>Play Trailer</b></a><a href=\"#\" class=\"btn fn-asset-link\" id=\""+$id+"\"><i></i><b>Show more</b></a><h3><a href=\"#\" class=\"fn-asset-link\" id=\""+$id+"\">"+item.title+"</a></h3></div>";
+								var $loader = "<img src=\"images/misc/loading.gif\" class=\"loader\"/>";
+								list +="<li class=\"column small-6 medium-3 large-2 end\"><ul>"+$loader +$poster+"</ul></li>" ;
 							});
 						} 
 					});
@@ -657,11 +654,12 @@ $('input[id="1_B"]', '.ui-options').on('click', function(){
 });
 	
 	// PLAY VIDEO IN MODAL
-	$(document).on('click','.fn-play-video', function(e){	
+	$(document).on('click','.fn-play-video_', function(e){	
 		var $modal = $('.reveal-modal');
 		var $id = $modal.attr('data-asset-id');
 		var $videoMode = $modal.attr('data-video-mode');
-		var $videolink = '<iframe width="560"  height="315" src="'+videoLink($id, $videoMode)+'?autoplay=1" frameborder="0" allowfullscreen=""></iframe>';
+		var $mediaName = $(this).attr('data-media-name');
+		var $videolink = '<iframe width="560"  height="315" src="'+videoLink($id, $videoMode, $mediaName)+'?autoplay=1" frameborder="0" allowfullscreen=""></iframe>';
 		var $videoContainer = $('.video-container');
 		$videoContainer.html($videolink);
 		e.preventDefault();

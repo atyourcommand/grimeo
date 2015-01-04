@@ -22,7 +22,8 @@
             <div class="vote-count">Total votes: {{show.vote_count}}</div>
             <div class="vote-average">Vote average: {{show.vote_average}}</div>
             <div class="vote-count">All Actors: {{show.actors}}</div>
-            <p><a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{show.tv_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a></p>
+            <!--<p><a href="#" data-reveal-id="myModal" class="btn fn-play-video" data-asset-id="{{show.tv_id}}" data-video-mode="movie"><i></i><b>Play Trailer</b></a></p>-->
+            <ul class="video-list"></ul>
             <li><img src="{{backdropUrlBase}}/{{show.backdrop_path}}" class="hero fade" ng-class="{in:show.poster_path.length}"></li>
             <p>{{show.overview}}</p>
             <!--<p><iframe width="560" height="315" src="//www.youtube.com/embed/undefined" frameborder="0" allowfullscreen=""></iframe></p>-->

@@ -700,7 +700,6 @@ header {
 			height:40%;
 			padding-top:10px;
 			vertical-align:middle;
-					
 			@include transition-property(all);
 			@include transition-duration(.25s);
 			@include transition-timing-function(ease-in);
@@ -728,9 +727,11 @@ header {
 				}
 			}
 			&.fn-play-video {
-				display:none;
+				//display:none;
 				.show-trailers & {
-					display:block;
+					display:block !important;
+					width:100% !important;
+					opacity:1 !important;
 				}
 				background-color:#dedede;
 				color:$site-red;
@@ -738,8 +739,9 @@ header {
 					content:"\f008"	
 				}
 				.preview & {
-					width:100%;
-					opacity:1;
+					display:block !important;
+					width:100% !important;
+					opacity:1 !important;
 				}	
 			}
 			&.fn-asset-link {
@@ -776,10 +778,16 @@ header {
 				}
 			}
 		}
-	
 	}
 	
-	
+	.preview {
+		.fn-play-video {
+			display:block !important;
+			width:100% !important;
+			opacity:1 !important;
+		}
+		
+	}
 }   
    
 /* ==========================================================================
@@ -959,7 +967,6 @@ input[type=checkbox] {
 		top:9px;
 		@include opacity(0);
 		cursor:pointer;
-			
 }
 
 input[type=checkbox] + label.checkboxes {
