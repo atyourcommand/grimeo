@@ -1,37 +1,9 @@
 #!/usr/local/bin/php
-<?php include_once "db.php";
- 
+<?php include_once "db.php"; 
 
-/***************** Fetch All genre Start *****************/
-$checkforgen = mysql_query('select * from genres');
-$getDbgen = mysql_num_rows($checkforgen);
-if($getDbgen>35 || $getDbgen==0){
-	$output  = useCurl("http://api.themoviedb.org/3/genre/list?api_key=ba5a09dba76b1c3875e487780468ef93"); 
-	$data = json_decode($output);
-	//echo"<pre>"; print_r($data->genres);die;
-	$count_genres =  count($data->genres);
-	$checkforgen = mysql_query('select * from genres');
 
-	if($count_genres!=$getDbgen){
-		$i = 0;
-		foreach($data->genres as $val){ 
-			$checkforgen = mysql_query("select * from genres where genresId = '".$val->id."'");
-			if(!mysql_num_rows($checkforgen)){
-				$output2  = useCurl("http://api.themoviedb.org/3/genre/".$val->id."/movies?api_key=ba5a09dba76b1c3875e487780468ef93&page=1"); 
-				$data2 = json_decode($output2);
-				mysql_query("insert into genres set genresId = '".$val->id."', title =  '".$val->name."',total_results = '".$data2->total_results."', total_pages =  '".$data2->total_pages."'   ");
-				$i++;
-			}
-			 
-		}
-		echo " $i record inserted!";
-		/***************** Fetch All genre End *****************/
-	}
-}
-
- 
 /*****************   keywords  Fetch All Movie from Gener Start *****************/
-
+ 
 $next = checkMovPointer();
 //mail("sanjay.vns1987@gmail.com","$next[genresId] and $next[page_num]"," $next[genresId] and $next[page_num] ");
 $output  = useCurl("http://api.themoviedb.org/3/genre/".$next[genresId]."/movies?api_key=ba5a09dba76b1c3875e487780468ef93&page=".$next[page_num]); 

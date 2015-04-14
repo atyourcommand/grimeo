@@ -34,20 +34,21 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$data =  array();
-		$data['user_profile'] ='';
+		$data['user_profile'] = '';
+		
 		if ($this->user){
 			try {
 
 				$user_profile = $this->facebook->api('/me');
 
-           //     var_dump($user_profile);
+                //var_dump($user_profile);
                 //$this->Managefacebookinfo->insertfacebookinfo($user_profile);								                //echo "<br/>";
 				$data['user_profile'] = $user_profile;
 				$params = array('next' => base_url().'welcome/logout');
 				$sesUser = array('User'=>$user_profile,
 				   'logout' =>$this->facebook->getLogoutUrl($params)
 				);
-		     $this->session->set_userdata($sesUser);
+		     	$this->session->set_userdata($sesUser);
 				//print_r($user_profile);
 				//echo $user_profile['email'];
 				
